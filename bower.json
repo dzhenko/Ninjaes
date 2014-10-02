@@ -1,0 +1,23 @@
+{
+  "name": "Ninjaes",
+  "version": "1.0.0",
+  "homepage": "https://github.com/fast4y/Ninjaes",
+  "description": "EAN Stack, Heroes3-like app",
+  "main": "server.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./public/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "toastr": "~2.0.3",
+    "angular": "~1.2.26",
+    "angular-resource": "~1.2.26",
+    "angular-route": "~1.2.26"
+  }
+}
