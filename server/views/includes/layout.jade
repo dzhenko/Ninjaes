@@ -5,9 +5,10 @@ html
         link(rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css")
         link(rel="stylesheet" href="/lib/toastr/toastr.min.css")
         link(rel="stylesheet" href="/css/app.css")
-    body(ng-app="app")
-        h1 Included layout
+        link(rel="icon" type="image/png" href="/img/favicon.png")
 
+    body(ng-app="app")
         block main-content
 
         include scripts
+        include currentUser
