@@ -21,8 +21,8 @@ module.exports = function(app, config) {
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(methodOverride('X-HTTP-Method-Override'));
 
+    app.use(cookieParser('heroes'));
     app.use(session({ secret: 'heroes' }));
-    app.use(cookieParser());
 
     app.use(stylus.middleware({
         src: config.rootPath + '/public',
