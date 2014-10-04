@@ -2,7 +2,7 @@
 
 var app = angular.module('app', ['ngResource', 'ngRoute']);
 
-app.config(['$routeProvider', '$sceDelegateProvider', function($routeProvider, $sceDelegateProvider) {
+app.config(['$routeProvider', '$sceDelegateProvider', function ($routeProvider, $sceDelegateProvider) {
     // if we use images from internet we need to allow the website
     $sceDelegateProvider.resourceUrlWhitelist([
         'self',
@@ -11,17 +11,17 @@ app.config(['$routeProvider', '$sceDelegateProvider', function($routeProvider, $
 
     var routeUserChecks = {
         adminRole: {
-            authenticate: function(auth) {
+            authenticate: function (auth) {
                 return auth.isAuthorizedForRole('admin');
             }
         },
         moderatorRole: {
-            authenticate: function(auth) {
+            authenticate: function (auth) {
                 return auth.isAuthorizedForRole('moderator');
             }
         },
         authenticated: {
-            authenticate: function(auth) {
+            authenticate: function (auth) {
                 return auth.isAuthenticated();
             }
         }
@@ -29,11 +29,11 @@ app.config(['$routeProvider', '$sceDelegateProvider', function($routeProvider, $
 
     $routeProvider
         .when('/', {
-            templateUrl : '/partials/home/home',
+            templateUrl: '/partials/home/home',
             controller: 'HomeCtrl'
         })
         .when('/home', {
-            templateUrl : '/partials/home/home',
+            templateUrl: '/partials/home/home',
             controller: 'HomeCtrl'
         })
         .when('/signup', {
@@ -44,30 +44,30 @@ app.config(['$routeProvider', '$sceDelegateProvider', function($routeProvider, $
             templateUrl: '/partials/chat/chat',
             controller: 'ChatCtrl'
         })
-		.when('/map', {
-                 templateUrl: './map/map.html',
-                 controller: 'MapCtrl'
-             })
-            .when('/castle', {
-                templateUrl: './castle/castle.html',
-                controller: 'CastleCtrl'
-            })
+        .when('/map', {
+            templateUrl: './map/map.html',
+            controller: 'MapCtrl'
+        })
+        .when('/castle', {
+            templateUrl: './castle/castle.html',
+            controller: 'CastleCtrl'
+        })
         .otherwise({ redirectTo: '/' });
 }]);
 
 app.value('toastr', toastr);
 
 // default error handling for the app
-app.value('errorHandler', function(error){
+app.value('errorHandler', function (error) {
     if (error.message) {
         toastr.error(error.message);
     }
 });
 
-app.run(function($rootScope, $location) {
+app.run(function ($rootScope, $location) {
     'use strict';
 
-    $rootScope.$on('$routeChangeError', function(ev, current, previous, rejection) {
+    $rootScope.$on('$routeChangeError', function (ev, current, previous, rejection) {
         if (rejection === 'not authorized') {
             $location.path('/');
         }
