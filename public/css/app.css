@@ -23,6 +23,11 @@ body > footer {
 #signUpForm input {
   height: 42px;
 }
+.container.player {
+  position: absolute;
+  top: 54%;
+  left: 41%;
+}
 footer {
   padding: 0 150px;
 }

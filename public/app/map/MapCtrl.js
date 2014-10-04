@@ -7,6 +7,11 @@ app.controller('MapCtrl', ['$scope', '$location', 'mapData', function ($scope, $
     var distance = 60;
 
     var handler = function(e){
+        // Arrow key press navigates through the page by default
+        // so this default should be prevented to move only on the map
+        // using arrow keys
+        e.preventDefault();
+
         if(e.keyCode === 37) {
             // console.log('lef arrow');
             $scope.vx += distance;
