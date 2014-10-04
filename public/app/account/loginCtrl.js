@@ -1,5 +1,5 @@
-app.controller('LoginCtrl', ['$scope', '$location', 'notifier', 'identity', 'auth', 'socket',
-    function ($scope, $location, notifier, identity, auth, socket) {
+app.controller('LoginCtrl', ['$scope', '$location', 'notifier', 'identity', 'auth',
+    function ($scope, $location, notifier, identity, auth) {
     'use strict';
 
     $scope.identity = identity;

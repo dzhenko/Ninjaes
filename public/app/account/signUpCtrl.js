@@ -1,4 +1,4 @@
-app.controller('SignUpCtrl', function ($scope, $location, auth, notifier) {
+app.controller('SignUpCtrl', ['$scope', '$location', 'auth', 'notifier', function ($scope, $location, auth, notifier) {
     'use strict';
 
     $scope.user = {};
@@ -12,4 +12,4 @@ app.controller('SignUpCtrl', function ($scope, $location, auth, notifier) {
             notifier.error('This username already exists !');
         });
     };
-});
+}]);

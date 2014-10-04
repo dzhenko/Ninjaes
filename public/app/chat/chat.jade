@@ -4,10 +4,11 @@
         p(ng-hide="identity.isAuthenticated()") Only registered users can send messages
 
 
-    .form-group.row.container
-        .col-md-8.col-md-offset-1
+    .form-group
+        .input-group.col-md-10.col-md-offset-1
             input.form-control(type="text", placeholder="enter your message", ng-model="newMessage" ng-disabled="!identity.isAuthenticated()")
-        button.col-md-2.pull-right.btn.btn-primary(ng-click="sendMessage(newMessage)" ng-disabled="!identity.isAuthenticated()") Send
+            span.input-group-btn
+                button.btn.btn-primary(ng-click="sendMessage(newMessage)" type="button" ng-disabled="!identity.isAuthenticated()") Send
 
 
     ul.list-group
