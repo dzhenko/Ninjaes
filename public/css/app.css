@@ -26,3 +26,9 @@ body {
 footer {
   padding: 0 150px;
 }
+canvas {
+    display: block;
+    margin: 20px auto;
+}
+
+
