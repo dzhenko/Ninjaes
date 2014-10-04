@@ -9,7 +9,14 @@ var userSchema = mongoose.Schema({
     lastName: { type: String, require: '{PATH} is required' },
     salt: String,
     hashPass: String,
-    roles: [String]
+    roles: [String],
+    coordinates: {
+        x : Number,
+        y: Number
+    },
+    gold : Number,
+    movement: Number,
+    troops: [Number]
 });
 
 userSchema.method({
@@ -27,12 +34,8 @@ module.exports = {
 
         salt = encryption.generateSalt();
         hashedPwd = encryption.generateHashedPassword(salt, 'admin');
-        User.create({username: 'admin', firstName: 'Administrator', lastName: 'Pesho', salt: salt, hashPass: hashedPwd, roles: ['admin'], race: 'terran', coordinates: [0,0,0]});
+        User.create({username: 'admin', firstName: 'Administrator', lastName: 'Pesho', salt: salt, hashPass: hashedPwd, roles: ['admin'], coordinates: {x:0, y:0}});
 
-        salt = encryption.generateSalt();
-        hashedPwd = encryption.generateHashedPassword(salt, 'password');
-        User.create({username: 'administrator', firstName: 'administrator', lastName: 'Gosho', salt: salt, hashPass: hashedPwd, roles: ['admin'], race: 'terran', coordinates: [0,0,1]});
-
-        console.log('Added 2 admins - admin and administrator');
+        console.log('Added 1 admin - admin');
     }
 };

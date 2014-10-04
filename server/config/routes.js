@@ -1,11 +1,15 @@
 'use strict';
 
 var auth = require('./auth'),
-    sampleController = require('../controllers/sampleController');
+    controllers = require('../controllers');
 
 module.exports = function(app, config) {
-    // try with postman - http://localhost:9999/sample will enter this route
-    app.get('/sample', sampleController);
+    app.route('/api/users')
+        .get(auth.isAuthenticated, controllers.users.getAllUsers)
+        .post(controllers.users.createUser)
+        .put(auth.isAuthenticated, controllers.users.updateUser);
+
+
 
     // this returns the partial name - angular requests them as partialUrl
     app.get('/partials/:partialArea/:partialName', function (req, res) {
