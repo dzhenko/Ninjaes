@@ -9,6 +9,8 @@ module.exports = function(app, config) {
         .post(controllers.users.createUser)
         .put(auth.isAuthenticated, controllers.users.updateUser);
 
+    app.post('/login', auth.login);
+    app.post('/logout', auth.logout);
 
 
     // this returns the partial name - angular requests them as partialUrl

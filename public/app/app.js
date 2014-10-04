@@ -28,6 +28,10 @@ app.config(['$routeProvider', '$sceDelegateProvider', function($routeProvider, $
     };
 
     $routeProvider
+        .when('/', {
+            templateUrl : '/partials/home/home',
+            controller: 'HomeCtrl'
+        })
         .when('/home', {
             templateUrl : '/partials/home/home',
             controller: 'HomeCtrl'
@@ -36,7 +40,11 @@ app.config(['$routeProvider', '$sceDelegateProvider', function($routeProvider, $
             templateUrl: '/partials/account/signup',
             controller: 'SignUpCtrl'
         })
-        .otherwise({ redirectTo: '/home' });
+        .when('/chat', {
+            templateUrl: '/partials/chat/chat',
+            controller: 'ChatCtrl'
+        })
+        .otherwise({ redirectTo: '/' });
 }]);
 
 app.value('toastr', toastr);

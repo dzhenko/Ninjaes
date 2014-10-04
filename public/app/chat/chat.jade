@@ -1,0 +1,16 @@
+.container#chatroom
+    .jumbotron
+        h1 Welcome to our chat room
+        p(ng-hide="identity.isAuthenticated()") Only registered users can send messages
+
+
+    .form-group.row.container
+        .col-md-8.col-md-offset-1
+            input.form-control(type="text", placeholder="enter your message", ng-model="newMessage" ng-disabled="!identity.isAuthenticated()")
+        button.col-md-2.pull-right.btn.btn-primary(ng-click="sendMessage(newMessage)" ng-disabled="!identity.isAuthenticated()") Send
+
+
+    ul.list-group
+        li.list-group-item(ng-repeat="message in messages | filter: filterText")
+            span.badge {{ message.user }}
+            | {{ message.text }}
