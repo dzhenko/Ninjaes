@@ -1,8 +1,8 @@
-body > footer {
-  margin-top: 50px;
-}
 body {
   padding-top: 120px;
+}
+body > footer {
+  margin-top: 50px;
 }
 .navbar-right .navbar-form input {
   margin-right: 10px;

@@ -45,12 +45,14 @@ app.config(['$routeProvider', '$sceDelegateProvider', function ($routeProvider, 
             controller: 'ChatCtrl'
         })
         .when('/map', {
-            templateUrl: './map/map.html',
-            controller: 'MapCtrl'
+            templateUrl: '/partials/map/map',
+            controller: 'MapCtrl',
+            resolve: routeUserChecks.authenticated
         })
         .when('/castle', {
-            templateUrl: './castle/castle.html',
-            controller: 'CastleCtrl'
+            templateUrl: '/partials/castle/castle',
+            controller: 'CastleCtrl',
+            resolve: routeUserChecks.authenticated
         })
         .otherwise({ redirectTo: '/' });
 }]);
