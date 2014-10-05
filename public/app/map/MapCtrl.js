@@ -1,72 +1,43 @@
 ﻿'use strict';
 
-app.controller('MapCtrl', ['$scope', '$location', 'mapData', 'mapPreloader', function ($scope, $location, mapData, mapPreloader) {
-    $scope.params = {};
-    $scope.playerPosition = {
-        x: 0,
-        y: 0
-    };
-    $scope.castlePosition = {
-        x: 0,
-        y: 0
-    };
-    $scope.mapPosition = {
-        x: 0,
-        y: 0
-    };
+app.controller('MapCtrl', ['$scope', '$location', 'mapData', 'mapPreloader', 'GameObject', function ($scope, $location, mapData, mapPreloader, GameObject) {
     $scope.images = {};
-    var gameObjects = [
+    var gameObjectsImages = [
         {name: 'castle', src: '../../img/castle-building.gif'},
         {name: 'bluePlayer', src: '../../img/bluePlayer.png'},
         {name: 'map', src: './../img/world.png'}
     ];
-    var distance = 60;
 
-    var canvas = document.querySelector('canvas');
-    var ctx = canvas.getContext('2d');
+    $scope.map = {
+        position: {
+            x: 0,
+            y: 0
+        },
+        distance: 60,
+        canvas: document.querySelector('canvas'),
+        ctx: function () {
+            return this.canvas.getContext('2d');
+        },
+        width: function () {
+            return this.canvas.width;
+        },
+        height: function () {
+            return this.canvas.height;
+        }
+    };
 
-    mapPreloader.preloadImages(gameObjects)
+    $scope.player = new GameObject('Mighty warrior', 'bluePlayer', {x: 200, y: 200});
+    $scope.mapObjects = [
+        new GameObject('King\'s landing', 'castle', {x: 0, y: 0}),
+        $scope.player
+    ];
+
+    mapPreloader.preloadImages(gameObjectsImages)
         .then(function (images) {
             $scope.images = images;
-            $scope.playerPosition.x = canvas.width / 2;
-            $scope.playerPosition.y = canvas.height / 2;
-            $scope.redraw();
+            loadGameObjectsImages($scope.images, $scope.mapObjects);
+            $scope.drawField();
         });
-
-    var keyboardHandler = function (e) {
-        // Arrow key press navigates through the page by default
-        // so this default should be prevented to move only on the map
-        // using arrow keys
-        e.preventDefault();
-
-        if (e.keyCode === 37) {
-            // console.log('lef arrow');
-            $scope.mapPosition.x += distance;
-            $scope.redraw();
-        }
-        if (e.keyCode === 38) {
-            // console.log('up arrow');
-            $scope.mapPosition.y += distance;
-            $scope.redraw();
-        }
-        if (e.keyCode === 39) {
-            // console.log('right arrow');
-            $scope.mapPosition.x -= distance;
-            $scope.redraw();
-        }
-        if (e.keyCode === 40) {
-            // console.log('down arrow');
-            $scope.mapPosition.y -= distance;
-            $scope.redraw();
-        }
-    };
-
-    $scope.movePlayer = function (event) {
-        $scope.playerPosition.x = -$scope.mapPosition.x + event.offsetX;
-        $scope.playerPosition.y = -$scope.mapPosition.y + event.offsetY;
-        console.log($scope.playerPosition.x + ' ' + $scope.playerPosition.y);
-        $scope.redraw();
-    };
 
     var $doc = angular.element(document);
     $doc.on('keydown', keyboardHandler);
@@ -74,25 +45,76 @@ app.controller('MapCtrl', ['$scope', '$location', 'mapData', 'mapPreloader', fun
         $doc.off('keydown', keyboardHandler);
     });
 
-    $scope.redraw = function () {
-        var vx = $scope.mapPosition.x % $scope.images.map.width;
-        var vy = $scope.mapPosition.y % $scope.images.map.height;
+    $scope.drawField = function () {
+        drawMap($scope.map, $scope.images.map);
+
+        for (var i = 0; i < $scope.mapObjects.length; i++) {
+            var mapObject = $scope.mapObjects[i];
+            if (mapObject.isInMapRange($scope.map)) {
+                var positionOnMap = calculateMapPosition(mapObject.position, $scope.map.position, $scope.map.distance);
+                $scope.map.ctx().drawImage($scope.images[mapObject.type], positionOnMap.x, positionOnMap.y);
+            }
+        }
+    };
+
+    function drawMap(map, mapImage) {
+        var vx = map.position.x % mapImage.width;
+        var vy = map.position.y % mapImage.height;
 
         if (vx > 0) {
-            vx -= $scope.images.map.width;
+            vx -= mapImage.width;
         }
         if (vy > 0) {
-            vy -= $scope.images.map.height;
+            vy -= mapImage.height;
         }
 
-        ctx.drawImage($scope.images.map, vx, vy);
-        ctx.drawImage($scope.images.map, vx, $scope.images.map.height - Math.abs(vy));
-        ctx.drawImage($scope.images.map, $scope.images.map.width - Math.abs(vx), vy);
-        ctx.drawImage($scope.images.map, $scope.images.map.width - Math.abs(vx), $scope.images.map.height - Math.abs(vy));
+        map.ctx().drawImage(mapImage, vx, vy);
+        map.ctx().drawImage(mapImage, vx, mapImage.height - Math.abs(vy));
+        map.ctx().drawImage(mapImage, mapImage.width - Math.abs(vx), vy);
+        map.ctx().drawImage(mapImage, mapImage.width - Math.abs(vx), mapImage.height - Math.abs(vy));
+    }
 
-        var posX = $scope.playerPosition.x + $scope.mapPosition.x - distance;
-        var posY = $scope.playerPosition.y + $scope.mapPosition.y - distance;
-        ctx.drawImage($scope.images.castle, $scope.castlePosition.x + $scope.mapPosition.x, $scope.castlePosition.y + $scope.mapPosition.y);
-        ctx.drawImage($scope.images.bluePlayer, posX, posY);
+    function calculateMapPosition(objectPosition, mapPosition, distance) {
+        return {
+            x: objectPosition.x + mapPosition.x - distance,
+            y: objectPosition.y + mapPosition.y - distance
+        };
+    }
+
+    function loadGameObjectsImages(images, gameObjects) {
+        for (var i = 0; i < gameObjects.length; i++) {
+            gameObjects[i].loadImage(images);
+        }
+    }
+
+    $scope.movePlayer = function (event) {
+        $scope.player.position.x = -$scope.map.position.x + event.offsetX;
+        $scope.player.position.y = -$scope.map.position.y + event.offsetY;
+        $scope.drawField();
     };
+
+    function keyboardHandler(e) {
+        // Arrow key press navigates through the page by default
+        // so this default should be prevented to move only on the map
+        // using arrow keys
+        e.preventDefault();
+
+        if (e.keyCode === 37) {
+            // console.log('lef arrow');
+            $scope.map.position.x += $scope.map.distance;
+            $scope.drawField();
+        } else if (e.keyCode === 38) {
+            // console.log('up arrow');
+            $scope.map.position.y += $scope.map.distance;
+            $scope.drawField();
+        } else if (e.keyCode === 39) {
+            // console.log('right arrow');
+            $scope.map.position.x -= $scope.map.distance;
+            $scope.drawField();
+        } else if (e.keyCode === 40) {
+            // console.log('down arrow');
+            $scope.map.position.y -= $scope.map.distance;
+            $scope.drawField();
+        }
+    }
 }]);

@@ -6,6 +6,8 @@ app.factory('mapPreloader', ['$q', function ($q) {
         var defer = $q.defer();
         var newimages = {},
             loadedimages = 0;
+        arr = (Object.prototype.toString.call(arr) === '[object Array]' ) ? arr : [arr];
+
 
         function imageloadpost() {
             loadedimages++;
