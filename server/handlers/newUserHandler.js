@@ -1,6 +1,7 @@
 'use strict';
 
-var gameSettings = require('../config/gameSettings');
+var gameSettings = require('../config/gameSettings'),
+    map = require('../gameObjects/map');
 
 module.exports = {
     getUnusedCoordinates: function (otherCastles) {
@@ -31,6 +32,7 @@ module.exports = {
     getUserObjects: function(user) {
         user.gold = 10000;
         user.troops = [25,8,3,0,0,0,0];
+        user.experience = 0;
         user.movement = 500;
     },
     getUserCastle: function(user) {
@@ -49,5 +51,10 @@ module.exports = {
             troopsForSale: [0,0,0,0,0,0,0],
             troops: [0,0,0,0,0,0,0]
         }
+    },
+    updateMapWithUser: function(user) {
+        map.position(user.coordinates, 3);
+        map.position({x:user.coordinates.x, y:user.coordinates.y - 1}, 4);
+        map.update();
     }
 };

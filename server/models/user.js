@@ -16,6 +16,7 @@ var userSchema = mongoose.Schema({
     },
     gold : Number,
     movement: Number,
+    experience: Number,
     troops: [Number]
 });
 

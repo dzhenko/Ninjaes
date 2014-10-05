@@ -44,6 +44,8 @@ module.exports = {
                         return;
                     }
 
+                    newUserHandler.updateMapWithUser(user);
+
                     req.logIn(user, function (err) {
                         if (err) {
                             res.status(400);
