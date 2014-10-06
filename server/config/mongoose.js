@@ -3,7 +3,7 @@
 var mongoose = require('mongoose'),
     Models = require('../models');
 
-require('../gameObjects/map').init();
+require('../handlers/mapHandler').init();
 
 module.exports = function (config) {
     mongoose.connect(config.db);

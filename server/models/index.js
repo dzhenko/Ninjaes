@@ -2,10 +2,10 @@
 
 var UserModel = require('../models/user'),
     CastleModel = require('../models/castle'),
-    MapModel = require('../models/map');
+    GameObjectModel = require('../models/gameObject');
 
 module.exports = {
     User : UserModel,
     Castle : CastleModel,
-    Map: MapModel
+    GameObject: GameObjectModel
 };

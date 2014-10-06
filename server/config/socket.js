@@ -10,8 +10,8 @@ module.exports = function (server) {
             io.emit('chat message', msg);
         });
 
-        socket.on('moved', function(player) {
-
+        socket.on('moved', function(information) {
+            socket.emit('moved', handlers.movement.checkMove(information));
         });
     });
 };

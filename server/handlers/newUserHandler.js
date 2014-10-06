@@ -1,7 +1,7 @@
 'use strict';
 
 var gameSettings = require('../config/gameSettings'),
-    map = require('../gameObjects/map');
+    map = require('../handlers/mapHandler');
 
 module.exports = {
     getUnusedCoordinates: function (otherCastles) {
@@ -9,13 +9,13 @@ module.exports = {
 
         while (invalidCoords) {
             invalidCoords = false;
-            var randomX = Math.floor(Math.random() * gameSettings.mapSize / gameSettings.playerTerrainSize) * gameSettings.playerTerrainSize + 500;
-            var randomY = Math.floor(Math.random() * gameSettings.mapSize / gameSettings.playerTerrainSize) * gameSettings.playerTerrainSize + 500;
+            var randomX = Math.floor(Math.random() * gameSettings.mapSize / gameSettings.playerTerrainSize) * gameSettings.playerTerrainSize + gameSettings.playerTerrainSize / 2;
+            var randomY = Math.floor(Math.random() * gameSettings.mapSize / gameSettings.playerTerrainSize) * gameSettings.playerTerrainSize + gameSettings.playerTerrainSize / 2;
 
             for (var i = 0; i < otherCastles.length; i++) {
                 if (otherCastles[i].coordinates.x === randomX && otherUsers[i].coordinates.y === randomY) {
-                    randomX = Math.floor(Math.random() * gameSettings.mapSize / gameSettings.playerTerrainSize) * gameSettings.playerTerrainSize + 500;
-                    randomY = Math.floor(Math.random() * gameSettings.mapSize / gameSettings.playerTerrainSize) * gameSettings.playerTerrainSize + 500;
+                    randomX = Math.floor(Math.random() * gameSettings.mapSize / gameSettings.playerTerrainSize) * gameSettings.playerTerrainSize + gameSettings.playerTerrainSize / 2;
+                    randomY = Math.floor(Math.random() * gameSettings.mapSize / gameSettings.playerTerrainSize) * gameSettings.playerTerrainSize + gameSettings.playerTerrainSize / 2;
 
                     invalidCoords = true;
                     break;
@@ -52,9 +52,17 @@ module.exports = {
             troops: [0,0,0,0,0,0,0]
         }
     },
-    updateMapWithUser: function(user) {
-        map.position(user.coordinates, 3);
-        map.position({x:user.coordinates.x, y:user.coordinates.y - 1}, 4);
+    updateMapWithUserAndCastle: function(user, castle) {
+        map.setPosition(user.coordinates, {
+            type : 3,
+            amount: 1,
+            obj : user
+        });
+        map.setPosition(castle.coordinates, {
+            type : 4,
+            amount: 1,
+            obj : castle
+        });
         map.update();
     }
 };

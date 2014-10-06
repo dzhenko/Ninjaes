@@ -95,6 +95,7 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'mapData', 'mapPre
             $scope.drawField();
         };
 
+
         function keyboardHandler(e) {
             // Arrow key press navigates through the page by default
             // so this default should be prevented to move only on the map
@@ -120,16 +121,23 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'mapData', 'mapPre
             }
         }
 
+
         var sc = io();
+        sc.on('moved', function(response) {
+            if (!response) {
+
+                return;
+            }
+            $scope.drawField();
+            identity.currentUser = response.user;
+            console.log(response);
+        });
 
         function movePlayer(dx, dy) {
-            identity.currentUser.coordinates.x += dx;
-            identity.currentUser.coordinates.y += dy;
-
             sc.emit('moved', {
-                user: identity.currentUser
+                user: identity.currentUser,
+                dx: dx,
+                dy: dy
             });
-
-            $scope.drawField();
         }
     }]);

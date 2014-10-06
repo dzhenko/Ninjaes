@@ -44,7 +44,7 @@ module.exports = {
                         return;
                     }
 
-                    newUserHandler.updateMapWithUser(user);
+                    newUserHandler.updateMapWithUserAndCastle(user, castle);
 
                     req.logIn(user, function (err) {
                         if (err) {
@@ -79,7 +79,7 @@ module.exports = {
         }
     },
     getAllUsers: function (req, res) {
-        User.find({}).select('username _id').exec(function (err, collection) {
+        User.find({}).select('username _id experience gold').exec(function (err, collection) {
             if (err) {
                 console.log('Users could not be loaded ' + err);
             }
