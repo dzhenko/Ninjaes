@@ -2,60 +2,67 @@
 
 module.exports = [
     {
-        Name: 'Halberdiers',
-        Attack: 6,
-        Defense: 5,
-        Damage: 2,
-        Health: 10,
-        Speed: 5,
-        Growth: 28
+        name: 'Halberdiers',
+        attack: 6,
+        defense: 5,
+        damage: 2,
+        health: 10,
+        speed: 5,
+        growth: 28,
+        cost: 130
     },{
-        Name: 'Marksmen',
-        Attack: 8,
-        Defense: 4,
-        Damage: 4,
-        Health: 10,
-        Speed: 6,
-        Growth: 18
+        name: 'Marksmen',
+        attack: 8,
+        defense: 4,
+        damage: 4,
+        health: 10,
+        speed: 6,
+        growth: 18,
+        cost: 300
     },{
-        Name: 'Royal Griffins',
-        Attack: 9,
-        Defense: 9,
-        Damage: 6,
-        Health: 25,
-        Speed: 9,
-        Growth: 18
+        name: 'Royal Griffins',
+        attack: 9,
+        defense: 9,
+        damage: 6,
+        health: 25,
+        speed: 9,
+        growth: 18,
+        cost: 440
     },{
-        Name: 'Crusaders',
-        Attack: 12,
-        Defense: 12,
-        Damage: 9,
-        Health: 35,
-        Speed: 6,
-        Growth: 8
+        name: 'Crusaders',
+        attack: 12,
+        defense: 12,
+        damage: 9,
+        health: 35,
+        speed: 6,
+        growth: 8,
+        cost: 760
     },{
-        Name: 'Zealots',
-        Attack: 12,
-        Defense: 10,
-        Damage: 12,
-        Health: 30,
-        Speed: 7,
-        Growth: 6
+        name: 'Zealots',
+        attack: 12,
+        defense: 10,
+        damage: 12,
+        health: 30,
+        speed: 7,
+        growth: 6,
+        cost: 1000
     },{
-        Name: 'Champions',
-        Attack: 16,
-        Defense: 16,
-        Damage: 24,
-        Health: 100,
-        Speed: 9,
-        Growth: 4
+        name: 'Champions',
+        attack: 16,
+        defense: 16,
+        damage: 24,
+        health: 100,
+        speed: 9,
+        growth: 4,
+        cost: 1500
     },{
-        Name: 'Archangels',
-        Attack: 30,
-        Defense: 30,
-        Damage: 50,
-        Health: 250,
-        Speed: 18,
-        Growth: 2
+        name: 'Archangels',
+        attack: 30,
+        defense: 30,
+        damage: 50,
+        health: 250,
+        speed: 18,
+        growth: 2,
+        cost: 5000
     }
 ];

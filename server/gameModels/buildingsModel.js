@@ -2,44 +2,44 @@
 
 module.exports = {
     hall: {
-        Name: ['Nothing', 'Town Hall', 'City Hall', 'Capitol'],
-        Produces: [500, 1000, 2000, 4000],
-        Cost: [0, 2500, 5000, 10000]
+        name: ['Nothing', 'Town Hall', 'City Hall', 'Capitol'],
+        produces: [500, 1000, 2000, 4000],
+        cost: [0, 2500, 5000, 10000]
     },
     castle: {
-        Name: ['Nothing', 'Fort', 'Citadel', 'Castle'],
-        Produces: [1, 1, 1.5, 2],
-        Cost: [0, 2500, 5000, 10000]
+        name: ['Nothing', 'Fort', 'Citadel', 'Castle'],
+        produces: [1, 1, 1.5, 2],
+        cost: [0, 2500, 5000, 10000]
     },
     troops: [
         {
-            Name: 'Guardhouse',
-            Produces: 14,
-            Cost: 2000
+            name: 'Guardhouse',
+            produces: 14,
+            cost: 2000
         },{
-            Name: 'Archer\'s Tower',
-            Produces: 8,
-            Cost: 3000
+            name: 'Archer\'s Tower',
+            produces: 8,
+            cost: 3000
         },{
-            Name: 'Griffin Tower',
-            Produces: 8,
-            Cost: 4000
+            name: 'Griffin Tower',
+            produces: 8,
+            cost: 4000
         },{
-            Name: 'Barracks',
-            Produces: 4,
-            Cost: 6000
+            name: 'Barracks',
+            produces: 4,
+            cost: 6000
         },{
-            Name: 'Monastery',
-            Produces: 3,
-            Cost: 9000
+            name: 'Monastery',
+            produces: 3,
+            cost: 9000
         },{
-            Name: 'Training Grounds',
-            Produces: 2,
-            Cost: 12000
+            name: 'Training Grounds',
+            produces: 2,
+            cost: 12000
         },{
-            Name: 'Portal of Glory',
-            Produces: 1,
-            Cost: 20000
+            name: 'Portal of Glory',
+            produces: 1,
+            cost: 20000
         }
     ]
 };
