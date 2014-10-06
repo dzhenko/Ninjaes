@@ -1,7 +1,7 @@
 ﻿'use strict';
 
-app.controller('MapCtrl', ['$scope', '$location', 'identity', 'mapData', 'mapPreloader', 'GameObject',
-    function ($scope, $location, identity, mapData, mapPreloader, GameObject) {
+app.controller('MapCtrl', ['$scope', '$location', 'identity', 'mapData', 'mapPreloader', 'GameObject', 'gameNotifier',
+    function ($scope, $location, identity, mapData, mapPreloader, GameObject, gameNotifier) {
         $scope.images = {};
         var gameObjectsImages = [
             {name: 'castle', src: '../../img/castle-building.gif'},
@@ -9,6 +9,16 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'mapData', 'mapPre
             {name: 'map', src: './../img/world.png'}
         ];
 
+        $scope.gameNotifierText = 'Press ok';
+        $scope.gameNotifierInfo = 'Hello there';
+        $scope.gameNotifierOk = function () {
+            alert('clicked');
+        };
+        $scope.gameNotifierStyle = 'hero';
+
+//        gameNotifier.gold(2500);
+//        gameNotifier.enemy(127).then(function(){alert('ok')}, function(){alert('er')});
+//        gameNotifier.hero(127).then(function(){alert('ok')}, function(){alert('er')});
 
         $scope.map = {
             position: {
@@ -89,13 +99,6 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'mapData', 'mapPre
             }
         }
 
-        $scope.movePlayer = function (event) {
-            $scope.player.position.x = -$scope.map.position.x + event.offsetX;
-            $scope.player.position.y = -$scope.map.position.y + event.offsetY;
-            $scope.drawField();
-        };
-
-
         function keyboardHandler(e) {
             // Arrow key press navigates through the page by default
             // so this default should be prevented to move only on the map
@@ -121,13 +124,23 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'mapData', 'mapPre
             }
         }
 
+        var mapObjects;
 
         var sc = io();
-        sc.on('moved', function(response) {
-            if (!response) {
 
+        sc.emit('getMap', identity.currentUser.coordinates);
+
+        sc.on('getMap', function(receivedMapObjects) {
+            mapObjects = receivedMapObjects;
+            console.log(mapObjects);
+        });
+
+        sc.on('moved', function (response) {
+            if (!response) {
+                // out of movement
                 return;
             }
+
             $scope.drawField();
             identity.currentUser = response.user;
             console.log(response);

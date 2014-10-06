@@ -2,10 +2,12 @@
 
 var newUserHandler = require('../handlers/newUserHandler'),
     mapHandler = require('../handlers/mapHandler'),
-    movementHandler = require('../handlers/movementHandler');
+    movementHandler = require('../handlers/movementHandler'),
+    battleHandler = require('../handlers/battleHandler');
 
 module.exports = {
     newUser: newUserHandler,
     map: mapHandler,
-    movement: movementHandler
+    movement: movementHandler,
+    battle: battleHandler
 };

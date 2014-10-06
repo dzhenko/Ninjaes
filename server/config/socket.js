@@ -13,5 +13,9 @@ module.exports = function (server) {
         socket.on('moved', function(information) {
             socket.emit('moved', handlers.movement.checkMove(information));
         });
+
+        socket.on('getMap', function(coordinates) {
+            socket.emit('getMap', handlers.map.getInitialMap(coordinates));
+        })
     });
 };

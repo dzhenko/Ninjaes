@@ -15,6 +15,47 @@ var changesDictionary = {
     inserted: []
 };
 
+function validateCoordinates(coordinates) {
+    return !(!field || arguments[0].x < 0 || arguments[0].x >=gameSettings.mapSize || arguments[0].y < 0 || arguments[0].y >=gameSettings.mapSize)
+}
+
+function generateRandomGold() {
+    var rndPosition = generateRandomPosition();
+    while (getPosition(rndPosition) !== undefined) {
+        rndPosition = generateRandomPosition();
+    }
+
+    setPosition(rndPosition, {
+        x : rndPosition.x,
+        y : rndPosition.y,
+        type: 1,
+        amount: (Math.floor(Math.random() * gameSettings.goldMaxStacks)) * gameSettings.goldAmountPerStack,
+        object: undefined
+    });
+}
+
+function generateRandomMonster() {
+    var rndPosition = generateRandomPosition();
+    while (getPosition(rndPosition) !== undefined) {
+        rndPosition = generateRandomPosition();
+    }
+
+    setPosition(rndPosition, {
+        x : rndPosition.x,
+        y : rndPosition.y,
+        type: 2,
+        amount: (Math.floor(Math.random() * gameSettings.monsterMaxAmount)),
+        object: undefined
+    });
+}
+
+function generateRandomPosition() {
+    return {
+        x: (Math.floor(Math.random() * gameSettings.mapSize)),
+        y: (Math.floor(Math.random() * gameSettings.mapSize))
+    }
+}
+
 function initMap() {
     GameObject.find({}, function(err, objects) {
         if (err) {
@@ -93,45 +134,77 @@ function removePosition(coordinates) {
     }
 }
 
-function validateCoordinates(coordinates) {
-    return !(!field || arguments[0].x < 0 || arguments[0].x >=gameSettings.mapSize || arguments[0].y < 0 || arguments[0].y >=gameSettings.mapSize)
-}
-
-function generateRandomGold() {
-    var rndPosition = generateRandomPosition();
-    while (getPosition(rndPosition) !== undefined) {
-        rndPosition = generateRandomPosition();
+function getInitialMap(coordinates) {
+    if (!field) {
+        return;
     }
 
-    setPosition(rndPosition, {
-        x : rndPosition.x,
-        y : rndPosition.y,
-        type: 1,
-        amount: (Math.floor(Math.random() * gameSettings.goldMaxStacks)) * gameSettings.goldAmountPerStack,
-        object: undefined
-    });
-}
+    var topLeft = {
+        x: coordinates.x - gameSettings.playerPositionSquare.x,
+        y: coordinates.y - gameSettings.playerPositionSquare.y
+    };
 
-function generateRandomMonster() {
-    var rndPosition = generateRandomPosition();
-    while (getPosition(rndPosition) !== undefined) {
-        rndPosition = generateRandomPosition();
+    var mapFragment = [];
+    for (var i = 0; i < gameSettings.playerHeightSquares; i++) {
+        mapFragment.push([]);
+        for (var j = 0; j < gameSettings.playerWidthSquares; j++) {
+            mapFragment[i].push(getPosition({
+                x : topLeft.x + j,
+                y : topLeft.y + i
+            }))
+        }
     }
 
-    setPosition(rndPosition, {
-        x : rndPosition.x,
-        y : rndPosition.y,
-        type: 2,
-        amount: (Math.floor(Math.random() * gameSettings.monsterMaxAmount)),
-        object: undefined
-    });
+    return mapFragment;
 }
 
-function generateRandomPosition() {
-    return {
-        x: (Math.floor(Math.random() * gameSettings.mapSize)),
-        y: (Math.floor(Math.random() * gameSettings.mapSize))
+function getPieceOfMap(coordinates, dx, dy) {
+    var topLeft = {
+        x: coordinates.x - gameSettings.playerPositionSquare.x,
+        y: coordinates.y - gameSettings.playerPositionSquare.y
+    };
+
+    var mapFragment = [];
+    var i;
+
+    if (dx > 0) {
+        //right
+        for (i = 0; i < gameSettings.playerHeightSquares; i++) {
+            mapFragment.push(getPosition({
+                x : topLeft.x + gameSettings.playerWidthSquares,
+                y : topLeft.y + i
+            }))
+        }
     }
+    else if (dx < 0) {
+        //left
+        for (i = 0; i < gameSettings.playerHeightSquares; i++) {
+            mapFragment.push(getPosition({
+                x : topLeft.x - 1,
+                y : topLeft.y + i
+            }))
+        }
+    }
+    else if (dy > 0) {
+        // down
+        for (i = 0; i < gameSettings.playerWidthSquares; i++) {
+            mapFragment.push(getPosition({
+                x : topLeft.x + i,
+                y : topLeft.y + gameSettings.playerHeightSquares
+            }))
+        }
+    }
+    else if (dy < 0) {
+        //up
+        for (i = 0; i < gameSettings.playerWidthSquares; i++) {
+            mapFragment.push(getPosition({
+                x : topLeft.x + i,
+                y : topLeft.y - 1
+            }))
+        }
+    }
+
+    return mapFragment;
 }
 
 module.exports = {
@@ -139,5 +212,7 @@ module.exports = {
     update: updateMap,
     getPosition: getPosition,
     setPosition: setPosition,
-    removePosition: removePosition
+    removePosition: removePosition,
+    getInitialMap: getInitialMap,
+    getPieceOfMap: getPieceOfMap
 };

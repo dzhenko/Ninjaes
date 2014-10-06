@@ -9,20 +9,16 @@ module.exports = {
             return false;
         }
 
+        var mapFragment = map.getPieceOfMap(user.coordinates, information.dx, information.dy);
+
         user.movement--;
 
         map.removePosition(user.coordinates);
-
-        //TODO: clear logging
-        console.log('Before move : ' + user.coordinates.x + ' ' + user.coordinates.y);
 
         user.coordinates = {
             x : user.coordinates.x + information.dx,
             y : user.coordinates.y + information.dy
         };
-
-        //TODO: clear logging
-        console.log('After move : ' + user.coordinates.x + ' ' + user.coordinates.y);
 
         var mapObj = map.getPosition(user.coordinates);
         var event;
@@ -41,18 +37,11 @@ module.exports = {
             event = 'castle';
         }
 
-        //TODO: clear logging
-        console.log('Returned object :');
-        console.dir({
-            user: user,
-            event: event,
-            object: mapObj
-        });
-
         return {
             user: user,
             event: event,
-            object: mapObj
+            object: mapObj,
+            mapFragment: mapFragment
         };
     }
 };
