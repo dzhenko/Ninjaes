@@ -2,13 +2,11 @@
 
 app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'mapData', 'mapPreloader', 'GameObject', 'gameNotifier',
     function ($scope, $location, identity, socket, mapData, mapPreloader, GameObject, gameNotifier) {
-        var coordinates ={
-            x: (identity.currentUser.coordinates.x % 32) * 60,
-            y: (identity.currentUser.coordinates.y % 32) * 60
-        };
-
         var distance = 60;
-        gameNotifier.enemy(127).then(function(){alert('ok')}, function(){alert('er')});
+        var coordinates ={
+            x: (identity.currentUser.coordinates.x % 32) * distance,
+            y: (identity.currentUser.coordinates.y % 32) * distance
+        };
 
         var handler = function(e){
             e.preventDefault();
@@ -38,7 +36,7 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'mapData
         var img = new Image();
         img.src = './../img/world.png';
 
-        var redraw = function(dx ,dy){
+        var redrawMap = function(dx ,dy){
             coordinates.x += dx * distance;
             coordinates.y += dy * distance;
 
@@ -59,6 +57,20 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'mapData
             ctx.drawImage(img, coordinates.x, img.height-Math.abs(coordinates.y));
             ctx.drawImage(img, img.width-Math.abs(coordinates.x), coordinates.y);
             ctx.drawImage(img, img.width-Math.abs(coordinates.x), img.height-Math.abs(coordinates.y));
+        };
+
+        var testEventPicture = new Image();
+        testEventPicture.src = './../img/favicon.png';
+
+        var drawEvents = function (mapFragment){
+            for(var y = 0; y < mapFragment.length; y++){
+                for(var x = 0; x < mapFragment[y].length; x++){
+                    if(mapFragment[y][x]) {
+                        ctx.drawImage(testEventPicture, x * distance, y * distance);
+                    }
+                }
+            }
+
         };
 
         socket.emit('getMap', identity.currentUser.coordinates);
@@ -95,15 +107,15 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'mapData
 
             console.log('moved recieved');
 
-            redraw(tempDx, tempDy);
+            redrawMap(tempDx, tempDy);
+            drawEvents(response.mapFragment);
 
             identity.currentUser = response.user;
-            console.log(response);
         }
 
         function handleInitialMapObjects(receivedMapObjects) {
             console.log('map recieved');
-            redraw(0,0);
-            console.log(receivedMapObjects);
+            redrawMap(0,0);
+            drawEvents(receivedMapObjects);
         }
     }]);
