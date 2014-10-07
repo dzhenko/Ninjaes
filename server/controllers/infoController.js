@@ -22,5 +22,15 @@ module.exports = {
                 });
             }
         });
+    },
+    topScores : function(req, res) {
+        User.find({}).sort('experience').limit(10).select('username experience gold').exec(function (err, topUsers) {
+            if (err) {
+                console.log('Error finding top users ' + err);
+                return;
+            }
+
+            res.send(topUsers);
+        });
     }
 };

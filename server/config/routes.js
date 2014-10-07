@@ -4,6 +4,9 @@ var auth = require('./auth'),
     controllers = require('../controllers');
 
 module.exports = function(app, config) {
+    app.post('/login', auth.login);
+    app.post('/logout', auth.logout);
+
     app.route('/api/users')
         .get(auth.isAuthenticated, controllers.users.getAllUsers)
         .post(controllers.users.createUser)
@@ -19,11 +22,8 @@ module.exports = function(app, config) {
         .delete(auth.isAuthenticated, controllers.messages.remove);
 
     //req.params.value
-    app.get('/api/info/userIdByName/:name',auth.isAuthenticated, controllers.info.userIdByName);
-
-    app.post('/login', auth.login);
-    app.post('/logout', auth.logout);
-
+    app.get('/api/info/user-id-by-name/:name',auth.isAuthenticated, controllers.info.userIdByName);
+    app.get('/api/info/top-scores', controllers.info.topScores);
 
     // this returns the partial name - angular requests them as partialUrl
     app.get('/partials/:partialArea/:partialName', function (req, res) {

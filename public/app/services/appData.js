@@ -27,13 +27,16 @@ app.factory('appData', ['$q', '$http', function($q, $http) {
                 textToSend : textToSend
             });
         },
+        getTopScores: function() {
+            return makeRequest('get', 'api/info/top-scores');
+        },
         deleteMessage: function(id) {
             return makeRequest('delete', '/api/game-messages', {
                 messageId: id
             })
         },
         getUserIdByName: function(name) {
-            return makeRequest('get', '/api/info/userIdByName/' + name);
+            return makeRequest('get', '/api/info/user-id-by-name/' + name);
         },
         getUserReports: function() {
             return makeRequest('get', '/api/game-reports');
