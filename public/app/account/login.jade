@@ -16,6 +16,15 @@
                     a(href="#/profile") Profile
                 li
                     a(href="#/settings") Settings
+
+                li.divider(ng-show="identity.isModerator()")
+                li(ng-show="identity.isModerator()")
+                    a(href="#/moderator") Moderator
+
+                li.divider(ng-show="identity.isAdmin()")
+                li(ng-show="identity.isAdmin()")
+                    a(href="#/admin") Admin
+
                 li.divider
                 li
                     a(href="#/about") About

@@ -14,6 +14,12 @@ app.factory('identity', ['$window', 'UsersResource', function($window, UsersReso
         },
         isAuthorizedForRole: function(role) {
             return !!this.currentUser && this.currentUser.roles.indexOf(role) >= 0;
+        },
+        isAdmin: function() {
+            return !!this.currentUser && this.currentUser.roles.indexOf('admin') >= 0;
+        },
+        isModerator: function() {
+            return !!this.currentUser && this.currentUser.roles.indexOf('moderator') >= 0;
         }
     }
 }]);

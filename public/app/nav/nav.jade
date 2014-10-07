@@ -1,44 +1,14 @@
-.navbar-default
+.navbar-default(ng-controller="NavCtrl")
     ul.nav.navbar-nav
-        li
-            a(href="#/overview") Overview
-        li
+        li(ng-show="identity.isAuthenticated()")
             a(href="#/map") Map
-        li
+        li(ng-show="identity.isAuthenticated()")
             a(href="#/castle") Castle
-        li.dropdown
-            a.dropdown-toggle(href="" data-toggle="dropdown") Build
-                span.caret
-            ul.dropdown-menu
-                li
-                    a(href="#/buildings") 1
-                li.divider
-                li
-                    a(href="#/ships") 2
-                li.divider
-                li
-                    a(href="#/troops") 3
-                li.divider
-                li
-                    a(href="#/upgrades") 4
-        li.dropdown
-            a.dropdown-toggle(href="" data-toggle="dropdown") Actions
-                span.caret
-            ul.dropdown-menu
-                li
-                    a(href="#/scan") 1
-                        span.glyphicon.glyphicon-search
-                li.divider
-                li
-                    a(href="#/attack-simulate") 2
-                        span.glyphicon.glyphicon-flag
-                li.divider
-                li
-                    a(href="#/attack") 3
-                        span.glyphicon.glyphicon-screenshot
-        li
-            a(href="#/chat") Chat
-        li.dropdown
+        li(ng-show="identity.isAuthenticated()")
+            a(href="#/troops") Troops
+        li(ng-show="identity.isAuthenticated()")
+            a(href="#/reports") Reports
+        li.dropdown(ng-show="identity.isAuthenticated()")
             a.dropdown-toggle(href="" data-toggle="dropdown") Messages
                 span.caret
             ul.dropdown-menu
@@ -49,3 +19,23 @@
                 li
                     a(href="#/messages") Read
                         span.glyphicon.glyphicon-book
+
+        li.dropdown(ng-show="identity.isAuthenticated()")
+            a.dropdown-toggle(href="" data-toggle="dropdown") Other
+                span.caret
+            ul.dropdown-menu
+                li
+                    a(href="#/overview") Overview
+                li.divider
+                li
+                    a(href="#/top-scores") Hall of Fame
+                li.divider
+                li
+                    a(href="#/stats") Game Statistics
+
+        li(ng-hide="identity.isAuthenticated()")
+            a(href="#/top-scores") Hall of Fame
+        li(ng-hide="identity.isAuthenticated()")
+            a(href="#/stats") Game Statistics
+        li
+            a(href="#/chat") Chat

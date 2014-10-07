@@ -31,18 +31,17 @@ app.config(['$routeProvider', '$sceDelegateProvider', function ($routeProvider, 
         .when('/', {
             templateUrl: '/partials/home/home',
             controller: 'HomeCtrl'
+            // public
         })
         .when('/home', {
             templateUrl: '/partials/home/home',
             controller: 'HomeCtrl'
+            // public
         })
         .when('/signup', {
             templateUrl: '/partials/account/signup',
             controller: 'SignUpCtrl'
-        })
-        .when('/chat', {
-            templateUrl: '/partials/chat/chat',
-            controller: 'ChatCtrl'
+            // public
         })
         .when('/map', {
             templateUrl: '/partials/map/map',
@@ -53,6 +52,66 @@ app.config(['$routeProvider', '$sceDelegateProvider', function ($routeProvider, 
             templateUrl: '/partials/castle/castle',
             controller: 'CastleCtrl',
             resolve: routeUserChecks.authenticated
+        })
+        .when('/troops', {
+            templateUrl: '/partials/troops/troops',
+            controller: 'TroopsCtrl',
+            resolve: routeUserChecks.authenticated
+        })
+        .when('/admin', {
+            templateUrl: '/partials/admin/admin',
+            controller: 'AdminCtrl',
+            resolve: routeUserChecks.adminRole
+        })
+        .when('/messages', {
+            templateUrl: '/partials/messages/messages',
+            controller: 'MessagesCtrl',
+            resolve: routeUserChecks.authenticated
+        })
+        .when('/message-create', {
+            templateUrl: '/partials/messages/message-create',
+            controller: 'MessageCreateCtrl',
+            resolve: routeUserChecks.authenticated
+        })
+        .when('/moderator', {
+            templateUrl: '/partials/moderator/moderator',
+            controller: 'ModeratorCtrl',
+            resolve: routeUserChecks.moderatorRole
+        })
+        .when('/profile', {
+            templateUrl: '/partials/profile/profile',
+            controller: 'ProfileCtrl',
+            resolve: routeUserChecks.authenticated
+        })
+        .when('/overview', {
+            templateUrl: '/partials/overview/overview',
+            controller: 'OverviewCtrl',
+            resolve: routeUserChecks.authenticated
+        })
+        .when('/reports', {
+            templateUrl: '/partials/reports/reports',
+            controller: 'ReportsCtrl',
+            resolve: routeUserChecks.authenticated
+        })
+        .when('/settings', {
+            templateUrl: '/partials/settings/settings',
+            controller: 'SettingsCtrl',
+            resolve: routeUserChecks.authenticated
+        })
+        .when('/stats', {
+            templateUrl: '/partials/stats/stats',
+            controller: 'StatsCtrl'
+            // public
+        })
+        .when('/top-scores', {
+            templateUrl: '/partials/top-scores/top-scores',
+            controller: 'topScoresCtrl'
+            // public
+        })
+        .when('/chat', {
+            templateUrl: '/partials/chat/chat',
+            controller: 'ChatCtrl'
+            // public
         })
         .otherwise({ redirectTo: '/' });
 }]);

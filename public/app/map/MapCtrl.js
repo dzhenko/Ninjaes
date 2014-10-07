@@ -1,7 +1,7 @@
 ﻿'use strict';
 
-app.controller('MapCtrl', ['$scope', '$location', 'identity', 'mapData', 'mapPreloader', 'GameObject', 'gameNotifier',
-    function ($scope, $location, identity, mapData, mapPreloader, GameObject, gameNotifier) {
+app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'mapData', 'mapPreloader', 'GameObject', 'gameNotifier',
+    function ($scope, $location, identity, socket, mapData, mapPreloader, GameObject, gameNotifier) {
         $scope.images = {};
         var gameObjectsImages = [
             {name: 'castle', src: '../../img/castle-building.gif'},
@@ -17,7 +17,7 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'mapData', 'mapPre
         $scope.gameNotifierStyle = 'hero';
 
 //        gameNotifier.gold(2500);
-//        gameNotifier.enemy(127).then(function(){alert('ok')}, function(){alert('er')});
+        gameNotifier.enemy(127).then(function(){alert('ok')}, function(){alert('er')});
 //        gameNotifier.hero(127).then(function(){alert('ok')}, function(){alert('er')});
 
         $scope.map = {
@@ -124,33 +124,34 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'mapData', 'mapPre
             }
         }
 
-        var mapObjects;
+        socket.emit('getMap', identity.currentUser.coordinates);
 
-        var sc = io();
-
-        sc.emit('getMap', identity.currentUser.coordinates);
-
-        sc.on('getMap', function(receivedMapObjects) {
-            mapObjects = receivedMapObjects;
-            console.log(mapObjects);
-        });
-
-        sc.on('moved', function (response) {
-            if (!response) {
-                // out of movement
-                return;
-            }
-
-            $scope.drawField();
-            identity.currentUser = response.user;
-            console.log(response);
-        });
+        socket.on('getMap', handleInitialMapObjects);
+        socket.on('moved', handleMovedResponse);
 
         function movePlayer(dx, dy) {
-            sc.emit('moved', {
+            console.log('emited');
+            socket.emit('moved', {
                 user: identity.currentUser,
                 dx: dx,
                 dy: dy
             });
+        }
+
+        function handleMovedResponse(response) {
+            if (!response) {
+                // out of movement
+                return;
+            }
+            // here we handle the movement
+            console.log('moved recieved');
+            $scope.drawField();
+            identity.currentUser = response.user;
+            console.log(response);
+        }
+
+        function handleInitialMapObjects(receivedMapObjects) {
+            console.log('map recieved');
+            console.log(receivedMapObjects);
         }
     }]);

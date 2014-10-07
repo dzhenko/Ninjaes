@@ -13,8 +13,7 @@ var castleSchema = mongoose.Schema({
         castle: Number,
         troops: [Number]
     },
-    troopsForSale: [Number],
-    troops: [Number]
+    troopsForSale: [Number]
 });
 
 var Castle = mongoose.model('Castle', castleSchema);
