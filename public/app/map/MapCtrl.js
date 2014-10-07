@@ -2,10 +2,11 @@
 
 app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images', 'gameNotifier',
     function ($scope, $location, identity, socket, images, gameNotifier) {
-        var distance = 60;
+        var squareDistance = 60;
+        var numberOfSqquares = 19;
         var coordinates ={
-            x: -((identity.currentUser.coordinates.x - 8 )% 32) * distance,
-            y: -((identity.currentUser.coordinates.y - 5) % 32) * distance
+            x: -((identity.currentUser.coordinates.x - 8 )% numberOfSqquares) * squareDistance,
+            y: -((identity.currentUser.coordinates.y - 5) % numberOfSqquares) * squareDistance
         };
         console.log(coordinates);
 
@@ -38,8 +39,8 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
         img.src = './../img/world.png';
 
         var redrawMap = function(dx ,dy){
-            coordinates.x -= dx * distance;
-            coordinates.y -= dy * distance;
+            coordinates.x -= dx * squareDistance;
+            coordinates.y -= dy * squareDistance;
 
             if (Math.abs(coordinates.x) >= img.width) {
                 coordinates.x = 0;
@@ -87,7 +88,7 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
                                 }
                             }
 
-                            ctx.drawImage(image, x * distance, y * distance);
+                            ctx.drawImage(image, x * squareDistance, y * squareDistance);
                         }
 //                        else if (currObj.object) {
 //                            if (currObj.object.owner === identity.currentUser._id) {
@@ -103,7 +104,7 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
 //
 //                        }
                         else {
-                            ctx.drawImage(images.castleImage, x * distance - 2*distance, y * distance - 2*distance);
+                            ctx.drawImage(images.castleImage, x * squareDistance - 2*squareDistance, y * squareDistance - 2*squareDistance);
                         }
                     }
                 }
