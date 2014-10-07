@@ -24,6 +24,8 @@ module.exports = function(app, config) {
     //req.params.value
     app.get('/api/info/user-id-by-name/:name',auth.isAuthenticated, controllers.info.userIdByName);
     app.get('/api/info/user-name-by-id/:id',auth.isAuthenticated, controllers.info.userNameById);
+    app.get('/api/info/user-overview',auth.isAuthenticated, controllers.info.userOverview);
+
     app.get('/api/info/top-scores', controllers.info.topScores);
     app.get('/api/info/game-statistics', controllers.info.gameStatistics);
 

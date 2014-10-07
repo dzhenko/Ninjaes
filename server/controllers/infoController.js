@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
-    User = mongoose.model('User');
+    User = mongoose.model('User'),
+    Castle = mongoose.model('Castle');
 
 module.exports = {
     userIdByName: function (req, res) {
@@ -66,9 +67,33 @@ module.exports = {
                 success: true,
                 stats: {
                     usersCount: usersCount,
-                    serverUptime: 12000
+                    serverUptime: 1200000
                 }
             });
         });
+    },
+    userOverview: function(req, res) {
+        User.findById(req.user._id.toString(), function(err, user) {
+            if (err) {
+                console.log('Could not find user' + err);
+                return;
+            }
+
+            user.salt = 'hidden';
+            user.hashPass = 'hidden';
+
+            Castle.find({owner : req.user._id.toString()}, function(err, castle) {
+                if (err) {
+                    console.log('Could not find castle' + err);
+                    return;
+                }
+
+                res.send({
+                    success: true,
+                    user: user,
+                    castle: castle
+                })
+            })
+        })
     }
 };

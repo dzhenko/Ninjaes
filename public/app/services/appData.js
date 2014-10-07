@@ -33,6 +33,9 @@ app.factory('appData', ['$q', '$http', function($q, $http) {
         getGameStatistics: function() {
             return makeRequest('get', 'api/info/game-statistics');
         },
+        getUserOverview: function() {
+            return makeRequest('get', '/api/info/user-overview');
+        },
         deleteMessage: function(id) {
             return makeRequest('put', '/api/game-messages', {
                 messageId: id
