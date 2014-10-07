@@ -2,7 +2,7 @@ var mongoose = require('mongoose'),
     Message = mongoose.model('Message');
 
 module.exports = {
-    getAll : function(req, res, next) {
+    getAllMessages : function(req, res, next) {
         Message.find({owner: req.user._id}).exec(function(err, userMessages) {
             if (err) {
                 console.log('Game messages could not be loaded ' + err);
@@ -22,7 +22,7 @@ module.exports = {
             });
         });
     },
-    create: function(req, res, next) {
+    createMessage: function(req, res, next) {
         var message = {
             fromID: req.user._id,
             from : req.user.username,
@@ -42,18 +42,20 @@ module.exports = {
             });
         });
     },
-    remove: function(req, res, next) {
-        Message.findOne({_id : req.body.messageId}, function(err, message) {
+    removeMessage: function(req, res, next) {
+        Message.findById(req.body.messageId, function(err, message) {
             if (err) {
                 console.log('Game message could not be found ' + err);
                 return;
             }
 
-            if (message.owner !== req.user._id) {
+            if (message === null || message.owner.toString() !== req.user._id.toString()) {
                 res.send({
                     success : false,
                     reason: 'This is not your message'
                 });
+
+                return;
             }
 
             message.remove(function(err) {
@@ -63,7 +65,6 @@ module.exports = {
                 }
 
                 res.send({
-                    message : message,
                     success : true
                 });
             })

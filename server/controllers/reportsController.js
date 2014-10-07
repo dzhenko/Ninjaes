@@ -2,7 +2,7 @@ var mongoose = require('mongoose'),
     Report = mongoose.model('Report');
 
 module.exports = {
-    getAll : function(req, res, next) {
+    getAllReports : function(req, res, next) {
         Report.find({owner: req.user._id}).exec(function(err, userReports) {
             if (err) {
                 console.log('Game reports could not be loaded ' + err);
@@ -22,14 +22,14 @@ module.exports = {
             });
         });
     },
-    remove: function(req, res, next) {
-        Report.findOne({_id : req.body.reportId}, function(err, report) {
+    removeReport: function(req, res, next) {
+        Report.findById(req.body.reportId, function(err, report) {
             if (err) {
                 console.log('Game report could not be found ' + err);
                 return;
             }
 
-            if (report.owner !== req.user._id) {
+            if (report === null || report.owner.toString() !== req.user._id.toString()) {
                 res.send({
                     success : false,
                     reason: 'This is not your report'

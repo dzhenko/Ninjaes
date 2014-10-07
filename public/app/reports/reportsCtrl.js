@@ -1,5 +1,5 @@
-app.controller('ReportsCtrl', ['$scope', 'appData', 'troopsModel', 'errorHandler',
-    function ($scope, appData, troopsModel, errorHandler) {
+app.controller('ReportsCtrl', ['$scope', 'appData', 'troopsModel', 'errorHandler', 'notifier',
+    function ($scope, appData, troopsModel, errorHandler, notifier) {
         'use strict';
 
         $scope.troopsModel = troopsModel;
