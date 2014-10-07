@@ -2,129 +2,63 @@
 
 app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'mapData', 'mapPreloader', 'GameObject', 'gameNotifier',
     function ($scope, $location, identity, socket, mapData, mapPreloader, GameObject, gameNotifier) {
-        $scope.images = {};
-        var gameObjectsImages = [
-            {name: 'castle', src: '../../img/castle-building.gif'},
-            {name: 'bluePlayer', src: '../../img/bluePlayer.png'},
-            {name: 'map', src: './../img/world.png'}
-        ];
-
-        $scope.gameNotifierText = 'Press ok';
-        $scope.gameNotifierInfo = 'Hello there';
-        $scope.gameNotifierOk = function () {
-            alert('clicked');
-        };
-        $scope.gameNotifierStyle = 'hero';
-
-//        gameNotifier.gold(2500);
-//        gameNotifier.enemy(127).then(function(){alert('ok')}, function(){alert('er')});
-//        gameNotifier.hero(127).then(function(){alert('ok')}, function(){alert('er')});
-
-        $scope.map = {
-            position: {
-                x: 0,
-                y: 0
-            },
-            distance: 60,
-            canvas: document.querySelector('canvas'),
-            ctx: function () {
-                return this.canvas.getContext('2d');
-            },
-            width: function () {
-                return this.canvas.width;
-            },
-            height: function () {
-                return this.canvas.height;
-            }
+        var coordinates ={
+            x: (identity.currentUser.coordinates.x % 32) * 60,
+            y: (identity.currentUser.coordinates.y % 32) * 60
         };
 
-        $scope.player = new GameObject('Mighty warrior', 'bluePlayer', {x: 200, y: 200});
-        $scope.mapObjects = [
-            new GameObject('King\'s landing', 'castle', {x: 0, y: 0}),
-            $scope.player
-        ];
+        var distance = 60;
 
-        mapPreloader.preloadImages(gameObjectsImages)
-            .then(function (images) {
-                $scope.images = images;
-                loadGameObjectsImages($scope.images, $scope.mapObjects);
-                $scope.drawField();
-            });
-
-        var $doc = angular.element(document);
-        $doc.on('keydown', keyboardHandler);
-        $scope.$on('$destroy', function () {
-            $doc.off('keydown', keyboardHandler);
-        });
-
-        $scope.drawField = drawField;
-
-        function drawField() {
-            drawMap($scope.map, $scope.images.map);
-
-            for (var i = 0; i < $scope.mapObjects.length; i++) {
-                var mapObject = $scope.mapObjects[i];
-                if (mapObject.isInMapRange($scope.map)) {
-                    var positionOnMap = calculateMapPosition(mapObject.position, $scope.map.position, $scope.map.distance);
-                    $scope.map.ctx().drawImage($scope.images[mapObject.type], positionOnMap.x, positionOnMap.y);
-                }
-            }
-        }
-
-        function drawMap(map, mapImage) {
-            var vx = map.position.x % mapImage.width;
-            var vy = map.position.y % mapImage.height;
-
-            if (vx > 0) {
-                vx -= mapImage.width;
-            }
-            if (vy > 0) {
-                vy -= mapImage.height;
-            }
-
-            map.ctx().drawImage(mapImage, vx, vy);
-            map.ctx().drawImage(mapImage, vx, mapImage.height - Math.abs(vy));
-            map.ctx().drawImage(mapImage, mapImage.width - Math.abs(vx), vy);
-            map.ctx().drawImage(mapImage, mapImage.width - Math.abs(vx), mapImage.height - Math.abs(vy));
-        }
-
-        function calculateMapPosition(objectPosition, mapPosition, distance) {
-            return {
-                x: objectPosition.x + mapPosition.x - distance,
-                y: objectPosition.y + mapPosition.y - distance
-            };
-        }
-
-        function loadGameObjectsImages(images, gameObjects) {
-            for (var i = 0; i < gameObjects.length; i++) {
-                gameObjects[i].loadImage(images);
-            }
-        }
-
-        function keyboardHandler(e) {
-            // Arrow key press navigates through the page by default
-            // so this default should be prevented to move only on the map
-            // using arrow keys
+        var handler = function(e){
             e.preventDefault();
 
-            if (e.keyCode === 37) {
-                // console.log('left arrow');
-                $scope.map.position.x += $scope.map.distance;
-                movePlayer(-1, 0);
-            } else if (e.keyCode === 38) {
-                // console.log('up arrow');
-                $scope.map.position.y += $scope.map.distance;
-                movePlayer(0, -1);
-            } else if (e.keyCode === 39) {
-                // console.log('right arrow');
-                $scope.map.position.x -= $scope.map.distance;
+            if(e.keyCode === 37) {
+                movePlayer(-1,0);
+            }
+            if(e.keyCode === 38) {
+                movePlayer(0,-1);
+            }
+            if(e.keyCode === 39) {
                 movePlayer(1, 0);
-            } else if (e.keyCode === 40) {
-                // console.log('down arrow');
-                $scope.map.position.y -= $scope.map.distance;
+            }
+            if(e.keyCode === 40) {
                 movePlayer(0, 1);
             }
-        }
+        };
+
+        var $doc = angular.element(document);
+        $doc.on('keydown', handler);
+        $scope.$on('$destroy',function(){
+            $doc.off('keydown', handler);
+        });
+
+        var canvas = document.querySelector('canvas');
+        var ctx = canvas.getContext('2d');
+        var img = new Image();
+        img.src = './../img/world.png';
+
+        var redraw = function(dx ,dy){
+            coordinates.x += dx * distance;
+            coordinates.y += dy * distance;
+
+            if (Math.abs(coordinates.x) > img.width) {
+                coordinates.x = 0;
+            }
+            if (Math.abs(coordinates.y) > img.height) {
+                coordinates.y = 0;
+            }
+            if(coordinates.x > 0){
+                coordinates.x -= img.width;
+            }
+            if(coordinates.y > 0){
+                coordinates.y -= img.height;
+            }
+
+            ctx.drawImage(img, coordinates.x, coordinates.y);
+            ctx.drawImage(img, coordinates.x, img.height-Math.abs(coordinates.y));
+            ctx.drawImage(img, img.width-Math.abs(coordinates.x), coordinates.y);
+            ctx.drawImage(img, img.width-Math.abs(coordinates.x), img.height-Math.abs(coordinates.y));
+        };
 
         socket.emit('getMap', identity.currentUser.coordinates);
 
@@ -138,7 +72,13 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'mapData
             socket.on('moved', handleMovedResponse);
         }
 
+        var tempDx;
+        var tempDy;
+
         function movePlayer(dx, dy) {
+            tempDx = -dx;
+            tempDy = -dy;
+
             socket.emit('moved', {
                 user: identity.currentUser,
                 dx: dx,
@@ -151,15 +91,18 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'mapData
                 // out of movement
                 return;
             }
-            // here we handle the movement
+
             console.log('moved recieved');
-            drawField();
+
+            redraw(tempDx, tempDy);
+
             identity.currentUser = response.user;
             console.log(response);
         }
 
         function handleInitialMapObjects(receivedMapObjects) {
             console.log('map recieved');
+            redraw(0,0);
             console.log(receivedMapObjects);
         }
     }]);
