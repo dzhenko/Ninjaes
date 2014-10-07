@@ -42,10 +42,10 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'mapData
             coordinates.x += dx * distance;
             coordinates.y += dy * distance;
 
-            if (Math.abs(coordinates.x) > img.width) {
+            if (Math.abs(coordinates.x) >= img.width) {
                 coordinates.x = 0;
             }
-            if (Math.abs(coordinates.y) > img.height) {
+            if (Math.abs(coordinates.y) >= img.height) {
                 coordinates.y = 0;
             }
             if(coordinates.x > 0){

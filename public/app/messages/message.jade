@@ -1,0 +1,15 @@
+.container
+    .well
+        form.form-horizontal(name="messageUsernameForm")
+            fieldset
+                legend.text-primary.col-md-offset-1.col-md-10 Message to Username
+                .form-group
+                    label.col-md-2.control-label(for="targetUsername") Username
+                    .col-md-6
+                        input.form-control(id="targetUsername" type="text", placeholder="username", ng-model="targetUsername")
+                    .col-md-3
+                        .alert.alert-danger(ng-hide="!!targetUsername") Username is required
+                .row
+                    .col-md-8
+                        button.pull-right.btn.btn-lg.btn-success(ng-click="confirmUsername()", ng-disabled="messageUsernameForm.$invalid") Find user
+                    a.btn.btn-lg.btn-danger(href="#/overview") Back

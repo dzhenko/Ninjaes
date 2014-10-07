@@ -34,7 +34,7 @@ module.exports = {
                 (mapObj.type === 4 &&mapObj.object && mapObj.object.owner !== user._id)) {
             event = 'enemy';
         }
-        else if (mapObj.type === 4 && mapObj.object.owner === user._id) {
+        else if (mapObj.type === 4 && mapObj.object && mapObj.object.owner === user._id) {
             event = 'castle';
         }
 

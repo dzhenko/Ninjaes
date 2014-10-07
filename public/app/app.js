@@ -63,12 +63,17 @@ app.config(['$routeProvider', '$sceDelegateProvider', function ($routeProvider, 
             resolve: routeUserChecks.adminRole
         })
         .when('/messages', {
-            templateUrl: '/partials/messages/messages',
-            controller: 'MessagesCtrl',
+            templateUrl: '/partials/message/messageView',
+            controller: 'MessageViewCtrl',
             resolve: routeUserChecks.authenticated
         })
         .when('/message-create', {
-            templateUrl: '/partials/messages/message-create',
+            templateUrl: '/partials/message/message',
+            controller: 'MessageCtrl',
+            resolve: routeUserChecks.authenticated
+        })
+        .when('/message-create/:target', {
+            templateUrl: '/partials/message/messageCreate',
             controller: 'MessageCreateCtrl',
             resolve: routeUserChecks.authenticated
         })
