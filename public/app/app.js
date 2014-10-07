@@ -52,6 +52,11 @@ app.config(['$routeProvider', '$sceDelegateProvider', function ($routeProvider, 
             controller: 'CastleCtrl',
             resolve: routeUserChecks.authenticated
         })
+        .when('/buildings', {
+            templateUrl: '/partials/buildings/buildings',
+            controller: 'BuildingsCtrl',
+            resolve: routeUserChecks.authenticated
+        })
         .when('/troops', {
             templateUrl: '/partials/troops/troops',
             controller: 'TroopsCtrl',
