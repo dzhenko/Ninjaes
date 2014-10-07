@@ -5,7 +5,7 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
         var squareDistance = 60;
         var numberOfSqquares = 19;
         var coordinates ={
-            x: -((identity.currentUser.coordinates.x - 8 )% numberOfSqquares) * squareDistance,
+            x: -((identity.currentUser.coordinates.x - 8) % numberOfSqquares) * squareDistance,
             y: -((identity.currentUser.coordinates.y - 5) % numberOfSqquares) * squareDistance
         };
         console.log(coordinates);
@@ -35,30 +35,30 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
 
         var canvas = document.querySelector('canvas');
         var ctx = canvas.getContext('2d');
-        var img = new Image();
-        img.src = './../img/world.png';
+        var worldMap = images.worldMap;
 
         var redrawMap = function(dx ,dy){
             coordinates.x -= dx * squareDistance;
             coordinates.y -= dy * squareDistance;
 
-            if (Math.abs(coordinates.x) >= img.width) {
+            if (Math.abs(coordinates.x) >= worldMap.width) {
                 coordinates.x = 0;
             }
-            if (Math.abs(coordinates.y) >= img.height) {
+            if (Math.abs(coordinates.y) >= worldMap.height) {
                 coordinates.y = 0;
             }
             if(coordinates.x > 0){
-                coordinates.x -= img.width;
+                coordinates.x -= worldMap.width;
             }
             if(coordinates.y > 0){
-                coordinates.y -= img.height;
+                coordinates.y -= worldMap.height;
             }
 
-            ctx.drawImage(img, coordinates.x, coordinates.y);
-            ctx.drawImage(img, coordinates.x, img.height-Math.abs(coordinates.y));
-            ctx.drawImage(img, img.width-Math.abs(coordinates.x), coordinates.y);
-            ctx.drawImage(img, img.width-Math.abs(coordinates.x), img.height-Math.abs(coordinates.y));
+            ctx.drawImage(worldMap, coordinates.x, coordinates.y);
+            ctx.drawImage(worldMap, coordinates.x, worldMap.height-Math.abs(coordinates.y));
+            ctx.drawImage(worldMap, worldMap.width-Math.abs(coordinates.x), coordinates.y);
+            ctx.drawImage(worldMap, worldMap.width-Math.abs(coordinates.x), worldMap.height-Math.abs(coordinates.y));
+            ctx.drawImage(images.redPlayer, 7.8 * squareDistance, 4.5 * squareDistance); // hardcoded for now
         };
 
         var drawObjects = function (mapFragment){
@@ -104,7 +104,7 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
 //
 //                        }
                         else {
-                            ctx.drawImage(images.castleImage, x * squareDistance - 2*squareDistance, y * squareDistance - 2*squareDistance);
+                            ctx.drawImage(images.castleImage, x * squareDistance - squareDistance, y * squareDistance - squareDistance);
                         }
                     }
                 }
