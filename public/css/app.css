@@ -34,3 +34,33 @@ body > footer {
 footer {
   padding: 0 150px;
 }
+.buildingBox{
+    border: 1px solid white;
+    background-color: green;
+    width: 154px;
+    margin-right: 40px;
+    margin-top: 85px;
+    text-align: center;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 12px;
+}
+.buildingsMenu{
+    background: url("../../img/buildings.png");
+    height: 600px;
+    width: 808px;
+    padding: 0px;
+    padding-top: 25px;
+}
+.buildingsRow{
+    margin: 0px;
+    padding: 0px;
+    margin-left: 32px;
+    text-align: center;
+}
+.exit{
+    color: #ffffff;
+    text-align: center;
+    margin-top: 8px;
+    background-color: green;
+}
