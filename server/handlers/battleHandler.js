@@ -43,18 +43,20 @@ module.exports = {
 
         var reports = {
             attacker: {
+                owner: user._id,
                 win : win,
-                date: new Date(),
-                opponent: target.username,
-                opponentId: target._id,
+                own : true,
+                enemy: target.username,
+                enemyId: target._id,
                 lostUnits: [],
                 killedUnits: []
             },
             defender: {
+                owner: target._id,
                 win : !win,
-                date: new Date(),
-                opponent: user.username,
-                opponentId: user._id,
+                own : false,
+                enemy: target.username,
+                enemyId: target._id,
                 lostUnits: [],
                 killedUnits: []
             }

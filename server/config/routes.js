@@ -9,7 +9,17 @@ module.exports = function(app, config) {
         .post(controllers.users.createUser)
         .put(auth.isAuthenticated, controllers.users.updateUser);
 
-    app.get('/api/players/idByName', auth.isAuthenticated, controllers.players)
+    app.route('/api/game-reports')
+        .get(auth.isAuthenticated, controllers.reports.getAll)
+        .delete(auth.isAuthenticated, controllers.reports.remove);
+
+    app.route('/api/game-messages')
+        .get(auth.isAuthenticated, controllers.messages.getAll)
+        .post(auth.isAuthenticated, controllers.messages.create)
+        .delete(auth.isAuthenticated, controllers.messages.remove);
+
+    //req.params.value
+    app.get('/api/info/userIdByName/:name',auth.isAuthenticated, controllers.info.userIdByName);
 
     app.post('/login', auth.login);
     app.post('/logout', auth.logout);

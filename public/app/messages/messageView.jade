@@ -13,8 +13,6 @@
                         th Date
                         th Read
                         th Answer
-                        th Scan
-                        th Attack
                         th Delete
                 tbody
                     tr(ng-repeat="message in allMessages| filter: searchMessage | orderBy:'-created' track by $index ")
@@ -28,14 +26,6 @@
                             a.btn.btn-md.btn-primary(href="#/message-create/{{message.fromID}}")
                                 span.glyphicon.glyphicon-pencil.text-success
                                 span Answer
-                        td
-                            a.btn.btn-md.btn-primary(href="#/scan/{{message.fromID}}")
-                                span.glyphicon.glyphicon-search.text-warning
-                                span Scan
-                        td
-                            a.btn.btn-md.btn-primary(href="#/attack/{{message.fromID}}")
-                                span.glyphicon.glyphicon-screenshot.text-danger
-                                span Attack
                         td
                             button.btn.btn-md.btn-danger(ng-click="deleteMessage($index)")
                                 span.glyphicon.glyphicon-trash.text-info

@@ -63,17 +63,17 @@ app.config(['$routeProvider', '$sceDelegateProvider', function ($routeProvider, 
             resolve: routeUserChecks.adminRole
         })
         .when('/messages', {
-            templateUrl: '/partials/message/messageView',
+            templateUrl: '/partials/messages/messageView',
             controller: 'MessageViewCtrl',
             resolve: routeUserChecks.authenticated
         })
         .when('/message-create', {
-            templateUrl: '/partials/message/message',
+            templateUrl: '/partials/messages/message',
             controller: 'MessageCtrl',
             resolve: routeUserChecks.authenticated
         })
-        .when('/message-create/:target', {
-            templateUrl: '/partials/message/messageCreate',
+        .when('/message-create/:id', {
+            templateUrl: '/partials/messages/messageCreate',
             controller: 'MessageCreateCtrl',
             resolve: routeUserChecks.authenticated
         })
@@ -126,6 +126,9 @@ app.value('toastr', toastr);
 app.value('errorHandler', function (error) {
     if (error.message) {
         toastr.error(error.message);
+    }
+    else {
+        console.warn(error);
     }
 });
 

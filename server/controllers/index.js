@@ -1,7 +1,13 @@
 'use strict';
 
-var usersController = require('../controllers/usersController');
+var usersController = require('../controllers/usersController'),
+    infoController = require('../controllers/infoController'),
+    messagesController = require('../controllers/messagesController'),
+    reportsController = require('../controllers/reportsController');
 
 module.exports = {
-    users: usersController
+    users: usersController,
+    info: infoController,
+    messages: messagesController,
+    reports: reportsController
 };

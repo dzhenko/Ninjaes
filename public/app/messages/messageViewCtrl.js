@@ -1,24 +1,32 @@
-app.controller('MessageViewCtrl', function ($scope, GameRequests, identity) {
-    'use strict';
+app.controller('MessageViewCtrl', ['$scope', 'appData', 'identity', 'notifier', 'errorHandler',
+    function ($scope, appData, identity, notifier, errorHandler) {
+        'use strict';
 
-    var currentMessages = JSON.parse(localStorage.getItem('novcraft-userobjects-usermessages-'+identity.currentUser._id)) || [];
+        function getUserMessages() {
+            appData.getUserMessages().then(function (response) {
+                if (!response.success) {
+                    notifier.error(response.reason);
+                }
 
-    GameRequests.getUserMessages().then(function (responce) {
-        var newMessages = currentMessages.concat(responce.allMessages);
-        localStorage.setItem('novcraft-userobjects-usermessages-'+identity.currentUser._id, JSON.stringify(newMessages));
+                $scope.allMessages = response.allMessages;
+            }, errorHandler);
+        }
 
-        $scope.allMessages = newMessages;
+        getUserMessages();
 
-    }, function (error) {
-        console.log(error);
-    });
+        $scope.deleteMessage = function (id) {
+            appData.deleteMessage(id).then(function (response) {
+                if (!response.success) {
+                    notifier.error(response.reason);
+                }
 
-    $scope.deleteMessage = function(index) {
-        $scope.allMessages.splice(index,1);
-        localStorage.setItem('novcraft-userobjects-usermessages-'+identity.currentUser._id, JSON.stringify($scope.allMessages));
-    };
+                notifier.success('Message deleted!');
 
-    $scope.viewMessage = function (index) {
-        $scope.selectedMessage = $scope.allMessages[$scope.allMessages.length - index - 1];
-    }
-});
+                getUserMessages();
+            }, errorHandler)
+        };
+
+        $scope.viewMessage = function (index) {
+            $scope.selectedMessage = $scope.allMessages[$scope.allMessages.length - index - 1];
+        }
+    }]);

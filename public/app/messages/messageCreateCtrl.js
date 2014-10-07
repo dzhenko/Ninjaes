@@ -1,17 +1,22 @@
-app.controller('MessageCreateCtrl', function ($scope, $routeParams, GameRequests, notifier) {
-    'use strict';
+app.controller('MessageCreateCtrl', ['$scope', '$routeParams', 'appData', 'notifier', 'errorHandler',
+    function ($scope, $routeParams, appData, notifier, errorHandler) {
+        'use strict';
 
-    $('#showMessageInputBtn').click();
-    $scope.sendMessage = function() {
-        GameRequests.createMessage($routeParams, $scope.textToSend).then(function (response) {
-            if (!response.success) {
-                notifier.error('Something is bad');
-                return;
-            }
+        $scope.showSentMessage = false;
 
-            notifier.success('Message sent');
-        }, function (error) {
-            console.log(error)
-        });
-    };
-});
+        $('#showMessageInputBtn').click();
+
+        $scope.sendMessage = function () {
+            appData.createMessage($routeParams.id, $scope.textToSend).then(function (response) {
+                if (!response.success) {
+                    notifier.error('Message could not be sent');
+                    return;
+                }
+
+                notifier.success('Message sent');
+                $scope.showSentMessage = true;
+                $scope.sentMessageText = ''
+
+            }, errorHandler);
+        };
+    }]);

@@ -1,3 +1,53 @@
 .container
-    .jumbotron
-        h1 Reports Page
+    .panel.panel-success
+        .panel-body
+            h3 All reports
+            table.table.table-hover.table-striped
+                thead
+                    tr.success
+                        th Enemy
+                        th Win
+                        th Date
+                        th View
+                        th Message
+                        th Delete
+                tbody
+                    tr(ng-repeat="report in allReports | orderBy:'-created' track by $index")
+                        td {{ report.enemy }}
+                        td
+                            span.text-success.glyphicon.glyphicon-ok(ng-show="report.win")
+                            span.text-danger.glyphicon.glyphicon-remove(ng-hide="report.win")
+                        td {{ report.created | date:'dd-MM HH:mm' }}
+                        td
+                            button.btn.btn-md.btn-success(ng-click="viewReport($index)" data-toggle="modal" data-target="#reportDetails")
+                                span.glyphicon.glyphicon-eye-open
+                                span View
+                        td
+                            a.btn.btn-md.btn-primary(href="#/message-create/{{report.enemyID}}")
+                                span.glyphicon.glyphicon-pencil.text-success
+                                span Message
+                        td
+                            button.btn.btn-md.btn-danger(ng-click="deleteReport($index)")
+                                span.glyphicon.glyphicon-trash.text-info
+                                span Delete
+    .modal.fade#reportDetails
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    h2.modal-title Report info for battle with {{ selectedReport.enemy }}
+                .modal-body
+                    p.lead.text-center(ng-show="selectedReport.win" ng-class="titleClass") {{ titleText }}
+
+                    .panel.panel-success
+                        .panel-heading
+                            h3.panel-title Killed units
+                        .panel-body
+                            p(ng-repeat="unit in selectedReport.killedUnits" ng-show="unit > 0") {{ unit }} {{ troopsModel[$index].name }}
+
+                    .panel.panel-danger
+                        .panel-heading
+                            h3.panel-title Lost units
+                        .panel-body
+                            p(ng-repeat="unit in selectedReport.lostUnits" ng-show="unit > 0") {{ unit }} {{ troopsModel[$index].name }}
+                .modal-footer
+                    button.btn.btn-lg.btn-success(data-dismiss="modal") OK
