@@ -17,7 +17,7 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'mapData
         $scope.gameNotifierStyle = 'hero';
 
 //        gameNotifier.gold(2500);
-//        gameNotifier.enemy(127).then(function(){alert('ok')}, function(){alert('er')});
+        gameNotifier.enemy(127).then(function(){alert('ok')}, function(){alert('er')});
 //        gameNotifier.hero(127).then(function(){alert('ok')}, function(){alert('er')});
 
         $scope.map = {

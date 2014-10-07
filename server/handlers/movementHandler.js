@@ -13,7 +13,7 @@ module.exports = {
 
         user.movement--;
 
-        map.removePosition(user.coordinates);
+        map.movePlayer(user.coordinates, dx, dy);
 
         user.coordinates = {
             x : user.coordinates.x + information.dx,
@@ -30,7 +30,7 @@ module.exports = {
             user.gold += mapObj.amount;
             event = 'gold';
         }
-        else if (mapObj.type === 2 || mapObj.type === 3 || (mapObj.type === 4 && mapObj.object.owner !== user._id)) {
+        else if (mapObj.type === 2 || (mapObj.type === 3 && mapObj.object._id !== user._id) || (mapObj.type === 4 && mapObj.object.owner !== user._id)) {
             event = 'enemy';
         }
         else if (mapObj.type === 4 && mapObj.object.owner === user._id) {

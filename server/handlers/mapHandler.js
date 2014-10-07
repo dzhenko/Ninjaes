@@ -6,10 +6,6 @@ var GameObject = require('mongoose').model('GameObject'),
 
 var field;
 
-setInterval(updateMap, gameSettings.mapSaveInterval);
-setInterval(generateRandomGold, gameSettings.goldSpawnInterval);
-setInterval(generateRandomMonster, gameSettings.monsterSpawnInterval);
-
 var changesDictionary = {
     removed: [],
     inserted: []
@@ -68,6 +64,8 @@ function generateRandomPosition() {
 }
 
 function initMap() {
+    setInterval(updateMap, gameSettings.mapSaveInterval);
+
     GameObject.find({}, function(err, objects) {
         if (err) {
             console.log('Game objects could not be loaded ' + err);
@@ -79,6 +77,11 @@ function initMap() {
         if (!objects || objects.length === 0) {
             console.log('Map created');
             return;
+        }
+
+        if (objects.length < (gameSettings.mapSize * gameSettings.mapSize) * 0.4) {
+            var goldInterval = setInterval(generateRandomGold, gameSettings.goldSpawnInterval);
+            var monsterInterval = setInterval(generateRandomMonster, gameSettings.monsterSpawnInterval);
         }
 
         objects.forEach(function(obj) {
@@ -112,6 +115,16 @@ function updateMap() {
 
     changesDictionary.removed =[];
     changesDictionary.inserted = [];
+}
+
+function movePlayer(coordinates, dx, dy) {
+    var currentObj = getPosition(coordinates);
+    if (currentObj && currentObj.type === 4) {
+
+    }
+    else {
+
+    }
 }
 
 function getPosition(coordinates) {
@@ -225,5 +238,6 @@ module.exports = {
     setPosition: setPosition,
     removePosition: removePosition,
     getInitialMap: getInitialMap,
-    getPieceOfMap: getPieceOfMap
+    getPieceOfMap: getPieceOfMap,
+    movePlayer: movePlayer
 };

@@ -5,6 +5,7 @@ var troopsModel = require('../gameModels/troopsModel'),
     map = require('../handlers/mapHandler');
 
 module.exports = {
+    // test with objects user.experience = 999 ; user.troops = [1,2,3,4,5,6,7] target same
     fightUser : function(user, target) {
         var coef = user.experience / target.experience;
         var i;
@@ -40,21 +41,24 @@ module.exports = {
             }
         }
 
-        var reports = [{
-            win : win,
-            date: new Date(),
-            opponent: target.username,
-            opponentId: target._id,
-            lostUnits: [],
-            killedUnits: []
-        }, {
-            win : !win,
-            date: new Date(),
-            opponent: user.username,
-            opponentId: user._id,
-            lostUnits: [],
-            killedUnits: []
-        }];
+        var reports = {
+            attacker: {
+                win : win,
+                date: new Date(),
+                opponent: target.username,
+                opponentId: target._id,
+                lostUnits: [],
+                killedUnits: []
+            },
+            defender: {
+                win : !win,
+                date: new Date(),
+                opponent: user.username,
+                opponentId: user._id,
+                lostUnits: [],
+                killedUnits: []
+            }
+        };
 
         for (i = 0; i < troopsModel.length; i++) {
             if (win) {
@@ -81,6 +85,7 @@ module.exports = {
 
         return reports;
     },
+    // test with objects user.experience = 999 ; user.troops = [1,2,3,4,5,6,7] lvl = 0 ! amount = 124124124124
     fightMonster: function(user, lvl, amount) {
         var monsterCost = (troopsModel[lvl].cost * amount) / (1 + user.experience);
 
