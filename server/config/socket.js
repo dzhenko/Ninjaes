@@ -20,7 +20,6 @@ module.exports = {
             });
 
             socket.on('getMap', function (coordinates) {
-                console.log(socket.id);
                 socket.emit('getMap', handlers.map.getMapFragment(coordinates));
             });
 

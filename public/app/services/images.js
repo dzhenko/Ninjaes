@@ -15,9 +15,13 @@ app.factory('images', [function() {
     bluePlayer.src = './../img/bluePlayer.png';
 
     return {
+        worldMap: worldMap,
+        mapSettings : {
+            squareDistance : 60,
+            numberOfSqquares : 19
+        },
         goldImage : goldImage,
         castleImage: castleImage,
-        worldMap: worldMap,
         redPlayer: redPlayer,
         blueCastle: blueCastle,
         bluePlayer: bluePlayer

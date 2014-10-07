@@ -2,13 +2,13 @@
 
 app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images', 'gameNotifier',
     function ($scope, $location, identity, socket, images, gameNotifier) {
-        var squareDistance = 60;
-        var numberOfSqquares = 19;
+        var sqrDistance = images.mapSettings.squareDistance;
+        var sqrCount = images.mapSettings.numberOfSqquares;
+
         var coordinates ={
-            x: -((identity.currentUser.coordinates.x - 8) % numberOfSqquares) * squareDistance,
-            y: -((identity.currentUser.coordinates.y - 5) % numberOfSqquares) * squareDistance
+            x: -((identity.currentUser.coordinates.x - 8) % sqrCount) * sqrDistance,
+            y: -((identity.currentUser.coordinates.y - 5) % sqrCount) * sqrDistance
         };
-        console.log(coordinates);
 
         var handler = function(e){
             e.preventDefault();
@@ -38,8 +38,8 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
         var worldMap = images.worldMap;
 
         var redrawMap = function(dx ,dy){
-            coordinates.x -= dx * squareDistance;
-            coordinates.y -= dy * squareDistance;
+            coordinates.x -= dx * sqrDistance;
+            coordinates.y -= dy * sqrDistance;
 
             if (Math.abs(coordinates.x) >= worldMap.width) {
                 coordinates.x = 0;
@@ -58,7 +58,7 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
             ctx.drawImage(worldMap, coordinates.x, worldMap.height-Math.abs(coordinates.y));
             ctx.drawImage(worldMap, worldMap.width-Math.abs(coordinates.x), coordinates.y);
             ctx.drawImage(worldMap, worldMap.width-Math.abs(coordinates.x), worldMap.height-Math.abs(coordinates.y));
-            ctx.drawImage(images.redPlayer, 7.8 * squareDistance, 4.5 * squareDistance); // hardcoded for now
+            ctx.drawImage(images.redPlayer, 7.8 * sqrDistance, 4.5 * sqrDistance); // hardcoded for now
         };
 
         var drawObjects = function (mapFragment){
@@ -88,7 +88,7 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
                                 }
                             }
 
-                            ctx.drawImage(image, x * squareDistance, y * squareDistance);
+                            ctx.drawImage(image, x * sqrDistance, y * sqrDistance);
                         }
 //                        else if (currObj.object) {
 //                            if (currObj.object.owner === identity.currentUser._id) {
@@ -104,7 +104,7 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
 //
 //                        }
                         else {
-                            ctx.drawImage(images.castleImage, x * squareDistance - squareDistance, y * squareDistance - squareDistance);
+                            ctx.drawImage(images.castleImage, x * sqrDistance - sqrDistance, y * sqrDistance - sqrDistance);
                         }
                     }
                 }
