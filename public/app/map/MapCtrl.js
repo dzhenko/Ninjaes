@@ -17,7 +17,7 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'mapData
         $scope.gameNotifierStyle = 'hero';
 
 //        gameNotifier.gold(2500);
-        gameNotifier.enemy(127).then(function(){alert('ok')}, function(){alert('er')});
+//        gameNotifier.enemy(127).then(function(){alert('ok')}, function(){alert('er')});
 //        gameNotifier.hero(127).then(function(){alert('ok')}, function(){alert('er')});
 
         $scope.map = {
@@ -57,7 +57,9 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'mapData
             $doc.off('keydown', keyboardHandler);
         });
 
-        $scope.drawField = function () {
+        $scope.drawField = drawField;
+
+        function drawField() {
             drawMap($scope.map, $scope.images.map);
 
             for (var i = 0; i < $scope.mapObjects.length; i++) {
@@ -67,7 +69,7 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'mapData
                     $scope.map.ctx().drawImage($scope.images[mapObject.type], positionOnMap.x, positionOnMap.y);
                 }
             }
-        };
+        }
 
         function drawMap(map, mapImage) {
             var vx = map.position.x % mapImage.width;
@@ -126,11 +128,17 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'mapData
 
         socket.emit('getMap', identity.currentUser.coordinates);
 
-        socket.on('getMap', handleInitialMapObjects);
-        socket.on('moved', handleMovedResponse);
+        if (!socket.eventDict['getMap']) {
+            socket.eventDict['getMap'] = true;
+            socket.on('getMap', handleInitialMapObjects);
+        }
+
+        if (!socket.eventDict['moved']) {
+            socket.eventDict['moved'] = true;
+            socket.on('moved', handleMovedResponse);
+        }
 
         function movePlayer(dx, dy) {
-            console.log('emited');
             socket.emit('moved', {
                 user: identity.currentUser,
                 dx: dx,
@@ -145,7 +153,7 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'mapData
             }
             // here we handle the movement
             console.log('moved recieved');
-            $scope.drawField();
+            drawField();
             identity.currentUser = response.user;
             console.log(response);
         }

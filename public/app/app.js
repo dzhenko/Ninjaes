@@ -5,8 +5,7 @@ var app = angular.module('app', ['ngResource', 'ngRoute']);
 app.config(['$routeProvider', '$sceDelegateProvider', function ($routeProvider, $sceDelegateProvider) {
     // if we use images from internet we need to allow the website
     $sceDelegateProvider.resourceUrlWhitelist([
-        'self',
-        'http://img*.wikia.nocookie.net/**'
+        'self'
     ]);
 
     var routeUserChecks = {
@@ -105,7 +104,7 @@ app.config(['$routeProvider', '$sceDelegateProvider', function ($routeProvider, 
         })
         .when('/top-scores', {
             templateUrl: '/partials/top-scores/top-scores',
-            controller: 'topScoresCtrl'
+            controller: 'TopScoresCtrl'
             // public
         })
         .when('/chat', {
@@ -125,7 +124,7 @@ app.value('errorHandler', function (error) {
     }
 });
 
-app.run(function ($rootScope, $location) {
+app.run(['$rootScope', '$location', function ($rootScope, $location) {
     'use strict';
 
     $rootScope.$on('$routeChangeError', function (ev, current, previous, rejection) {
@@ -133,4 +132,7 @@ app.run(function ($rootScope, $location) {
             $location.path('/');
         }
     })
-});
+}]);
+
+//app.run(['socket', function(socket){
+//}]);

@@ -16,10 +16,17 @@ var changesDictionary = {
 };
 
 function validateCoordinates(coordinates) {
-    return !(!field || arguments[0].x < 0 || arguments[0].x >=gameSettings.mapSize || arguments[0].y < 0 || arguments[0].y >=gameSettings.mapSize)
+    if (!field) {
+        return false;
+    }
+    return !(coordinates.x < 0 || coordinates.x >=gameSettings.mapSize || coordinates.y < 0 || coordinates.y >=gameSettings.mapSize);
 }
 
 function generateRandomGold() {
+    if (!field) {
+        return;
+    }
+
     var rndPosition = generateRandomPosition();
     while (getPosition(rndPosition) !== undefined) {
         rndPosition = generateRandomPosition();
@@ -35,6 +42,10 @@ function generateRandomGold() {
 }
 
 function generateRandomMonster() {
+    if (!field) {
+        return;
+    }
+
     var rndPosition = generateRandomPosition();
     while (getPosition(rndPosition) !== undefined) {
         rndPosition = generateRandomPosition();
