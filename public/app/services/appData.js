@@ -31,7 +31,7 @@ app.factory('appData', ['$q', '$http', function($q, $http) {
             return makeRequest('get', 'api/info/top-scores');
         },
         deleteMessage: function(id) {
-            return makeRequest('delete', '/api/game-messages', {
+            return makeRequest('put', '/api/game-messages', {
                 messageId: id
             })
         },
@@ -45,7 +45,7 @@ app.factory('appData', ['$q', '$http', function($q, $http) {
             return makeRequest('get', '/api/game-reports');
         },
         deleteReport: function(id) {
-            return makeRequest('delete', '/api/game-reports', {
+            return makeRequest('put', '/api/game-reports', {
                 reportId: id
             })
         }

@@ -13,13 +13,13 @@ module.exports = function(app, config) {
         .put(auth.isAuthenticated, controllers.users.updateUser);
 
     app.route('/api/game-reports')
-        .get(auth.isAuthenticated, controllers.reports.getAll)
-        .delete(auth.isAuthenticated, controllers.reports.remove);
+        .get(auth.isAuthenticated, controllers.reports.getAllReports)
+        .put(auth.isAuthenticated, controllers.reports.removeReport);
 
     app.route('/api/game-messages')
-        .get(auth.isAuthenticated, controllers.messages.getAll)
-        .post(auth.isAuthenticated, controllers.messages.create)
-        .delete(auth.isAuthenticated, controllers.messages.remove);
+        .get(auth.isAuthenticated, controllers.messages.getAllMessages)
+        .post(auth.isAuthenticated, controllers.messages.createMessage)
+        .put(auth.isAuthenticated, controllers.messages.removeMessage);
 
     //req.params.value
     app.get('/api/info/user-id-by-name/:name',auth.isAuthenticated, controllers.info.userIdByName);

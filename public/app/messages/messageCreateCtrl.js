@@ -12,7 +12,6 @@ app.controller('MessageCreateCtrl', ['$scope', '$routeParams', 'appData', 'notif
 
         $scope.sendMessage = function () {
             appData.createMessage($routeParams.id, $scope.textToSend).then(function (response) {
-                console.log(response);
                 if (!response.success) {
                     notifier.error('Message could not be sent');
                     return;
