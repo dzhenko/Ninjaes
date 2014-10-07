@@ -9,6 +9,8 @@ module.exports = function(app, config) {
         .post(controllers.users.createUser)
         .put(auth.isAuthenticated, controllers.users.updateUser);
 
+    app.get('/api/players/idByName', auth.isAuthenticated, controllers.players)
+
     app.post('/login', auth.login);
     app.post('/logout', auth.logout);
 
