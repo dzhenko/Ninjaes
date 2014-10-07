@@ -226,8 +226,8 @@ function getMapFragment(coordinates) {
 
             if (obj) {
                 mapFragment.push({
-                    x : topLeft.x + j,
-                    y : topLeft.y + i,
+                    x : j,
+                    y : i,
                     obj : obj
                 })
             }
