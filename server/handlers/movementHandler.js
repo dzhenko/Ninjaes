@@ -11,7 +11,7 @@ module.exports = {
 
         user.movement--;
 
-        //map.movePlayer(user.coordinates, information.dx, information.dy);
+        map.movePlayer(user, information.dx, information.dy);
 
         user.coordinates = {
             x : user.coordinates.x + information.dx,
@@ -19,11 +19,11 @@ module.exports = {
         };
 
         var mapObj = map.getPosition(user.coordinates);
+
         var event;
 
         if (!mapObj) {
             event = 'null';
-
         }
         else if (mapObj.type === 1) {
             user.gold += mapObj.amount;
@@ -33,6 +33,13 @@ module.exports = {
                 (mapObj.type === 3 && mapObj.object && mapObj.object._id !== user._id) ||
                 (mapObj.type === 4 &&mapObj.object && mapObj.object.owner !== user._id)) {
             event = 'enemy';
+
+            // rollback move
+            map.movePlayer(user, -information.dx, -information.dy);
+            user.coordinates = {
+                x : user.coordinates.x - information.dx,
+                y : user.coordinates.y - information.dy
+            };
         }
         else if (mapObj.type === 4 && mapObj.object && mapObj.object.owner === user._id) {
             event = 'castle';
@@ -45,7 +52,7 @@ module.exports = {
             event: event,
             object: mapObj,
             mapFragment: map.getMapFragment(user.coordinates),
-            move: true
+            move: event !== 'enemy'
         };
     }
 };

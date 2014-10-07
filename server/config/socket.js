@@ -17,6 +17,7 @@ module.exports = {
 
             socket.on('moved', function (information) {
                 socket.emit('moved', handlers.movement.checkMove(information));
+                io.emit('someone moved');
             });
 
             socket.on('getMap', function (coordinates) {

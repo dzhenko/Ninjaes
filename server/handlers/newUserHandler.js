@@ -53,16 +53,7 @@ module.exports = {
         }
     },
     updateMapWithUserAndCastle: function(user, castle) {
-        map.setPosition(user.coordinates, {
-            type : 3,
-            amount: 1,
-            obj : user
-        });
-        map.setPosition(castle.coordinates, {
-            type : 4,
-            amount: 1,
-            obj : castle
-        });
-        map.update();
+        map.addPlayer(user);
+        map.addCastle(castle);
     }
 };

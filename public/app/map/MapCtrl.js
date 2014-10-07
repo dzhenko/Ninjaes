@@ -147,7 +147,7 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
         }
 
         function handleInitialMapObjects(receivedMapObjects) {
-            console.log('map recieved');
+            console.log(receivedMapObjects);
             redrawMap(0,0);
             drawObjects(receivedMapObjects);
         }

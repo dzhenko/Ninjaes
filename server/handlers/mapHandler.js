@@ -1,10 +1,15 @@
 'use strict';
 
-var GameObject = require('mongoose').model('GameObject'),
+var mongoose = require('mongoose'),
+    GameObject = mongoose.model('GameObject'),
+    Castle = mongoose.model('Castle'),
+    User = mongoose.model('User'),
     gameSettings = require('../config/gameSettings'),
     indexConverter= require('../utilities/indexConverter');
 
 var field;
+var players;
+var castles;
 
 var changesDictionary = {
     removed: [],
@@ -29,8 +34,6 @@ function generateRandomGold() {
     }
 
     setPosition(rndPosition, {
-        x : rndPosition.x,
-        y : rndPosition.y,
         type: 1,
         amount: (Math.floor(Math.random() * gameSettings.goldMaxStacks)) * gameSettings.goldAmountPerStack,
         object: undefined
@@ -48,8 +51,6 @@ function generateRandomMonster() {
     }
 
     setPosition(rndPosition, {
-        x : rndPosition.x,
-        y : rndPosition.y,
         type: 2,
         amount: (Math.floor(Math.random() * gameSettings.monsterMaxAmount)),
         object: undefined
@@ -79,7 +80,7 @@ function initMap() {
             return;
         }
 
-        if (objects.length < (gameSettings.mapSize * gameSettings.mapSize) * 0.4) {
+        if (objects.length < (gameSettings.mapSize * gameSettings.mapSize) * 0.2) {
             var goldInterval = setInterval(generateRandomGold, gameSettings.goldSpawnInterval);
             var monsterInterval = setInterval(generateRandomMonster, gameSettings.monsterSpawnInterval);
         }
@@ -89,7 +90,37 @@ function initMap() {
         });
 
         console.log('Map loaded');
-    })
+    });
+
+    User.find({}, function(err, users) {
+        if (err) {
+            console.log('Game players could not be loaded ' + err);
+            return;
+        }
+
+        players = {};
+
+        users.forEach(function(user) {
+            players[indexConverter.getIndex(user.coordinates)] = user;
+        });
+
+        console.log('Users loaded');
+    });
+
+    Castle.find({}, function(err, allCastles) {
+        if (err) {
+            console.log('Game castles could not be loaded ' + err);
+            return;
+        }
+
+        castles = {};
+
+        allCastles.forEach(function(castle) {
+            castles[indexConverter.getIndex(castle.coordinates)] = castle;
+        });
+
+        console.log('Castles loaded');
+    });
 }
 
 function updateMap() {
@@ -117,23 +148,37 @@ function updateMap() {
     changesDictionary.inserted = [];
 }
 
-function movePlayer(coordinates, dx, dy) {
-    var currentObj = getPosition(coordinates);
-    if (currentObj && currentObj.type === 4) {
-        // castle here im on a castle
-    }
-    else {
-
-    }
-}
-
 function getPosition(coordinates) {
     if (!validateCoordinates(coordinates)) {
         console.log(!field ? 'Map is not set' : 'Invalid coordinates');
         return;
     }
 
-    return field[indexConverter.getIndex(coordinates)];
+    var index = indexConverter.getIndex(coordinates);
+
+    if (players[index]) {
+        return {
+            type: 3,
+            amount: 1,
+            obj: {
+                _id : players[index]._id,
+                username : players[index].username,
+                experience : players[index].experience
+            }
+        }
+    }
+    else if(castles[index]) {
+        return {
+            type: 4,
+            amount: 1,
+            obj: {
+                owner : castles[index].owner
+            }
+        }
+    }
+    else {
+        return field[index];
+    }
 }
 
 function setPosition(coordinates, obj) {
@@ -173,16 +218,40 @@ function getMapFragment(coordinates) {
 
     var mapFragment = [];
     for (var i = 0; i < gameSettings.playerHeightSquares; i++) {
-        mapFragment.push([]);
         for (var j = 0; j < gameSettings.playerWidthSquares; j++) {
-            mapFragment[i].push(getPosition({
+            var obj = getPosition({
                 x : topLeft.x + j,
                 y : topLeft.y + i
-            }))
+            });
+
+            if (obj) {
+                mapFragment.push({
+                    x : topLeft.x + j,
+                    y : topLeft.y + i,
+                    obj : obj
+                })
+            }
         }
     }
 
     return mapFragment;
+}
+
+function addPlayer(player) {
+    players[indexConverter.getIndex(player.coordinates)] = player;
+}
+
+function addCastle(castle) {
+    castles[indexConverter.getIndex(castle.coordinates)] = castle;
+}
+
+function movePlayer(user, dx, dy) {
+    players[indexConverter.getIndex(user.coordinates)] = undefined;
+
+    players[indexConverter.getIndex({
+        x: user.coordinates.x + dx,
+        y: user.coordinates.y + dy
+    })] = user;
 }
 
 module.exports = {
@@ -192,5 +261,7 @@ module.exports = {
     setPosition: setPosition,
     removePosition: removePosition,
     getMapFragment: getMapFragment,
+    addPlayer: addPlayer,
+    addCastle: addCastle,
     movePlayer: movePlayer
 };
