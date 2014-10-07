@@ -1,8 +1,8 @@
 'use strict';
 
 var troopsModel = require('../gameModels/troopsModel'),
-    User = require('mongoose').model('User'),
-    map = require('../handlers/mapHandler');
+    Report = require('mongoose').model('Report'),
+    socket = require('../config/socket');
 
 module.exports = {
     // test with objects user.experience = 999 ; user.troops = [1,2,3,4,5,6,7] target same
@@ -55,8 +55,8 @@ module.exports = {
                 owner: target._id,
                 win : !win,
                 own : false,
-                enemy: target.username,
-                enemyId: target._id,
+                enemy: user.username,
+                enemyId: user._id,
                 lostUnits: [],
                 killedUnits: []
             }
@@ -84,6 +84,23 @@ module.exports = {
                 user.troops[i] = 0;
             }
         }
+
+        // async
+        Report.create(reports.attacker, function(err) {
+            if (err) {
+                console.log('Could not create report ' + err);
+            }
+        });
+        Report.create(reports.defender, function(err) {
+            if (err) {
+                console.log('Could not create report ' + err);
+                return;
+            }
+
+            if (socket.byId[reports.defender.owner]) {
+                socket.byId[reports.defender.owner].emit('newReport', {win : reports.defender.win, enemy:reports.defender.enemy});
+            }
+        });
 
         return reports;
     },

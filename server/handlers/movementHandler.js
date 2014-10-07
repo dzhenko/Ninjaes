@@ -42,7 +42,8 @@ module.exports = {
             user: user,
             event: event,
             object: mapObj,
-            mapFragment: map.getMapFragment(user.coordinates)
+            mapFragment: map.getMapFragment(user.coordinates),
+            move: true
         };
     }
 };

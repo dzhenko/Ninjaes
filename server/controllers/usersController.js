@@ -52,6 +52,9 @@ module.exports = {
                             return res.send({reason: err.toString()})
                         }
 
+                        user.hashPass = 'hidden';
+                        user.salt = 'hidden';
+
                         res.send(user);
                     });
                 });

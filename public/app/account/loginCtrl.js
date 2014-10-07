@@ -1,5 +1,5 @@
-app.controller('LoginCtrl', ['$scope', '$location', 'notifier', 'identity', 'auth',
-    function ($scope, $location, notifier, identity, auth) {
+app.controller('LoginCtrl', ['$scope', '$location', 'notifier', 'identity', 'auth', 'socket',
+    function ($scope, $location, notifier, identity, auth, socket) {
     'use strict';
 
     $scope.identity = identity;
@@ -9,6 +9,9 @@ app.controller('LoginCtrl', ['$scope', '$location', 'notifier', 'identity', 'aut
             auth.login(user).then(function (success) {
                 if (success) {
                     notifier.success('Successful login!');
+
+                    socket.emit('registerForEvents', {id : identity.currentUser._id, name: identity.currentUser.username});
+
                     $location.path('/')
                 }
                 else {

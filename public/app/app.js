@@ -142,5 +142,18 @@ app.run(['$rootScope', '$location', function ($rootScope, $location) {
     })
 }]);
 
-//app.run(['socket', function(socket){
-//}]);
+app.run(['socket','notifier', function(socket, notifier){
+    if (!socket.eventDict['newReport']) {
+        socket.eventDict['newReport'] = true;
+        socket.on('newReport', function(info) {
+            notifier.warning('You have just ' + info.win ? 'won' : 'lost' + ' a battle with ' + info.enemy);
+        });
+    }
+
+    if (!socket.eventDict['newMessage']) {
+        socket.eventDict['newMessage'] = true;
+        socket.on('newMessage', function(info) {
+            notifier.warning('You have new message from ' + info);
+        });
+    }
+}]);

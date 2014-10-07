@@ -18,6 +18,9 @@ module.exports = {
                     return next(err);
                 }
 
+                user.hashPass = 'hidden';
+                user.salt = 'hidden';
+
                 res.send({success: true, user: user});
             });
         });

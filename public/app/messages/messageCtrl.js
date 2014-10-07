@@ -9,7 +9,7 @@ app.controller('MessageCtrl', ['$scope', '$location', 'notifier', 'identity', 'a
         }
         appData.getUserIdByName($scope.targetUsername).then(function(response) {
             if (response.success) {
-                $location.path('/message-create/' + response.id._id);
+                $location.path('/message-create/' + response.id);
             }
             else {
                 notifier.error('User not found');

@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
-    Message = mongoose.model('Message');
+    Message = mongoose.model('Message'),
+    socket = require('../config/socket');
 
 module.exports = {
     getAllMessages : function(req, res, next) {
@@ -34,6 +35,10 @@ module.exports = {
             if (err) {
                 console.log('Game message could not be created ' + err);
                 return;
+            }
+
+            if (socket.byId[message.owner]) {
+                socket.byId[message.owner].emit('newMessage', message.from);
             }
 
             res.send({
