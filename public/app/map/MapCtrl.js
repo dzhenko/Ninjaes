@@ -4,8 +4,8 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
     function ($scope, $location, identity, socket, images, gameNotifier) {
         var distance = 60;
         var coordinates ={
-            x: -(identity.currentUser.coordinates.x % 32) * distance,
-            y: -(identity.currentUser.coordinates.y % 32) * distance
+            x: -((identity.currentUser.coordinates.x - 8 )% 32) * distance,
+            y: -((identity.currentUser.coordinates.y - 5) % 32) * distance
         };
         console.log(coordinates);
 
