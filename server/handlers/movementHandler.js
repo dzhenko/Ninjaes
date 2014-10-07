@@ -13,7 +13,7 @@ module.exports = {
 
         user.movement--;
 
-        map.movePlayer(user.coordinates, dx, dy);
+        map.movePlayer(user.coordinates, information.dx, information.dy);
 
         user.coordinates = {
             x : user.coordinates.x + information.dx,

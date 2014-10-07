@@ -130,6 +130,7 @@ function movePlayer(coordinates, dx, dy) {
 function getPosition(coordinates) {
     if (!validateCoordinates(coordinates)) {
         console.log(!field ? 'Map is not set' : 'Invalid coordinates');
+        return;
     }
 
     return field[indexConverter.getIndex(coordinates)];
@@ -138,6 +139,7 @@ function getPosition(coordinates) {
 function setPosition(coordinates, obj) {
     if (!validateCoordinates(coordinates)) {
         console.log(!field ? 'Map is not set' : 'Invalid coordinates');
+        return;
     }
 
     var index = indexConverter.getIndex(coordinates);
@@ -149,6 +151,7 @@ function setPosition(coordinates, obj) {
 function removePosition(coordinates) {
     if (!validateCoordinates(coordinates)) {
         console.log(!field ? 'Map is not set' : 'Invalid coordinates');
+        return;
     }
 
     var obj = field[indexConverter.getIndex(coordinates)];
