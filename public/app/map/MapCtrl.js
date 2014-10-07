@@ -1,12 +1,13 @@
 ﻿'use strict';
 
-app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'mapData', 'mapPreloader', 'GameObject', 'gameNotifier',
-    function ($scope, $location, identity, socket, mapData, mapPreloader, GameObject, gameNotifier) {
+app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images', 'gameNotifier',
+    function ($scope, $location, identity, socket, images, gameNotifier) {
         var distance = 60;
         var coordinates ={
-            x: (identity.currentUser.coordinates.x % 32) * distance,
-            y: (identity.currentUser.coordinates.y % 32) * distance
+            x: -(identity.currentUser.coordinates.x % 32) * distance,
+            y: -(identity.currentUser.coordinates.y % 32) * distance
         };
+        console.log(coordinates);
 
         var handler = function(e){
             e.preventDefault();
@@ -37,8 +38,8 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'mapData
         img.src = './../img/world.png';
 
         var redrawMap = function(dx ,dy){
-            coordinates.x += dx * distance;
-            coordinates.y += dy * distance;
+            coordinates.x -= dx * distance;
+            coordinates.y -= dy * distance;
 
             if (Math.abs(coordinates.x) >= img.width) {
                 coordinates.x = 0;
@@ -59,14 +60,51 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'mapData
             ctx.drawImage(img, img.width-Math.abs(coordinates.x), img.height-Math.abs(coordinates.y));
         };
 
-        var testEventPicture = new Image();
-        testEventPicture.src = './../img/favicon.png';
-
-        var drawEvents = function (mapFragment){
+        var drawObjects = function (mapFragment){
             for(var y = 0; y < mapFragment.length; y++){
                 for(var x = 0; x < mapFragment[y].length; x++){
                     if(mapFragment[y][x]) {
-                        ctx.drawImage(testEventPicture, x * distance, y * distance);
+                        var currObj = mapFragment[y][x];
+                        var image;
+
+                        if(currObj.type !== 4){
+                            if(currObj.type === 1) {
+                                image = images.goldImage;
+                            }
+                            else if (currObj.type === 2) {
+                                image = images.goldImage;
+                            }
+                            else if (currObj.type === 3) {
+                                if (currObj.object._id === identity.currentUser._id) {
+                                    // me
+                                    //TODO
+                                    image = images.goldImage;
+                                }
+                                else {
+                                    //enemy
+                                    //TODO
+                                    image = images.goldImage;
+                                }
+                            }
+
+                            ctx.drawImage(image, x * distance, y * distance);
+                        }
+//                        else if (currObj.object) {
+//                            if (currObj.object.owner === identity.currentUser._id) {
+//                                //own castle
+//                                image = images.castleImage;
+//                            }
+//                            else {
+//                                // enemy castle
+//                                //TODO:Change image
+//                                image = images.castleImage;
+//                            }
+//
+//
+//                        }
+                        else {
+                            ctx.drawImage(images.castleImage, x * distance - 2*distance, y * distance - 2*distance);
+                        }
                     }
                 }
             }
@@ -85,13 +123,7 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'mapData
             socket.on('moved', handleMovedResponse);
         }
 
-        var tempDx;
-        var tempDy;
-
         function movePlayer(dx, dy) {
-            tempDx = -dx;
-            tempDy = -dy;
-
             socket.emit('moved', {
                 user: identity.currentUser,
                 dx: dx,
@@ -107,8 +139,8 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'mapData
 
             console.log('moved recieved');
 
-            redrawMap(tempDx, tempDy);
-            drawEvents(response.mapFragment);
+            redrawMap(response.dx, response.dy);
+            drawObjects(response.mapFragment);
 
             identity.currentUser = response.user;
         }
@@ -116,6 +148,6 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'mapData
         function handleInitialMapObjects(receivedMapObjects) {
             console.log('map recieved');
             redrawMap(0,0);
-            drawEvents(receivedMapObjects);
+            drawObjects(receivedMapObjects);
         }
     }]);
