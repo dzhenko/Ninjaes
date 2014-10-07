@@ -120,7 +120,7 @@ function updateMap() {
 function movePlayer(coordinates, dx, dy) {
     var currentObj = getPosition(coordinates);
     if (currentObj && currentObj.type === 4) {
-
+        // castle here im on a castle
     }
     else {
 
@@ -161,7 +161,7 @@ function removePosition(coordinates) {
     }
 }
 
-function getInitialMap(coordinates) {
+function getMapFragment(coordinates) {
     if (!field) {
         return;
     }
@@ -185,62 +185,12 @@ function getInitialMap(coordinates) {
     return mapFragment;
 }
 
-function getPieceOfMap(coordinates, dx, dy) {
-    var topLeft = {
-        x: coordinates.x - gameSettings.playerPositionSquare.x,
-        y: coordinates.y - gameSettings.playerPositionSquare.y
-    };
-
-    var mapFragment = [];
-    var i;
-
-    if (dx > 0) {
-        //right
-        for (i = 0; i < gameSettings.playerHeightSquares; i++) {
-            mapFragment.push(getPosition({
-                x : topLeft.x + gameSettings.playerWidthSquares,
-                y : topLeft.y + i
-            }))
-        }
-    }
-    else if (dx < 0) {
-        //left
-        for (i = 0; i < gameSettings.playerHeightSquares; i++) {
-            mapFragment.push(getPosition({
-                x : topLeft.x - 1,
-                y : topLeft.y + i
-            }))
-        }
-    }
-    else if (dy > 0) {
-        // down
-        for (i = 0; i < gameSettings.playerWidthSquares; i++) {
-            mapFragment.push(getPosition({
-                x : topLeft.x + i,
-                y : topLeft.y + gameSettings.playerHeightSquares
-            }))
-        }
-    }
-    else if (dy < 0) {
-        //up
-        for (i = 0; i < gameSettings.playerWidthSquares; i++) {
-            mapFragment.push(getPosition({
-                x : topLeft.x + i,
-                y : topLeft.y - 1
-            }))
-        }
-    }
-
-    return mapFragment;
-}
-
 module.exports = {
     init: initMap,
     update: updateMap,
     getPosition: getPosition,
     setPosition: setPosition,
     removePosition: removePosition,
-    getInitialMap: getInitialMap,
-    getPieceOfMap: getPieceOfMap,
+    getMapFragment: getMapFragment,
     movePlayer: movePlayer
 };

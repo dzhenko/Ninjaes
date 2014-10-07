@@ -15,7 +15,7 @@ module.exports = function (server) {
         });
 
         socket.on('getMap', function(coordinates) {
-            socket.emit('getMap', handlers.map.getInitialMap(coordinates));
+            socket.emit('getMap', handlers.map.getMapFragment(coordinates));
         })
     });
 };

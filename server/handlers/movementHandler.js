@@ -9,11 +9,9 @@ module.exports = {
             return false;
         }
 
-        var mapFragment = map.getPieceOfMap(user.coordinates, information.dx, information.dy);
-
         user.movement--;
 
-        map.movePlayer(user.coordinates, information.dx, information.dy);
+        //map.movePlayer(user.coordinates, information.dx, information.dy);
 
         user.coordinates = {
             x : user.coordinates.x + information.dx,
@@ -25,12 +23,15 @@ module.exports = {
 
         if (!mapObj) {
             event = 'null';
+
         }
         else if (mapObj.type === 1) {
             user.gold += mapObj.amount;
             event = 'gold';
         }
-        else if (mapObj.type === 2 || (mapObj.type === 3 && mapObj.object._id !== user._id) || (mapObj.type === 4 && mapObj.object.owner !== user._id)) {
+        else if (mapObj.type === 2 ||
+                (mapObj.type === 3 && mapObj.object && mapObj.object._id !== user._id) ||
+                (mapObj.type === 4 &&mapObj.object && mapObj.object.owner !== user._id)) {
             event = 'enemy';
         }
         else if (mapObj.type === 4 && mapObj.object.owner === user._id) {
@@ -41,7 +42,7 @@ module.exports = {
             user: user,
             event: event,
             object: mapObj,
-            mapFragment: mapFragment
+            mapFragment: map.getMapFragment(user.coordinates)
         };
     }
 };
