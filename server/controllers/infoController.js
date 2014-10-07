@@ -49,7 +49,10 @@ module.exports = {
                 return;
             }
 
-            res.send(topUsers);
+            res.send({
+                success: true,
+                topUsers: topUsers
+            });
         });
     },
     gameStatistics: function (req, res) {
