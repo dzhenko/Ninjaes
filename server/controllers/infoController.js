@@ -22,7 +22,7 @@ module.exports = {
             }
         });
     },
-    userNameById: function(req, res) {
+    userNameById: function (req, res) {
         User.findById(req.params.id).select('username').exec(function (err, username) {
             if (err) {
                 console.log('Error finding user id ' + err);
@@ -42,14 +42,33 @@ module.exports = {
             }
         });
     },
-    topScores : function(req, res) {
+    topScores: function (req, res) {
         User.find({}).sort('experience').limit(10).select('username experience gold').exec(function (err, topUsers) {
             if (err) {
                 console.log('Error finding top users ' + err);
                 return;
             }
 
-            res.send(topUsers);
+            res.send({
+                success: true,
+                topUsers: topUsers
+            });
+        });
+    },
+    gameStatistics: function (req, res) {
+        User.count({}, function (err, usersCount) {
+            if (err) {
+                console.log('Error generation users count ' + err);
+                return;
+            }
+
+            res.send({
+                success: true,
+                stats: {
+                    usersCount: usersCount,
+                    serverUptime: 12000
+                }
+            });
         });
     }
 };

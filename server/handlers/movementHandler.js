@@ -40,6 +40,8 @@ module.exports = {
 
         return {
             user: user,
+            dx : information.dx,
+            dy : information.dy,
             event: event,
             object: mapObj,
             mapFragment: map.getMapFragment(user.coordinates),

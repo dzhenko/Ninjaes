@@ -1,4 +1,16 @@
 .container
     .jumbotron
         h1 Stats Page
-        p Game stats - users count, server uptime (imaginary number)
+        table.table.table-striped.table-hover
+            thead
+                tr
+                    th Users Count
+                    th Server Uptime
+                    th Server Status
+            tbody
+                tr
+                    td {{stats.usersCount}}
+                    td {{stats.serverUptime}}
+                    td
+                        div.progress
+                            div(style="width:100%").progress-bar.progress-bar-success Online
