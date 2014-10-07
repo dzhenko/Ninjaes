@@ -38,6 +38,9 @@ app.factory('appData', ['$q', '$http', function($q, $http) {
         getUserIdByName: function(name) {
             return makeRequest('get', '/api/info/user-id-by-name/' + name);
         },
+        getUserNameById: function(id) {
+            return makeRequest('get', '/api/info/user-name-by-id/' + id);
+        },
         getUserReports: function() {
             return makeRequest('get', '/api/game-reports');
         },

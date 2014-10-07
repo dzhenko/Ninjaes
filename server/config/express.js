@@ -22,7 +22,9 @@ module.exports = function(app, config) {
     app.use(methodOverride('X-HTTP-Method-Override'));
 
     app.use(cookieParser('heroes'));
-    app.use(session({ secret: 'heroes' }));
+    app.use(session({ secret: 'heroes',
+                      saveUninitialized: true,
+                      resave: true}));
 
     app.use(stylus.middleware({
         src: config.rootPath + '/public',

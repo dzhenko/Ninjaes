@@ -9,16 +9,35 @@ module.exports = {
                 return;
             }
 
-            if (userId) {
+            if (userId !== null) {
                 res.send({
-                    id: userId,
+                    id: userId.id,
                     success: true
                 });
             }
             else {
                 res.send({
-                    success: false,
-                    reason : 'User not found'
+                    success: false
+                });
+            }
+        });
+    },
+    userNameById: function(req, res) {
+        User.findById(req.params.id).select('username').exec(function (err, username) {
+            if (err) {
+                console.log('Error finding user id ' + err);
+                return;
+            }
+
+            if (username !== null) {
+                res.send({
+                    username: username.username,
+                    success: true
+                });
+            }
+            else {
+                res.send({
+                    success: false
                 });
             }
         });

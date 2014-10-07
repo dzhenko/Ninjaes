@@ -8,6 +8,7 @@ app.controller('ReportsCtrl', ['$scope', 'appData', 'troopsModel', 'errorHandler
             appData.getUserReports().then(function (response) {
                 if (!response.success) {
                     notifier.error(response.reason);
+                    return;
                 }
 
                 $scope.allReports = response.reports;
@@ -20,6 +21,7 @@ app.controller('ReportsCtrl', ['$scope', 'appData', 'troopsModel', 'errorHandler
             appData.deleteReport(id).then(function (response) {
                 if (!response.success) {
                     notifier.error(response.reason);
+                    return;
                 }
 
                 notifier.success('Report deleted!');

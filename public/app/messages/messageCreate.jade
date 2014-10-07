@@ -2,11 +2,17 @@
     .modal-dialog
         .modal-content
             .modal-header
-                h4.modal-title Write message
+                h4.modal-title Message to
+                    span.text-primary  {{ sentMessageUser }}
             .modal-body
                .form-group
                     textarea.form-control(rows="5" ng-model="textToSend")
             .modal-footer
                 button.btn.btn-lg.btn-success(data-dismiss="modal" ng-click="sendMessage()") Send
                 button.btn.btn-lg.btn-danger(data-dismiss="modal") Cancel
+.container(ng-show="showSentMessage")
+    .jumbotron
+        h1 Message to
+            span.text-primary  {{ sentMessageUser }}
+        p {{ sentMessageText }}
 button#showMessageInputBtn(ng-hide="true" data-toggle="modal" data-target="#sendMessage")

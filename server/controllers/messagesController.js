@@ -30,8 +30,6 @@ module.exports = {
             text: req.body.textToSend
         };
 
-        console.log(message);
-
         Message.create(message, function(err, message){
             if (err) {
                 console.log('Game message could not be created ' + err);

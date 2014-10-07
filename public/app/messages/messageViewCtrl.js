@@ -6,9 +6,10 @@ app.controller('MessageViewCtrl', ['$scope', 'appData', 'identity', 'notifier', 
             appData.getUserMessages().then(function (response) {
                 if (!response.success) {
                     notifier.error(response.reason);
+                    return;
                 }
 
-                $scope.allMessages = response.allMessages;
+                $scope.allMessages = response.messages;
             }, errorHandler);
         }
 
@@ -18,6 +19,7 @@ app.controller('MessageViewCtrl', ['$scope', 'appData', 'identity', 'notifier', 
             appData.deleteMessage(id).then(function (response) {
                 if (!response.success) {
                     notifier.error(response.reason);
+                    return;
                 }
 
                 notifier.success('Message deleted!');
