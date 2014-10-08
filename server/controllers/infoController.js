@@ -43,6 +43,19 @@ module.exports = {
             }
         });
     },
+    userCastle: function(req, res) {
+        Castle.findOne({owner : req.user._id.toString()}, function(err, castle) {
+            if (err) {
+                console.log('Could not find castle' + err);
+                return;
+            }
+
+            res.send({
+                success: true,
+                castle: castle
+            })
+        })
+    },
     topScores: function (req, res) {
         User.find({}).sort('experience').limit(10).select('username experience gold').exec(function (err, topUsers) {
             if (err) {

@@ -10,7 +10,8 @@ module.exports = function(app, config) {
     app.route('/api/users')
         .get(auth.isAuthenticated, controllers.users.getAllUsers)
         .post(controllers.users.createUser)
-        .put(auth.isAuthenticated, controllers.users.updateUser);
+        .put(auth.isAuthenticated, controllers.users.updateUser)
+        .delete(auth.isInRole('admin'), controllers.users.deleteUser);
 
     app.route('/api/game-reports')
         .get(auth.isAuthenticated, controllers.reports.getAllReports)
@@ -21,10 +22,15 @@ module.exports = function(app, config) {
         .post(auth.isAuthenticated, controllers.messages.createMessage)
         .put(auth.isAuthenticated, controllers.messages.removeMessage);
 
-    //req.params.value
+    app.route('/api/game-buildings')
+        .post(auth.isAuthenticated, controllers.buildings.build);
+
+    //req.params.name
+    //req.body.name
     app.get('/api/info/user-id-by-name/:name',auth.isAuthenticated, controllers.info.userIdByName);
     app.get('/api/info/user-name-by-id/:id',auth.isAuthenticated, controllers.info.userNameById);
     app.get('/api/info/user-overview',auth.isAuthenticated, controllers.info.userOverview);
+    app.get('/api/info/user-castle', auth.isAuthenticated, controllers.info.userCastle);
 
     app.get('/api/info/top-scores', controllers.info.topScores);
     app.get('/api/info/game-statistics', controllers.info.gameStatistics);

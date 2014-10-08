@@ -68,6 +68,9 @@ module.exports = {
                 firstName : req.body.firstName,
                 lastName: req.body.lastName
             };
+            if (req.user.roles.indexOf('admin') >= 0) {
+                newUserData.roles = req.body.roles;
+            }
             if (req.body.password && req.body.password.length > 5) {
                 newUserData.salt = encryption.generateSalt();
                 newUserData.hashPass = encryption.generateHashedPassword(newUserData.salt, req.body.password);
@@ -89,5 +92,8 @@ module.exports = {
 
             res.send(collection);
         });
+    },
+    deleteUser: function(req, res) {
+        //
     }
 };

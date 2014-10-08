@@ -41,6 +41,9 @@ app.factory('appData', ['$q', '$http', function($q, $http) {
                 messageId: id
             })
         },
+        getUserCastle: function() {
+            return makeRequest('get','/api/info/user-castle');
+        },
         getUserIdByName: function(name) {
             return makeRequest('get', '/api/info/user-id-by-name/' + name);
         },
@@ -54,6 +57,9 @@ app.factory('appData', ['$q', '$http', function($q, $http) {
             return makeRequest('put', '/api/game-reports', {
                 reportId: id
             })
+        },
+        build: function(obj) {
+            return makeRequest('post', '/api/game-buildings', obj);
         }
     }
 }]);

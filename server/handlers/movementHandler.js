@@ -4,7 +4,8 @@ var map = require('../handlers/mapHandler');
 
 module.exports = {
     checkMove: function(information, dictById) {
-        var user = information.user;
+        var user = map.getUser(information.user.coordinates);
+
         if (!user || user.movement === 0) {
             return false;
         }

@@ -1,40 +1,40 @@
 .container.buildingsMenu(id="build-panel")
     div.buildingsRow
         div.buildingBox(ng-click='showBuyWindow(0)')
-            div.buildingName {{ buildings[0].name }}
+            div.buildingName {{ hallName }}
         div.buildingBox(ng-click='showBuyWindow(1)')
-            div.buildingName {{ buildings[1].name }}
+            div.buildingName {{ castleName }}
         div.buildingBox(ng-click='showBuyWindow(2)')
-            div.buildingName {{ buildings[2].name }}
+            div.buildingName {{ buildingsModel.other[0].name }}
         div.buildingBox(ng-click='showBuyWindow(3)')
-            div.buildingName {{ buildings[3].name }}
+            div.buildingName {{ buildingsModel.other[1].name }}
     div.buildingsRow
         div.buildingBox(ng-click='showBuyWindow(4)')
-            div.buildingName {{ buildings[4].name }}
+            div.buildingName {{ buildingsModel.other[2].name }}
         div.buildingBox(ng-click='showBuyWindow(5)')
-            div.buildingName {{ buildings[5].name }}
+            div.buildingName {{ buildingsModel.other[3].name }}
         div.buildingBox(ng-click='showBuyWindow(6)')
-            div.buildingName {{ buildings[6].name }}
+            div.buildingName {{ buildingsModel.other[4].name }}
     div.buildingsRow
         div.buildingBox(ng-click='showBuyWindow(7)')
-            div.buildingName {{ buildings[7].name }}
+            div.buildingName {{ buildingsModel.other[5].name }}
         div.buildingBox(ng-click='showBuyWindow(8)')
-            div.buildingName {{ buildings[8].name }}
+            div.buildingName {{ buildingsModel.other[6].name }}
     div.buildingsRow
         div.buildingBox(ng-click='showBuyWindow(9)')
-            div.buildingName {{ buildings[9].name }}
+            div.buildingName {{ buildingsModel.troops[0].name }}
         div.buildingBox(ng-click='showBuyWindow(10)')
-            div.buildingName {{ buildings[10].name }}
+            div.buildingName {{ buildingsModel.troops[1].name }}
         div.buildingBox(ng-click='showBuyWindow(11)')
-            div.buildingName {{ buildings[11].name }}
+            div.buildingName {{ buildingsModel.troops[2].name }}
         div.buildingBox(ng-click='showBuyWindow(12)')
-            div.buildingName {{ buildings[12].name }}
+            div.buildingName {{ buildingsModel.troops[3].name }}
     div.buildingsRow
         div.buildingBox(ng-click='showBuyWindow(13)')
-            div.buildingName {{ buildings[13].name }}
+            div.buildingName {{ buildingsModel.troops[4].name }}
         div.buildingBox(ng-click='showBuyWindow(14)')
-            div.buildingName {{ buildings[14].name }}
+            div.buildingName {{ buildingsModel.troops[5].name }}
         div.buildingBox(ng-click='showBuyWindow(15)')
-            div.buildingName {{ buildings[15].name }}
-    a(href='#castle' target='_parent')
+            div.buildingName {{ buildingsModel.troops[6].name }}
+    a(href='#castle' title="Go to castle")
         div.exit

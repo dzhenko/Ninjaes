@@ -107,9 +107,13 @@ function initMap() {
 
         field = {};
 
-        if (objects.length < (gameSettings.mapSize * gameSettings.mapSize) * 0.2) {
+        if (objects.length < (gameSettings.mapSize * gameSettings.mapSize) * 0.1) {
+            console.log('Items generating enabled');
             var goldInterval = setInterval(generateRandomGold, gameSettings.goldSpawnInterval);
             var monsterInterval = setInterval(generateRandomMonster, gameSettings.monsterSpawnInterval);
+        }
+        else {
+            console.log('Items generating DISABLED');
         }
 
         if (!objects || objects.length === 0) {
@@ -330,6 +334,14 @@ function movePlayer(user, dx, dy) {
     })] = user;
 }
 
+function getUser(coords) {
+    return players[indexConverter.getIndex(coords)];
+}
+
+function getCastle(coords) {
+    return castles[indexConverter.getIndex(coords)];
+}
+
 module.exports = {
     init: initMap,
     update: updateMap,
@@ -339,5 +351,7 @@ module.exports = {
     getMapFragment: getMapFragment,
     addPlayer: addPlayer,
     addCastle: addCastle,
-    movePlayer: movePlayer
+    movePlayer: movePlayer,
+    getUser : getUser,
+    getCastle : getCastle
 };
