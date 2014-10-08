@@ -9,6 +9,9 @@ module.exports = {
         x: 8,
         y: 5
     },
+    castleUpdateInterval: 1000 * 60 * 60 * 24,
+    playerUpdateInterval: 1000 * 60,
+    playerUpdateMovement: 10,
     mapSaveInterval: 1000 * 30,
     goldSpawnInterval: 1000 * 4,
     goldMaxStacks: 25,

@@ -27,11 +27,13 @@ module.exports = {
         }
         else if (mapObj.type === 1) {
             user.gold += mapObj.amount;
+            map.removePosition(user.coordinates);
             event = 'gold';
         }
         else if (mapObj.type === 2 ||
-                (mapObj.type === 3 && mapObj.object && mapObj.object._id !== user._id) ||
-                (mapObj.type === 4 &&mapObj.object && mapObj.object.owner !== user._id)) {
+                (mapObj.type === 3 && mapObj.obj && mapObj.obj._id !== user._id) ||
+                (mapObj.type === 4 && mapObj.obj && mapObj.obj.owner !== user._id)) {
+
             event = 'enemy';
 
             // rollback move
@@ -41,7 +43,7 @@ module.exports = {
                 y : user.coordinates.y - information.dy
             };
         }
-        else if (mapObj.type === 4 && mapObj.object && mapObj.object.owner === user._id) {
+        else if (mapObj.type === 4 && mapObj.obj && mapObj.obj.owner === user._id) {
             event = 'castle';
         }
 

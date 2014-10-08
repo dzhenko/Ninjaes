@@ -18,7 +18,9 @@ app.factory('images', [function() {
         worldMap: worldMap,
         mapSettings : {
             squareDistance : 60,
-            numberOfSqquares : 19
+            squareCount : 19,
+            visibleWidthSquares: 17,
+            visibleHeightSquares: 10
         },
         goldImage : goldImage,
         castleImage: castleImage,
