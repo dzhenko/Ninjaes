@@ -27,6 +27,7 @@ module.exports = {
         }
         else if (mapObj.type === 1) {
             user.gold += mapObj.amount;
+            map.removePosition(user.coordinates);
             event = 'gold';
         }
         else if (mapObj.type === 2 ||

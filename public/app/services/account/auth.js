@@ -1,4 +1,4 @@
-app.factory('auth', ['$q', '$http', 'identity', 'UsersResource', function($q, $http, identity, UsersResource) {
+app.factory('auth', ['$q', '$http', 'identity', 'UsersResource', 'socket', function($q, $http, identity, UsersResource, socket) {
     'use strict';
 
     return {
@@ -8,6 +8,9 @@ app.factory('auth', ['$q', '$http', 'identity', 'UsersResource', function($q, $h
             var user = new UsersResource(user);
             user.$save().then(function(){
                 identity.currentUser = user;
+
+                socket.emit('registerForEvents', {id : user._id, name: user.username});
+
                 deferred.resolve(true);
             }, function(response){
                 deferred.reject(response);
@@ -38,6 +41,9 @@ app.factory('auth', ['$q', '$http', 'identity', 'UsersResource', function($q, $h
                     var user = new UsersResource();
                     angular.extend(user, response.user);
                     identity.currentUser = user;
+
+                    socket.emit('registerForEvents', {id : user._id, name: user.username});
+
                     deferred.resolve(true);
                 }
                 else {

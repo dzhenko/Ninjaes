@@ -1,0 +1,71 @@
+body {
+  padding-top: 120px;
+}
+body > footer {
+  margin-top: 50px;
+}
+.navbar-right .navbar-form input {
+  margin-right: 10px;
+}
+.navbar-right .navbar-form a.btn {
+  margin-left: 10px;
+}
+.toast-top-right {
+  top: 60px;
+}
+#mapHolder {
+  position: relative;
+}
+.container .well .form-horizontal fieldset .pull-right button.btn.btn-primary {
+  margin-right: 10px;
+}
+.form-group .alert.alert-danger {
+  margin-bottom: 0;
+  padding: 10px;
+}
+#signUpForm input {
+  height: 42px;
+}
+.container.player {
+  position: absolute;
+  top: 54%;
+  left: 41%;
+}
+footer {
+  padding: 0 150px;
+}
+<<<<<<< HEAD
+=======
+.buildingBox{
+    border: 1px solid white;
+    background-color: green;
+    width: 154px;
+    margin-right: 40px;
+    margin-top: 85px;
+    text-align: center;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 12px;
+}
+.buildingsMenu{
+    background: url("../../img/buildings.png");
+    height: 574px;
+    width: 808px;
+    padding: 0px;
+    padding-top: 25px;
+}
+.buildingsRow{
+    margin: 0px;
+    padding: 0px;
+    margin-left: 32px;
+    text-align: center;
+}
+.exit{
+    color: #ffffff;
+    text-align: center;
+    width: 130px;
+    height: 20px;
+    margin: auto;
+    margin-top: 10px;
+}
+>>>>>>> a86d23c998618a55038a812935e6f46f836b2c3a
