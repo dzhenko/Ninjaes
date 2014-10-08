@@ -13,9 +13,9 @@ module.exports = {
     playerUpdateInterval: 1000 * 60,
     playerUpdateMovement: 10,
     mapSaveInterval: 1000 * 30,
-    goldSpawnInterval: 1000 * 4,
+    goldSpawnInterval: 1000 * 15,
     goldMaxStacks: 25,
     goldAmountPerStack: 100,
-    monsterSpawnInterval: 1000 * 13,
+    monsterSpawnInterval: 1000 * 60,
     monsterMaxAmount: 200
 };
