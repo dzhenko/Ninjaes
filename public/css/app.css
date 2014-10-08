@@ -34,35 +34,40 @@ body > footer {
 footer {
   padding: 0 150px;
 }
-.buildingBox{
-    border: 1px solid white;
-    background-color: green;
-    width: 154px;
-    margin-right: 40px;
-    margin-top: 85px;
-    text-align: center;
-    color: #ffffff;
-    display: inline-block;
-    font-size: 12px;
+.buildingBox {
+  border: 1px solid #fff;
+  width: 154px;
+  height: 90px;
+  margin-right: 40px;
+  margin-top: 14px;
+  text-align: center;
+  color: #fff;
+  display: inline-block;
+  font-size: 12px;
+  padding-top: 70px;
 }
-.buildingsMenu{
-    background: url("../../img/buildings.png");
-    height: 574px;
-    width: 808px;
-    padding: 0px;
-    padding-top: 25px;
+.buildingsMenu {
+  background: url("../../img/buildings.png");
+  height: 574px;
+  width: 808px;
+  padding: 0px;
+  padding-top: 23px;
 }
-.buildingsRow{
-    margin: 0px;
-    padding: 0px;
-    margin-left: 32px;
-    text-align: center;
+.buildingsRow {
+  margin: 0px;
+  padding: 0px;
+  margin-left: 32px;
+  text-align: center;
 }
-.exit{
-    color: #ffffff;
-    text-align: center;
-    width: 130px;
-    height: 20px;
-    margin: auto;
-    margin-top: 10px;
+.exit {
+  color: #fff;
+  text-align: center;
+  width: 130px;
+  height: 20px;
+  margin: auto;
+  margin-top: 10px;
+}
+.buildingName {
+  border: 1px solid #808080;
+  background-color: #008000;
 }

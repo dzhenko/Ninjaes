@@ -1,39 +1,56 @@
 .container.buildingsMenu
     div.buildingsRow
+        div.buildingBox#town-hall(ng-click='buyBuilding()')
+            div.buildingName
+                | Town Hall
         div.buildingBox(ng-click='buyBuilding()')
-            | Town Hall
+            div.buildingName
+                | Citadel
         div.buildingBox(ng-click='buyBuilding()')
-            | Citadel
+            div.buildingName
+                | Brotherhood of the sword
         div.buildingBox(ng-click='buyBuilding()')
-            | Brotherhood of the sword
-        div.buildingBox(ng-click='buyBuilding()')
-            | Blacksmith
+            div.buildingName
+                | Blacksmith
     div.buildingsRow
         div.buildingBox(ng-click='buyBuilding()')
-            | Market Place
+            div.buildingName
+                | Market Place
         div.buildingBox(ng-click='buyBuilding()')
-            | Mage Guild level 2
+            div.buildingName
+                | Mage Guild level 2
         div.buildingBox(ng-click='buyBuilding()')
-            | Shipyard
+            div.buildingName
+                | Shipyard
     div.buildingsRow
         div.buildingBox(ng-click='buyBuilding()')
-            | Stables
+            div.buildingName
+                | Stables
         div.buildingBox(ng-click='buyBuilding()')
-            | Griffin Bastion
+            div.buildingName
+                | Griffin Bastion
     div.buildingsRow
         div.buildingBox(ng-click='buyBuilding()')
-            | Upg. Guardhouse
+            div.buildingName
+                | Upg. Guardhouse
         div.buildingBox(ng-click='buyBuilding()')
-            | Upg. Archer's Tower
+            div.buildingName
+                | Upg. Archer's Tower
         div.buildingBox(ng-click='buyBuilding()')
-            | Upg. Griffin Tower
+            div.buildingName
+                | Upg. Griffin Tower
         div.buildingBox(ng-click='buyBuilding()')
-            | Barracks
+            div.buildingName
+                | Barracks
     div.buildingsRow
         div.buildingBox(ng-click='buyBuilding()')
-            | Monastery
+            div.buildingName
+                | Monastery
         div.buildingBox(ng-click='buyBuilding()')
-            | Training Grounds
+            div.buildingName
+                | Training Grounds
         div.buildingBox(ng-click='buyBuilding()')
-            | Portal of Glory
-    div.exit(ng-click='buyBuilding()')
+            div.buildingName
+                | Portal of Glory
+    a(href='#castle' target='_parent')
+        div.exit
