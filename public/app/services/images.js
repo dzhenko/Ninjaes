@@ -6,9 +6,9 @@ app.factory('images', [function() {
     var monsterImage = new Image();
     monsterImage.src = './../img/monster.png';
     var castleImage = new Image();
-    castleImage.src = './../img/castle_1_red.png';
+    castleImage.src = './../img/castle.png';
     var blueCastle = new Image();
-    blueCastle.src = './../img/castle_1_blue.png';
+    blueCastle.src = './../img/castle.png';
     var worldMap = new Image();
     worldMap.src = './../img/bigWorld.jpg';
     var redPlayer = new Image();

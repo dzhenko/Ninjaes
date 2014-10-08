@@ -10,42 +10,58 @@ module.exports = {
             return false;
         }
 
-        user.movement--;
-
-        map.movePlayer(user, information.dx, information.dy);
-
-        user.coordinates = {
+        var futureCoords = {
             x : user.coordinates.x + information.dx,
             y : user.coordinates.y + information.dy
         };
 
-        var mapObj = map.getPosition(user.coordinates);
+        var mapObj = map.getPosition(futureCoords);
+
+        user.movement--;
 
         var event;
-
         if (!mapObj) {
             event = 'null';
-        }
-        else if (mapObj.type === 1) {
-            user.gold += mapObj.amount;
-            map.removePosition(user.coordinates);
-            event = 'gold';
+
+            map.movePlayer(user, information.dx, information.dy);
+            user.coordinates = futureCoords;
         }
         else if (mapObj.type === 2 ||
-                (mapObj.type === 3 && mapObj.obj && mapObj.obj._id !== user._id) ||
-                (mapObj.type === 4 && mapObj.obj && mapObj.obj.owner !== user._id)) {
+            (mapObj.type === 3 && mapObj.obj && mapObj.obj._id.toString() !== user._id.toString()) ||
+            (mapObj.type === 4 && mapObj.obj && mapObj.obj.owner.toString() !== user._id.toString())) {
 
             event = 'enemy';
-
-            // rollback move
-            map.movePlayer(user, -information.dx, -information.dy);
-            user.coordinates = {
-                x : user.coordinates.x - information.dx,
-                y : user.coordinates.y - information.dy
-            };
         }
-        else if (mapObj.type === 4 && mapObj.obj && mapObj.obj.owner === user._id) {
-            event = 'castle';
+        else {
+            if (!mapObj) {
+                event = 'null';
+            }
+            else if (mapObj.type === 1) {
+                user.gold += mapObj.amount;
+                event = 'gold';
+
+                map.removePosition(futureCoords);
+            }
+            else if (mapObj.type === 4 && mapObj.obj && mapObj.obj.owner.toString() === user._id.toString()) {
+                event = 'castle';
+                var userCastle = map.getCastle(mapObj.obj.coordinates);
+
+                if (!userCastle) {
+                    console.log('Serious bug map handler 48 row - can not get castle at coords');
+                    return;
+                }
+
+                for (var i = 0; i < userCastle.troops.length; i++) {
+                    user.troops[i] += userCastle.troops[i];
+                    userCastle.troops[i] = 0;
+                }
+            }
+            else {
+                console.log('movement handler logic error : ' + mapObj);
+            }
+
+            map.movePlayer(user, information.dx, information.dy);
+            user.coordinates = futureCoords;
         }
 
         return {
@@ -55,8 +71,7 @@ module.exports = {
             mapFragment: map.getMapFragment({
                 user : user,
                 forced : false
-            }, dictById),
-            move: event !== 'enemy'
+            }, dictById)
         };
     }
 };

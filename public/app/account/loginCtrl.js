@@ -9,7 +9,6 @@ app.controller('LoginCtrl', ['$scope', '$location', 'notifier', 'identity', 'aut
             auth.login(user).then(function (success) {
                 if (success) {
                     notifier.success('Successful login!');
-
                     $location.path('/')
                 }
                 else {

@@ -28,11 +28,19 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
             ctx = undefined;
         });
 
-        images.worldMap.onload = function() {
+        images.worldMap.onload = function () {
             redrawMap();
+            socket.emit('get map', {
+                user: identity.currentUser,
+                forced: false
+            });
         };
 
         redrawMap();
+        socket.emit('get map', {
+            user: identity.currentUser,
+            forced: false
+        });
 
         function redrawMap(coordinates) {
             coordinates = coordinates || identity.currentUser.coordinates;
@@ -49,6 +57,8 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
                 0, 0,
                     images.mapSettings.visibleWidthSquares * images.mapSettings.squareDistance,
                     images.mapSettings.visibleHeightSquares * images.mapSettings.squareDistance);
+
+            ctx.drawImage(images.redPlayer, 8 * images.mapSettings.squareDistance - 15, 5 * images.mapSettings.squareDistance - 20);
         }
 
         function drawObjects(mapFragment) {
@@ -56,20 +66,23 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
                 ctx = document.getElementById('main-canvas').getContext('2d');
             }
 
-            mapFragment.forEach(function(item) {
+            mapFragment.forEach(function (item) {
                 if (item.obj.type === 1) {
                     ctx.drawImage(images.goldImage, item.x * images.mapSettings.squareDistance, item.y * images.mapSettings.squareDistance);
                 }
                 else if (item.obj.type === 2) {
                     ctx.drawImage(images.monsterImage, item.x * images.mapSettings.squareDistance, item.y * images.mapSettings.squareDistance - 15);
                 }
-            })
+                else if (item.obj.type === 3) {
+                    ctx.drawImage(images.bluePlayer, item.x * images.mapSettings.squareDistance, item.y * images.mapSettings.squareDistance);
+                }
+                else if (item.obj.type === 4) {
+                    ctx.drawImage(item.obj.obj.owner.toString() === identity.currentUser._id.toString() ? images.castleImage : images.blueCastle,
+                            item.x * images.mapSettings.squareDistance - images.mapSettings.squareDistance,
+                            item.y * images.mapSettings.squareDistance - images.mapSettings.squareDistance);
+                }
+            });
         }
-
-        socket.emit('get map', {
-            user : identity.currentUser,
-            forced : false
-        });
 
         if (!socket.eventDict['get map']) {
             socket.eventDict['get map'] = true;
@@ -81,12 +94,23 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
             socket.on('moved', handleMovedResponse);
         }
 
+        if (!socket.eventDict['fight monster']) {
+            socket.eventDict['fight monster'] = true;
+            socket.on('fight monster', handleFightResponse);
+        }
+
+        if (!socket.eventDict['fight hero']) {
+            socket.eventDict['fight hero'] = true;
+            socket.on('fight hero', handleFightResponse);
+        }
+
+
         if (!socket.eventDict['someone moved']) {
             socket.eventDict['someone moved'] = true;
-            socket.on('someone moved', function() {
+            socket.on('someone moved', function () {
                 socket.emit('get map', {
-                    user : identity.currentUser,
-                    forced : true
+                    user: identity.currentUser,
+                    forced: true
                 });
             });
         }
@@ -100,13 +124,65 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
         }
 
         function handleMovedResponse(response) {
+            console.log(response);
             if (!response) {
-                // no movement or wrong coords
+                return;
+            }
+
+            identity.currentUser = response.user;
+            redrawMap();
+            drawObjects(response.mapFragment);
+
+            if (response.event === 'null') {
+                // nothing special
+            }
+            else if (response.event === 'gold') {
+                gameNotifier.gold(response.object.amount);
+            }
+            else if (response.event === 'castle') {
+                gameNotifier.message('You got your troops!');
+            }
+            else if (response.event === 'enemy') {
+                if (response.object.type === 2) {
+                    gameNotifier.enemy(response.object.amount).then(function() {
+                        socket.emit('fight monster', {
+                            monster : response.object.index,
+                            user: identity.currentUser
+                        });
+                    });
+                }
+                else if (response.object.type === 4) {
+                    gameNotifier.message('Enemy castle - ambush!')
+                }
+                else {
+                    gameNotifier.hero(response.object.amount).then(function() {
+                        socket.emit('fight hero', {
+                            hero : response.object.obj.coordinates,
+                            user: identity.currentUser
+                        });
+                    });
+                }
+            }
+        }
+
+        function handleFightResponse(response) {
+            if (!response) {
+                return;
+            }
+
+            identity.currentUser = response.user;
+
+            if (response.success) {
+                gameNotifier.message('   You won   ')
             }
             else {
-                identity.currentUser = response.user;
-                redrawMap();
-                drawObjects(response.mapFragment);
+                gameNotifier.message('   You lost   ')
             }
+
+            socket.emit('moved', {
+                user: identity.currentUser,
+                dx: 0,
+                dy: 0
+            });
         }
     }]);

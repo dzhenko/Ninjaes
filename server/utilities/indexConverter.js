@@ -9,7 +9,7 @@ module.exports = {
     getCoordinates: function(index) {
         return {
             x : index % gameSettings.mapSize,
-            y : index / gameSettings.mapSize
+            y : Math.floor(index / gameSettings.mapSize)
         }
     }
 };

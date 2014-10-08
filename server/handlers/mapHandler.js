@@ -18,7 +18,7 @@ var changesDictionary = {
 };
 
 function validateCoordinates(coordinates) {
-    if (!field) {
+    if (!field || !coordinates) {
         return false;
     }
     return !(coordinates.x < 0 || coordinates.x >= gameSettings.mapSize || coordinates.y < 0 || coordinates.y >= gameSettings.mapSize);
@@ -108,7 +108,7 @@ function initMap() {
         field = {};
 
         if (objects.length < (gameSettings.mapSize * gameSettings.mapSize) * 0.1) {
-            console.log('Items generating enabled');
+            console.log('Items generating enabled - currently ' + objects.length + ' out of ' + (gameSettings.mapSize * gameSettings.mapSize * 0.1));
             var goldInterval = setInterval(generateRandomGold, gameSettings.goldSpawnInterval);
             var monsterInterval = setInterval(generateRandomMonster, gameSettings.monsterSpawnInterval);
         }
@@ -226,7 +226,11 @@ function getPosition(coordinates) {
             obj: {
                 _id: players[index]._id,
                 username: players[index].username,
-                experience: players[index].experience
+                experience: players[index].experience,
+                coordinates: {
+                    x : players[index].coordinates.x,
+                    y : players[index].coordinates.y
+                }
             }
         }
     }
@@ -235,7 +239,11 @@ function getPosition(coordinates) {
             type: 4,
             amount: 1,
             obj: {
-                owner: castles[index].owner
+                owner: castles[index].owner,
+                coordinates: {
+                    x : castles[index].coordinates.x,
+                    y : castles[index].coordinates.y
+                }
             }
         }
     }
@@ -288,7 +296,7 @@ function getMapFragment(userForced, dictById) {
                 y: topLeft.y + i
             });
 
-            if (obj && !(j === 8 && i === 5)) {
+            if (obj && !(j === 8 && i === 5 && obj.type === 3)) {
                 if (obj.type === 3 && dictById[obj._id] && !userForced.forced) {
                     dictById[obj._id].emit('someone moved');
                 }
@@ -335,10 +343,18 @@ function movePlayer(user, dx, dy) {
 }
 
 function getUser(coords) {
+    if (!players) {
+        return;
+    }
+
     return players[indexConverter.getIndex(coords)];
 }
 
 function getCastle(coords) {
+    if (!castles) {
+        return;
+    }
+
     return castles[indexConverter.getIndex(coords)];
 }
 

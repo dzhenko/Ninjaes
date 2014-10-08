@@ -27,6 +27,14 @@ module.exports = {
                 socket.emit('get map', handlers.map.getMapFragment(userForced, dictById));
             });
 
+            socket.on('fight monster', function (information) {
+                socket.emit('fight monster', handlers.battle.fightMonster(information));
+            });
+
+            socket.on('fight hero', function (information) {
+                socket.emit('fight hero', handlers.battle.fightHero(information));
+            });
+
             socket.on('register for events', function (userData) {
                 dictByName[userData.name] = socket;
                 dictById[userData.id] = socket;

@@ -2,11 +2,19 @@
 
 var troopsModel = require('../gameModels/troopsModel'),
     Report = require('mongoose').model('Report'),
-    socket = require('../config/socket');
+    map = require('../handlers/mapHandler'),
+    indexConverter = require('../utilities/indexConverter');
 
 module.exports = {
     // test with objects user.experience = 999 ; user.troops = [1,2,3,4,5,6,7] target same
-    fightUser : function(user, target) {
+    fightHero : function(information) {
+        var user = map.getUser(information.user.coordinates);
+        var target = map.getUser(information.hero);
+        if (!user || !target) {
+            console.log('can not get user or hero at fight hero ctrl');
+            return;
+        }
+
         var coef = user.experience / target.experience;
         var i;
 
@@ -97,15 +105,35 @@ module.exports = {
                 return;
             }
 
-            if (socket.byId[reports.defender.owner]) {
-                socket.byId[reports.defender.owner].emit('new report', {win : reports.defender.win, enemy:reports.defender.enemy});
+            if (require('../config/socket').byId[reports.defender.owner]) {
+                require('../config/socket').byId[reports.defender.owner].emit('new report', {win : reports.defender.win, enemy:reports.defender.enemy});
             }
         });
 
-        return reports;
+        return {
+            success: reports.attacker.win,
+            user : user
+        }
     },
     // test with objects user.experience = 999 ; user.troops = [1,2,3,4,5,6,7] lvl = 0 ! amount = 124124124124
-    fightMonster: function(user, lvl, amount) {
+    fightMonster: function(information) {
+        var user = map.getUser(information.user.coordinates);
+        if (!user) {
+            return {
+                success: false
+            }
+        }
+
+        var monster = map.getPosition(indexConverter.getCoordinates(information.monster));
+        if (!monster) {
+            return {
+                success: false
+            }
+        }
+
+        var amount = monster.amount;
+        var lvl = monster.level || 0;
+
         var monsterCost = (troopsModel[lvl].cost * amount) / (1 + user.experience);
 
         for (var i = user.troops.length - 1; i >= 0; i--) {
@@ -119,6 +147,16 @@ module.exports = {
             }
         }
 
-        return (troopsModel[lvl].cost * amount)
+        var success = user.troops[0] > 0;
+
+        if (success) {
+            map.removePosition(indexConverter.getCoordinates(information.monster));
+            user.experience++;
+        }
+
+        return {
+            success: success,
+            user : user
+        }
     }
 };

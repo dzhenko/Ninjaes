@@ -13,21 +13,21 @@
                 span.caret
             ul.dropdown-menu
                 li
-                    a.lead(href="#/profile") Profile
+                    a(href="#/profile") Profile
                 li
-                    a.lead(href="#/settings") Settings
+                    a(href="#/settings") Settings
 
                 li.divider(ng-show="identity.isModerator()")
                 li(ng-show="identity.isModerator()")
-                    a.lead(href="#/moderator") Moderator
+                    a(href="#/moderator") Moderator
 
                 li.divider(ng-show="identity.isAdmin()")
                 li(ng-show="identity.isAdmin()")
-                    a.lead(href="#/admin") Admin
+                    a(href="#/admin") Admin
 
                 li.divider
                 li
-                    a.lead(href="#/about") About
+                    a(href="#/about") About
                 li.divider
                 li
-                    a.lead(href="#" ng-click="logout()") Sign Out
+                    a(href="#" ng-click="logout()") Sign Out

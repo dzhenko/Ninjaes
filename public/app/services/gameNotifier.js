@@ -54,6 +54,14 @@ app.factory('gameNotifier', ['$q', function($q) {
             holder.appendTo($('#mapHolder')).hide().fadeIn();
 
             return deferred.promise;
+        },
+        message : function(msg) {
+            title.hide();
+            text.text(msg).css('bottom','7px');
+            cnclBtn.hide();
+            okBtn.hide();
+            holder.css('background-image', 'url("../../img/gameNotifier/troopsNotifier.jpg")').height('105px');
+            holder.hide().appendTo(mapHolder).show().fadeOut(4000);
         }
     }
 }]);
