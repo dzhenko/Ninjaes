@@ -1,11 +1,12 @@
 .container
     .jumbotron
         h1 Admin Area
-        p kendo grid view for server side CRUD on users and filtering + sorting TODO:Remove this
+        div(ng-controller='AdminCtrl')
+            div(id='grid')
     .container
-        h2 Send mass message to players
-        .form-group
-            .input-group.col-md-10.col-md-offset-1
-                input.form-control(type="text", placeholder="enter message", ng-model="newMessage")
-                span.input-group-btn
-                    button.btn.btn-primary(ng-click="sendMessage(newMessage)" type="button" ng-disabled="newMessage.length === 0") Send
+            h2 Send mass message to players
+            .form-group
+                .input-group.col-md-10.col-md-offset-1
+                    input.form-control(type="text", placeholder="enter message", ng-model="newMessage")
+                    span.input-group-btn
+                        button.btn.btn-primary(ng-click="sendMessage(newMessage)" type="button" ng-disabled="newMessage.length === 0") Send
