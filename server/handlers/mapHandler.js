@@ -5,7 +5,8 @@ var mongoose = require('mongoose'),
     Castle = mongoose.model('Castle'),
     User = mongoose.model('User'),
     gameSettings = require('../config/gameSettings'),
-    indexConverter= require('../utilities/indexConverter');
+    indexConverter= require('../utilities/indexConverter'),
+    gameModels = require('../gameModels');
 
 var field;
 var players;
@@ -64,8 +65,33 @@ function generateRandomPosition() {
     }
 }
 
+function populateCastle() {
+    var moneyPerPlayer = {};
+    castles.forEach(function(castle) {
+        for (var i = 0; i < castle.troopsForSale.length; i++) {
+            castle.troopsForSale[i] += gameModels.buildings.castle.produces[castle.buildings.castle] *
+                                        castle.buildings.troops[i] * gameModels.troops[i].growth;
+        }
+
+        moneyPerPlayer[castle.owner] = gameModels.buildings.hall.produces[castle.buildings.hall]
+    });
+
+    players.forEach(function(player) {
+        player.gold += moneyPerPlayer[player._id];
+    });
+}
+
+function populatePlayer() {
+    players.forEach(function(player) {
+        player.movement += gameSettings.playerUpdateMovement;
+    });
+}
+
 function initMap() {
     setInterval(updateMap, gameSettings.mapSaveInterval);
+
+    setInterval(populateCastle, gameSettings.castleUpdateInterval);
+    setInterval(populatePlayer, gameSettings.playerUpdateInterval);
 
     GameObject.find({}, function(err, objects) {
         if (err) {
@@ -127,21 +153,19 @@ function updateMap() {
     if (!field) return;
 
     changesDictionary.removed.slice().forEach(function(item) {
-        GameObject.findOneAndRemove({index : item.index}, function(err) {
-            if (err) {
-                console.log('Could not remove item ' + err);
-                return;
-            }
-        });
+        GameObject.findOneAndRemove({index : item.index}, function(err) {if (err) {console.log('Could not remove item ' + err)}});
     });
 
     changesDictionary.inserted.slice().forEach(function(item) {
-        GameObject.create(item, function(err) {
-            if (err) {
-                console.log('Could not create item ' + err);
-                return;
-            }
-        });
+        GameObject.create(item, function(err) {if (err) {console.log('Could not create item ' + err)}});
+    });
+
+    players.forEach(function(player) {
+        User.findOneAndUpdate({_id : player._id}, player, function(err){if (err) {console.log('Could not update user' + err)}});
+    });
+
+    castles.forEach(function(castle) {
+        Castle.findOneAndUpdate({_id : castle._id}, castle, function(err){if (err) {console.log('Could not update castle' + err)}});
     });
 
     changesDictionary.removed =[];
