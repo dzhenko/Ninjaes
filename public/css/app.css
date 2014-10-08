@@ -36,36 +36,22 @@ footer {
 }
 .buildingBox {
   border: 1px solid #fff;
-<<<<<<< HEAD
   width: 154px;
   height: 90px;
   margin-right: 40px;
   margin-top: 14px;
-=======
-  background-color: #008000;
-  width: 154px;
-  margin-right: 40px;
-  margin-top: 85px;
->>>>>>> 2ac180830f28b11658a3185bfc07ca8bd42fe662
   text-align: center;
   color: #fff;
   display: inline-block;
   font-size: 12px;
-<<<<<<< HEAD
   padding-top: 70px;
-=======
->>>>>>> 2ac180830f28b11658a3185bfc07ca8bd42fe662
 }
 .buildingsMenu {
   background: url("../../img/buildings.png");
   height: 574px;
   width: 808px;
   padding: 0px;
-<<<<<<< HEAD
   padding-top: 23px;
-=======
-  padding-top: 25px;
->>>>>>> 2ac180830f28b11658a3185bfc07ca8bd42fe662
 }
 .buildingsRow {
   margin: 0px;
@@ -81,10 +67,7 @@ footer {
   margin: auto;
   margin-top: 10px;
 }
-<<<<<<< HEAD
 .buildingName {
   border: 1px solid #808080;
   background-color: #008000;
 }
-=======
->>>>>>> 2ac180830f28b11658a3185bfc07ca8bd42fe662
