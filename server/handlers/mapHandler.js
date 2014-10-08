@@ -68,7 +68,7 @@ function generateRandomPosition() {
 function populateCastles() {
     var moneyPerPlayer = {};
     for (var castle in castles) {
-        if (castles.hasOwnProperty(castle)) {
+        if (castles[castle] && castles.hasOwnProperty(castle)) {
             for (var i = 0; i < castle.troopsForSale.length; i++) {
                 castles[castle].troopsForSale[i] += gameModels.buildings.castle.produces[castles[castle].buildings.castle] *
                     castles[castle].buildings.troops[i] * gameModels.troops[i].growth;
@@ -79,7 +79,7 @@ function populateCastles() {
     }
 
     for (var player in players) {
-        if (players.hasOwnProperty(player)) {
+        if (players[player] && players.hasOwnProperty(player)) {
             players[player].gold += moneyPerPlayer[player._id];
         }
     }
@@ -87,7 +87,7 @@ function populateCastles() {
 
 function populatePlayers() {
     for (var player in players) {
-        if (players.hasOwnProperty(player)) {
+        if (players[player] && players.hasOwnProperty(player)) {
             players[player].movement += gameSettings.playerUpdateMovement;
         }
     }
@@ -107,14 +107,14 @@ function initMap() {
 
         field = {};
 
-        if (!objects || objects.length === 0) {
-            console.log('Map created');
-            return;
-        }
-
         if (objects.length < (gameSettings.mapSize * gameSettings.mapSize) * 0.2) {
             var goldInterval = setInterval(generateRandomGold, gameSettings.goldSpawnInterval);
             var monsterInterval = setInterval(generateRandomMonster, gameSettings.monsterSpawnInterval);
+        }
+
+        if (!objects || objects.length === 0) {
+            console.log('Map created');
+            return;
         }
 
         objects.forEach(function (obj) {
@@ -175,7 +175,7 @@ function updateMap() {
     });
 
     for (var player in players) {
-        if (players.hasOwnProperty(player)) {
+        if (players[player] && players.hasOwnProperty(player)) {
             User.findOneAndUpdate({_id : players[player]._id}, {
                 coordinates : players[player].coordinates,
                 gold : players[player].gold,
@@ -191,7 +191,7 @@ function updateMap() {
     }
 
     for (var castle in castles) {
-        if (castles.hasOwnProperty(castle)) {
+        if (castles[castle] && castles.hasOwnProperty(castle)) {
             Castle.findOneAndUpdate({_id : castles[castle]._id}, {
                 buildings : castles[castle].buildings,
                 troopsForSale: castles[castle].troopsForSale
@@ -265,14 +265,15 @@ function removePosition(coordinates) {
     }
 }
 
-function getMapFragment(coordinates) {
-    if (!field) {
+function getMapFragment(userForced, dictById) {
+    if (!validateCoordinates(userForced.user.coordinates)) {
+        console.log(!field ? 'Map is not set' : 'Invalid coordinates');
         return;
     }
 
     var topLeft = {
-        x: coordinates.x - gameSettings.playerPositionSquare.x,
-        y: coordinates.y - gameSettings.playerPositionSquare.y
+        x: userForced.user.coordinates.x - gameSettings.playerPositionSquare.x,
+        y: userForced.user.coordinates.y - gameSettings.playerPositionSquare.y
     };
 
     var mapFragment = [];
@@ -283,7 +284,11 @@ function getMapFragment(coordinates) {
                 y: topLeft.y + i
             });
 
-            if (obj) {
+            if (obj && !(j === 8 && i === 5)) {
+                if (obj.type === 3 && dictById[obj._id] && !userForced.forced) {
+                    dictById[obj._id].emit('someone moved');
+                }
+
                 mapFragment.push({
                     x: j,
                     y: i,
@@ -297,14 +302,26 @@ function getMapFragment(coordinates) {
 }
 
 function addPlayer(player) {
+    if (!players) {
+        return;
+    }
+
     players[indexConverter.getIndex(player.coordinates)] = player;
 }
 
 function addCastle(castle) {
+    if (!castles) {
+        return;
+    }
+
     castles[indexConverter.getIndex(castle.coordinates)] = castle;
 }
 
 function movePlayer(user, dx, dy) {
+    if (!players) {
+        return;
+    }
+
     players[indexConverter.getIndex(user.coordinates)] = undefined;
 
     players[indexConverter.getIndex({

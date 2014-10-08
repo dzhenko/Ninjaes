@@ -2,6 +2,8 @@
 
 app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images', 'gameNotifier',
     function ($scope, $location, identity, socket, images, gameNotifier) {
+        var ctx;
+
         var handler = function (e) {
             e.preventDefault();
 
@@ -23,15 +25,25 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
         $doc.on('keydown', handler);
         $scope.$on('$destroy', function () {
             $doc.off('keydown', handler);
+            ctx = undefined;
         });
 
-        var ctx = document.querySelector('canvas').getContext('2d');
-        redrawMap(identity.currentUser.coordinates);
+        images.worldMap.onload = function() {
+            redrawMap();
+        };
+
+        redrawMap();
 
         function redrawMap(coordinates) {
+            coordinates = coordinates || identity.currentUser.coordinates;
+
+            if (!ctx) {
+                ctx = document.getElementById('main-canvas').getContext('2d');
+            }
+
             ctx.drawImage(images.worldMap,
-                    (coordinates.x % images.mapSettings.squareCount) * images.mapSettings.squareDistance,
-                    (coordinates.y % images.mapSettings.squareCount) * images.mapSettings.squareDistance,
+                    images.worldMap.width / 3 + (coordinates.x % images.mapSettings.squareCount) * images.mapSettings.squareDistance,
+                    images.worldMap.height / 3 + (coordinates.y % images.mapSettings.squareCount) * images.mapSettings.squareDistance,
                     images.mapSettings.visibleWidthSquares * images.mapSettings.squareDistance,
                     images.mapSettings.visibleHeightSquares * images.mapSettings.squareDistance,
                 0, 0,
@@ -40,23 +52,43 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
         }
 
         function drawObjects(mapFragment) {
-            console.log(mapFragment);
-//            ctx.drawImage(images.castleImage, x * sqrDistance - sqrDistance, y * sqrDistance - sqrDistance);
-//            mapObjects.forEach(function(obj) {
-//
-//            });
+            if (!ctx) {
+                ctx = document.getElementById('main-canvas').getContext('2d');
+            }
+
+            mapFragment.forEach(function(item) {
+                if (item.obj.type === 1) {
+                    ctx.drawImage(images.goldImage, item.x * images.mapSettings.squareDistance, item.y * images.mapSettings.squareDistance);
+                }
+                else if (item.obj.type === 2) {
+                    ctx.drawImage(images.monsterImage, item.x * images.mapSettings.squareDistance, item.y * images.mapSettings.squareDistance - 15);
+                }
+            })
         }
 
-        socket.emit('getMap', identity.currentUser.coordinates);
+        socket.emit('get map', {
+            user : identity.currentUser,
+            forced : false
+        });
 
-        if (!socket.eventDict['getMap']) {
-            socket.eventDict['getMap'] = true;
-            socket.on('getMap', drawObjects);
+        if (!socket.eventDict['get map']) {
+            socket.eventDict['get map'] = true;
+            socket.on('get map', drawObjects);
         }
 
         if (!socket.eventDict['moved']) {
             socket.eventDict['moved'] = true;
             socket.on('moved', handleMovedResponse);
+        }
+
+        if (!socket.eventDict['someone moved']) {
+            socket.eventDict['someone moved'] = true;
+            socket.on('someone moved', function() {
+                socket.emit('get map', {
+                    user : identity.currentUser,
+                    forced : true
+                });
+            });
         }
 
         function movePlayer(dx, dy) {
@@ -69,14 +101,12 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
 
         function handleMovedResponse(response) {
             if (!response) {
-                // out of movement
-                return;
+                // no movement or wrong coords
             }
-
-            console.log('moved recieved');
-
-            redrawMap(response.user.coordinates);
-            drawObjects(response.mapFragment);
-            identity.currentUser = response.user;
+            else {
+                identity.currentUser = response.user;
+                redrawMap();
+                drawObjects(response.mapFragment);
+            }
         }
     }]);

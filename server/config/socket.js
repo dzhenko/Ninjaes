@@ -16,12 +16,11 @@ module.exports = {
             });
 
             socket.on('moved', function (information) {
-                socket.emit('moved', handlers.movement.checkMove(information));
-                io.emit('someone moved');
+                socket.emit('moved', handlers.movement.checkMove(information, dictById));
             });
 
-            socket.on('getMap', function (coordinates) {
-                socket.emit('getMap', handlers.map.getMapFragment(coordinates));
+            socket.on('get map', function (userForced) {
+                socket.emit('get map', handlers.map.getMapFragment(userForced, dictById));
             });
 
             socket.on('registerForEvents', function (userData) {
