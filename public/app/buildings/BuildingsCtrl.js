@@ -1,6 +1,8 @@
 'use strict';
 
-app.controller('BuildingsCtrl', ['$scope', '$location', function ($scope, $location) {
+app.controller('BuildingsCtrl', ['$scope', '$location', 'buildNotifier', 'buildingsData', function ($scope, $location, buildNotifier, buildingsData) {
+    $scope.showBuyWindow = buildNotifier.showBuyWindow;
+
     $scope.buyBuilding = function(){
         alert('doesn\'t work yet');
     };
@@ -15,4 +17,6 @@ app.controller('BuildingsCtrl', ['$scope', '$location', function ($scope, $locat
             $buildings[i].style.backgroundColor = 'green';
         }
     }
+
+    $scope.buildings = buildingsData.getBuildings;
 }]);
