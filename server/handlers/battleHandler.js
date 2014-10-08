@@ -98,7 +98,7 @@ module.exports = {
             }
 
             if (socket.byId[reports.defender.owner]) {
-                socket.byId[reports.defender.owner].emit('newReport', {win : reports.defender.win, enemy:reports.defender.enemy});
+                socket.byId[reports.defender.owner].emit('new report', {win : reports.defender.win, enemy:reports.defender.enemy});
             }
         });
 

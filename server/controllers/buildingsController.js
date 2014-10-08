@@ -16,12 +16,10 @@ module.exports = {
             var castle = map.getCastle(origCastle.coordinates);
 
             if (!user) {
-                console.log('!!! Can not find user from map dict');
-                return;
+                user = req.user;
             }
             if (!castle) {
-                console.log('!!! Can not find castle from map dict');
-                return;
+                castle = origCastle;
             }
 
             var success = false;

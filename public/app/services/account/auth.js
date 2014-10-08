@@ -9,7 +9,7 @@ app.factory('auth', ['$q', '$http', 'identity', 'UsersResource', 'socket', funct
             user.$save().then(function(){
                 identity.currentUser = user;
 
-                socket.emit('registerForEvents', {id : user._id, name: user.username});
+                socket.emit('register for events', {id : user._id, name: user.username});
 
                 deferred.resolve(true);
             }, function(response){
@@ -42,7 +42,7 @@ app.factory('auth', ['$q', '$http', 'identity', 'UsersResource', 'socket', funct
                     angular.extend(user, response.user);
                     identity.currentUser = user;
 
-                    socket.emit('registerForEvents', {id : user._id, name: user.username});
+                    socket.emit('register for events', {id : user._id, name: user.username});
 
                     deferred.resolve(true);
                 }

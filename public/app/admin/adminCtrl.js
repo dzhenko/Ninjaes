@@ -1,7 +1,7 @@
 'use strict';
 
-app.controller('AdminCtrl', ['$scope','massNotifier', function ($scope, massNotifier) {
+app.controller('AdminCtrl', ['$scope','socket', function ($scope, socket) {
     $scope.sendMessage = function(message) {
-        massNotifier.show(message);
+        socket.emit('mass message', message);
     }
 }]);

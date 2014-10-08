@@ -15,6 +15,10 @@ module.exports = {
                 io.emit('chat message', msg);
             });
 
+            socket.on('mass message', function(msg) {
+                io.emit('mass message', msg);
+            });
+
             socket.on('moved', function (information) {
                 socket.emit('moved', handlers.movement.checkMove(information, dictById));
             });
@@ -23,7 +27,7 @@ module.exports = {
                 socket.emit('get map', handlers.map.getMapFragment(userForced, dictById));
             });
 
-            socket.on('registerForEvents', function (userData) {
+            socket.on('register for events', function (userData) {
                 dictByName[userData.name] = socket;
                 dictById[userData.id] = socket;
                 dictByNameId[socket.id] = userData;

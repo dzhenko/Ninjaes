@@ -147,18 +147,25 @@ app.run(['$rootScope', '$location', function ($rootScope, $location) {
     })
 }]);
 
-app.run(['socket','notifier', function(socket, notifier){
-    if (!socket.eventDict['newReport']) {
-        socket.eventDict['newReport'] = true;
-        socket.on('newReport', function(info) {
+app.run(['socket','notifier','massNotifier', function(socket, notifier, massNotifier){
+    if (!socket.eventDict['new report']) {
+        socket.eventDict['new report'] = true;
+        socket.on('new report', function(info) {
             notifier.warning('You have just ' + info.win ? 'won' : 'lost' + ' a battle with ' + info.enemy);
         });
     }
 
-    if (!socket.eventDict['newMessage']) {
-        socket.eventDict['newMessage'] = true;
-        socket.on('newMessage', function(info) {
+    if (!socket.eventDict['new message']) {
+        socket.eventDict['new message'] = true;
+        socket.on('new message', function(info) {
             notifier.warning('You have new message from ' + info);
+        });
+    }
+
+    if (!socket.eventDict['mass message']) {
+        socket.eventDict['mass message'] = true;
+        socket.on('mass message', function(message) {
+            massNotifier.show(message);
         });
     }
 }]);
