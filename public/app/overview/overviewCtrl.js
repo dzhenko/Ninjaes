@@ -1,13 +1,13 @@
 'use strict';
 
-app.controller('OverviewCtrl', ['$scope', 'appData', 'troopsModel', 'overviewNotifier', function ($scope, appData, troopsModel, overviewNotifier) {
-    $scope.recruit = overviewNotifier.recruit;
+app.controller('OverviewCtrl', ['$scope', '$location', 'appData', 'troopsModel', 'overviewNotifier', function ($scope, $location, appData, troopsModel, overviewNotifier) {
+    $scope.troopsInfo = troopsModel;
 
     appData.getUserOverview().then(function (data) {
-        console.log(data);
         $scope.userTroops = data;
     });
 
-    $scope.troopsInfo = troopsModel;
-    console.log(troopsModel);
+    $scope.go = function (path) {
+        $location.path(path);
+    };
 }]);
