@@ -80,6 +80,15 @@ footer {
 }
 .buildingsCreator {
   margin-top: 250px;
+  position: absolute;
+  height: 200px;
+  width: 200px;
+  display: inline-block;
+}
+.troopsCreator {
+  margin-top: 50px;
+  margin-left: 720px;
+  position: absolute;
   height: 200px;
   width: 200px;
   display: inline-block;

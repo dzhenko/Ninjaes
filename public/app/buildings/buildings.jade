@@ -1,56 +1,40 @@
-.container.buildingsMenu
+.container.buildingsMenu(id="build-panel")
     div.buildingsRow
-        div.buildingBox#town-hall(ng-click='buyBuilding()')
-            div.buildingName
-                | Town Hall
-        div.buildingBox(ng-click='buyBuilding()')
-            div.buildingName
-                | Citadel
-        div.buildingBox(ng-click='buyBuilding()')
-            div.buildingName
-                | Brotherhood of the sword
-        div.buildingBox(ng-click='buyBuilding()')
-            div.buildingName
-                | Blacksmith
+        div.buildingBox(ng-click='showBuyWindow(0)')
+            div.buildingName {{ buildings[0].name }}
+        div.buildingBox(ng-click='showBuyWindow(1)')
+            div.buildingName {{ buildings[1].name }}
+        div.buildingBox(ng-click='showBuyWindow(2)')
+            div.buildingName {{ buildings[2].name }}
+        div.buildingBox(ng-click='showBuyWindow(3)')
+            div.buildingName {{ buildings[3].name }}
     div.buildingsRow
-        div.buildingBox(ng-click='buyBuilding()')
-            div.buildingName
-                | Market Place
-        div.buildingBox(ng-click='buyBuilding()')
-            div.buildingName
-                | Mage Guild level 2
-        div.buildingBox(ng-click='buyBuilding()')
-            div.buildingName
-                | Shipyard
+        div.buildingBox(ng-click='showBuyWindow(4)')
+            div.buildingName {{ buildings[4].name }}
+        div.buildingBox(ng-click='showBuyWindow(5)')
+            div.buildingName {{ buildings[5].name }}
+        div.buildingBox(ng-click='showBuyWindow(6)')
+            div.buildingName {{ buildings[6].name }}
     div.buildingsRow
-        div.buildingBox(ng-click='buyBuilding()')
-            div.buildingName
-                | Stables
-        div.buildingBox(ng-click='buyBuilding()')
-            div.buildingName
-                | Griffin Bastion
+        div.buildingBox(ng-click='showBuyWindow(7)')
+            div.buildingName {{ buildings[7].name }}
+        div.buildingBox(ng-click='showBuyWindow(8)')
+            div.buildingName {{ buildings[8].name }}
     div.buildingsRow
-        div.buildingBox(ng-click='buyBuilding()')
-            div.buildingName
-                | Upg. Guardhouse
-        div.buildingBox(ng-click='buyBuilding()')
-            div.buildingName
-                | Upg. Archer's Tower
-        div.buildingBox(ng-click='buyBuilding()')
-            div.buildingName
-                | Upg. Griffin Tower
-        div.buildingBox(ng-click='buyBuilding()')
-            div.buildingName
-                | Barracks
+        div.buildingBox(ng-click='showBuyWindow(9)')
+            div.buildingName {{ buildings[9].name }}
+        div.buildingBox(ng-click='showBuyWindow(10)')
+            div.buildingName {{ buildings[10].name }}
+        div.buildingBox(ng-click='showBuyWindow(11)')
+            div.buildingName {{ buildings[11].name }}
+        div.buildingBox(ng-click='showBuyWindow(12)')
+            div.buildingName {{ buildings[12].name }}
     div.buildingsRow
-        div.buildingBox(ng-click='buyBuilding()')
-            div.buildingName
-                | Monastery
-        div.buildingBox(ng-click='buyBuilding()')
-            div.buildingName
-                | Training Grounds
-        div.buildingBox(ng-click='buyBuilding()')
-            div.buildingName
-                | Portal of Glory
+        div.buildingBox(ng-click='showBuyWindow(13)')
+            div.buildingName {{ buildings[13].name }}
+        div.buildingBox(ng-click='showBuyWindow(14)')
+            div.buildingName {{ buildings[14].name }}
+        div.buildingBox(ng-click='showBuyWindow(15)')
+            div.buildingName {{ buildings[15].name }}
     a(href='#castle' target='_parent')
         div.exit
