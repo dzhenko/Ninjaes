@@ -71,3 +71,16 @@ footer {
   border: 1px solid #808080;
   background-color: #008000;
 }
+.castle {
+  margin-top: -40px;
+  background: url("../../img/insideCastle.jpg");
+  width: 1000px;
+  height: 600px;
+  background-size: 1000px 790px;
+}
+.buildingsCreator {
+  margin-top: 250px;
+  height: 200px;
+  width: 200px;
+  display: inline-block;
+}
