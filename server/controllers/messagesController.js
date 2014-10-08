@@ -38,7 +38,7 @@ module.exports = {
             }
 
             if (socket.byId[message.owner]) {
-                socket.byId[message.owner].emit('newMessage', message.from);
+                socket.byId[message.owner].emit('new message', message.from);
             }
 
             res.send({
