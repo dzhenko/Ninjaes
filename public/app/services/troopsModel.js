@@ -4,6 +4,7 @@ app.factory('troopsModel', [function() {
     return [
         {
             name: 'Halberdiers',
+            image: './img/troops/halberdier.gif',
             attack: 6,
             defense: 5,
             damage: 2,
@@ -13,6 +14,7 @@ app.factory('troopsModel', [function() {
             cost: 130
         },{
             name: 'Marksmen',
+            image: './img/troops/halberdier.gif',
             attack: 8,
             defense: 4,
             damage: 4,
@@ -22,6 +24,7 @@ app.factory('troopsModel', [function() {
             cost: 300
         },{
             name: 'Royal Griffins',
+            image: './img/troops/halberdier.gif',
             attack: 9,
             defense: 9,
             damage: 6,
@@ -31,6 +34,7 @@ app.factory('troopsModel', [function() {
             cost: 440
         },{
             name: 'Crusaders',
+            image: './img/troops/halberdier.gif',
             attack: 12,
             defense: 12,
             damage: 9,
@@ -40,6 +44,7 @@ app.factory('troopsModel', [function() {
             cost: 760
         },{
             name: 'Zealots',
+            image: './img/troops/halberdier.gif',
             attack: 12,
             defense: 10,
             damage: 12,
@@ -49,6 +54,7 @@ app.factory('troopsModel', [function() {
             cost: 1000
         },{
             name: 'Champions',
+            image: './img/troops/halberdier.gif',
             attack: 16,
             defense: 16,
             damage: 24,
@@ -58,6 +64,7 @@ app.factory('troopsModel', [function() {
             cost: 1500
         },{
             name: 'Archangels',
+            image: './img/troops/halberdier.gif',
             attack: 30,
             defense: 30,
             damage: 50,
