@@ -85,7 +85,7 @@ module.exports = {
         }
     },
     getAllUsers: function (req, res) {
-        User.find({}).select('username _id experience gold').exec(function (err, collection) {
+        User.find({}).select('username _id firstName lastName experience gold movement').exec(function (err, collection) {
             if (err) {
                 console.log('Users could not be loaded ' + err);
             }
