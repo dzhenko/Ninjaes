@@ -1,8 +1,6 @@
 app.factory('gameNotifier', ['$q', function($q) {
     'use strict';
 
-    var mapHolder = $('#mapHolder');
-
     var holder = $('<div />').css('position','absolute').css('top','120px').css('color','white').width('158px')
         .css('left',(screen.availWidth / 2 - 132) + 'px').css('background-size','strech').css('z-index', 100);
 
@@ -23,7 +21,7 @@ app.factory('gameNotifier', ['$q', function($q) {
             cnclBtn.hide();
             okBtn.hide();
             holder.css('background-image', 'url("../../img/gameNotifier/goldNotifier.jpg")').height('105px');
-            holder.hide().appendTo(mapHolder).fadeIn().fadeOut(2000);
+            holder.hide().appendTo($('#mapHolder')).fadeIn().fadeOut(2000);
         },
         enemy: function(amount) {
             var deferred = $q.defer();
@@ -61,7 +59,7 @@ app.factory('gameNotifier', ['$q', function($q) {
             cnclBtn.hide();
             okBtn.hide();
             holder.css('background-image', 'url("../../img/gameNotifier/troopsNotifier.jpg")').height('105px');
-            holder.hide().appendTo(mapHolder).show().fadeOut(4000);
+            holder.hide().appendTo($('#mapHolder')).show().fadeOut(4000);
         }
     }
 }]);

@@ -124,7 +124,6 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
         }
 
         function handleMovedResponse(response) {
-            console.log(response);
             if (!response) {
                 return;
             }
@@ -173,10 +172,10 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
             identity.currentUser = response.user;
 
             if (response.success) {
-                gameNotifier.message('   You won   ')
+                gameNotifier.message('-------You won-------')
             }
             else {
-                gameNotifier.message('   You lost   ')
+                gameNotifier.message('-------You lost-------')
             }
 
             socket.emit('moved', {

@@ -56,9 +56,6 @@ module.exports = {
                     userCastle.troops[i] = 0;
                 }
             }
-            else {
-                console.log('movement handler logic error : ' + mapObj);
-            }
 
             map.movePlayer(user, information.dx, information.dy);
             user.coordinates = futureCoords;
