@@ -3,7 +3,7 @@
 var map = require('../handlers/mapHandler');
 
 module.exports = {
-    checkMove: function(information) {
+    checkMove: function(information, dictById) {
         var user = information.user;
         if (!user || user.movement === 0) {
             return false;
@@ -49,11 +49,12 @@ module.exports = {
 
         return {
             user: user,
-            dx : information.dx,
-            dy : information.dy,
             event: event,
             object: mapObj,
-            mapFragment: map.getMapFragment(user.coordinates),
+            mapFragment: map.getMapFragment({
+                user : user,
+                forced : false
+            }, dictById),
             move: event !== 'enemy'
         };
     }
