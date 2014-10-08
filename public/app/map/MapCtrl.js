@@ -2,8 +2,6 @@
 
 app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images', 'gameNotifier',
     function ($scope, $location, identity, socket, images, gameNotifier) {
-        redrawMap(identity.currentUser.coordinates);
-
         var handler = function (e) {
             e.preventDefault();
 
@@ -28,6 +26,7 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
         });
 
         var ctx = document.querySelector('canvas').getContext('2d');
+        redrawMap(identity.currentUser.coordinates);
 
         function redrawMap(coordinates) {
             ctx.drawImage(images.worldMap,
