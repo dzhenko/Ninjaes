@@ -27,16 +27,6 @@ app.controller('AdminCtrl', ['$scope', 'socket', function ($scope, socket) {
                     if (operation !== "read" && options.models) {
                         return {models: kendo.stringify(options.models)};
                     }
-
-                    if (operation == "edit" && options.models) {
-                        console.log("Update worked");
-                        return { models: kendo.stringify(data.models) };
-                    }
-
-                    if (operation == "destroy" && options.models) {
-                        console.log("Delete worked");
-                        return { models: kendo.stringify(data.models) };
-                    }
                 }
             },
             batch: true,
@@ -62,7 +52,6 @@ app.controller('AdminCtrl', ['$scope', 'socket', function ($scope, socket) {
         filterable: true,
         sortable: true,
         pageable: true,
-        //detailTemplate: kendo.template($("#template").html()),
         columns: [
             { field: "username", title: "Username", width: "100px" },
             { field: "firstName", title: "First Name", width: "100px" },

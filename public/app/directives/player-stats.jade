@@ -1,0 +1,64 @@
+div.stats-container(style="background-color: #2f1b0e; color: #fff;")
+    table.table(style="background-color: #2f1b0e; color: #fff;")
+        tbody
+            tr
+                td.merged-text.text-right Gold:
+                td.merged-text.text-left {{ playerData.gold }}
+                td.merged-text.text-right Exp
+                td.merged-text.text-left(style="width: 70%;")
+                    div.progress
+                        div.progress-bar.progress-bar-success(style="width: 100%") {{ playerData.experience }}
+    table.table(style="background-color: #2f1b0e; color: #fff;")
+        tbody
+            tr
+                td.merged-text.text-left CASTLE
+                td.merged-text.text-right {{ troopsData[0].name }}:
+                td.merged-text.text-left {{ castleData.troops[0] }}
+                td.merged-text.text-right {{ troopsData[1].name }}:
+                td.merged-text.text-left {{ castleData.troops[1] }}
+                td.merged-text.text-right {{ troopsData[2].name }}:
+                td.merged-text.text-left {{ castleData.troops[2] }}
+                td.merged-text.text-right {{ troopsData[3].name }}:
+                td.merged-text.text-left {{ castleData.troops[3] }}
+                td.merged-text.text-right {{ troopsData[4].name }}:
+                td.merged-text.text-left {{ castleData.troops[4] }}
+                td.merged-text.text-right {{ troopsData[5].name }}:
+                td.merged-text.text-left {{ castleData.troops[5] }}
+                td.merged-text.text-right {{ troopsData[6].name }}:
+                td.merged-text.text-left {{ castleData.troops[6] }}
+    table.table(style="background-color: #2f1b0e; color: #fff;")
+        tbody
+            tr
+                td.merged-text.text-left FOR SALE
+                td.merged-text.text-right {{ troopsData[0].name }}:
+                td.merged-text.text-left {{ castleData.troopsForSale[0] }}
+                td.merged-text.text-right {{ troopsData[1].name }}:
+                td.merged-text.text-left {{ castleData.troopsForSale[1] }}
+                td.merged-text.text-right {{ troopsData[2].name }}:
+                td.merged-text.text-left {{ castleData.troopsForSale[2] }}
+                td.merged-text.text-right {{ troopsData[3].name }}:
+                td.merged-text.text-left {{ castleData.troopsForSale[3] }}
+                td.merged-text.text-right {{ troopsData[4].name }}:
+                td.merged-text.text-left {{ castleData.troopsForSale[4] }}
+                td.merged-text.text-right {{ troopsData[5].name }}:
+                td.merged-text.text-left {{ castleData.troopsForSale[5] }}
+                td.merged-text.text-right {{ troopsData[6].name }}:
+                td.merged-text.text-left {{ castleData.troopsForSale[6] }}
+    table.table(style="background-color: #2f1b0e; color: #fff;")
+        tbody
+            tr
+                td.merged-text.text-left USER TROOPS
+                td.merged-text.text-right {{ troopsData[0].name }}:
+                td.merged-text.text-left {{ playerData.troops[0] }}
+                td.merged-text.text-right {{ troopsData[1].name }}:
+                td.merged-text.text-left {{ playerData.troops[1] }}
+                td.merged-text.text-right {{ troopsData[2].name }}:
+                td.merged-text.text-left {{ playerData.troops[2] }}
+                td.merged-text.text-right {{ troopsData[3].name }}:
+                td.merged-text.text-left {{ playerData.troops[3] }}
+                td.merged-text.text-right {{ troopsData[4].name }}:
+                td.merged-text.text-left {{ playerData.troops[4] }}
+                td.merged-text.text-right {{ troopsData[5].name }}:
+                td.merged-text.text-left {{ playerData.troops[5] }}
+                td.merged-text.text-right {{ troopsData[6].name }}:
+                td.merged-text.text-left {{ playerData.troops[6] }}
