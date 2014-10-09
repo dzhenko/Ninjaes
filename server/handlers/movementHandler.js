@@ -3,6 +3,7 @@
 var originalGameData = require('../data/gameData'),
     map = require('../handlers/mapHandler');
 
+//TODO: Test
 function movePlayer(player, dx, dy, gameData) {
     if (!player.coordinates) {
         return;
@@ -17,6 +18,7 @@ function movePlayer(player, dx, dy, gameData) {
 }
 
 module.exports = {
+    //TODO: Test
     checkMove: function(information, dictById, gameData) {
         gameData = gameData || originalGameData;
 

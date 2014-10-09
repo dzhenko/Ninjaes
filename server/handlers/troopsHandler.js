@@ -4,6 +4,7 @@ var troopsModel = require('../gameModels/troopsModel'),
     originalGameData = require('../data/gameData');
 
 module.exports = {
+    //TODO: Test
     buyTroops : function(information, gameData) {
         gameData = gameData || originalGameData;
 

@@ -52,6 +52,7 @@ module.exports = {
             troops: [0,0,0,0,0,0,0]
         }
     },
+    //TODO: Test
     updateMapWithUserAndCastle: function(user, castle, gameData) {
         gameData = gameData || originalGameData;
 
