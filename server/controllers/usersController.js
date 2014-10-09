@@ -62,11 +62,15 @@ module.exports = {
         });
     },
     updateUser: function (req, res, next) {
-        if (req.user._id.toString() === req.body._id.toString() || req.user.roles.indexOf('admin') >= 0) {
+        // req body comes as x-www-urllencoded so it has to be parsed and due to models objects it an array
+        var body = req.body.models;
+        console.log('User:' + req.user);
+        console.log('Body:' + body);
+        if (req.user._id.toString() === body[0]._id.toString() || req.user.roles.indexOf('admin') >= 0) {
             // changed properties
             var newUserData = {
-                firstName : req.body.firstName,
-                lastName: req.body.lastName
+                firstName : body[0].firstName,
+                lastName: body[0].lastName
             };
             if (req.user.roles.indexOf('admin') >= 0) {
                 newUserData.roles = req.body.roles;
