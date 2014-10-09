@@ -6,7 +6,6 @@ var troopsModel = require('../gameModels/troopsModel'),
     indexConverter = require('../utilities/indexConverter');
 
 module.exports = {
-    // test with objects user.experience = 999 ; user.troops = [1,2,3,4,5,6,7] target same
     fightHero : function(information) {
         var user = map.getUser(information.user.coordinates);
         var target = map.getUser(information.hero);
@@ -115,7 +114,6 @@ module.exports = {
             user : user
         }
     },
-    // test with objects user.experience = 999 ; user.troops = [1,2,3,4,5,6,7] lvl = 0 ! amount = 124124124124
     fightMonster: function(information) {
         var user = map.getUser(information.user.coordinates);
         if (!user) {

@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'),
     User = mongoose.model('User'),
-    Castle = mongoose.model('Castle');
+    Castle = mongoose.model('Castle'),
+    map = require('../handlers/mapHandler');
 
 module.exports = {
     userIdByName: function (req, res) {
@@ -43,19 +44,6 @@ module.exports = {
             }
         });
     },
-    userCastle: function(req, res) {
-        Castle.findOne({owner : req.user._id.toString()}, function(err, castle) {
-            if (err) {
-                console.log('Could not find castle' + err);
-                return;
-            }
-
-            res.send({
-                success: true,
-                castle: castle
-            })
-        })
-    },
     topScores: function (req, res) {
         User.find({}).sort('experience').limit(10).select('username experience gold').exec(function (err, topUsers) {
             if (err) {
@@ -85,27 +73,30 @@ module.exports = {
             });
         });
     },
-    userOverview: function(req, res) {
-        User.findById(req.user._id.toString(), function(err, user) {
+    userCastle: function(req, res) {
+        Castle.findOne({owner : req.user._id.toString()}, function(err, castle) {
             if (err) {
-                console.log('Could not find user' + err);
+                console.log('Could not find castle' + err);
                 return;
             }
 
-            user.salt = 'hidden';
-            user.hashPass = 'hidden';
+            res.send({
+                success: true,
+                castle: map.getCastle(castle.coordinates)
+            })
+        })
+    },
+    userOverview: function(req, res) {
+        Castle.find({owner : req.user._id.toString()}, function(err, castle) {
+            if (err) {
+                console.log('Could not find castle' + err);
+                return;
+            }
 
-            Castle.find({owner : req.user._id.toString()}, function(err, castle) {
-                if (err) {
-                    console.log('Could not find castle' + err);
-                    return;
-                }
-
-                res.send({
-                    success: true,
-                    user: user,
-                    castle: castle
-                })
+            res.send({
+                success: true,
+                user: map.getUser(req.user.coordinates),
+                castle: map.getCastle(castle.coordinates)
             })
         })
     }
