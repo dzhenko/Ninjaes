@@ -13,6 +13,8 @@ module.exports = function(app, config) {
         .put(auth.isAuthenticated, controllers.users.updateUser)
         .delete(auth.isInRole('admin'), controllers.users.deleteUser);
 
+    app.post('/api/users/all', auth.isInRole('admin'), controllers.users.getAllUsers);
+
     app.route('/api/game-reports')
         .get(auth.isAuthenticated, controllers.reports.getAllReports)
         .put(auth.isAuthenticated, controllers.reports.removeReport);

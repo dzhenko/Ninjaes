@@ -9,8 +9,8 @@ app.controller('AdminCtrl', ['$scope', 'socket', function ($scope, socket) {
         dataSource = new kendo.data.DataSource({
             transport: {
                 read: {
-                    url: crudServiceBaseUrl + "/users",
-                    type: 'GET',
+                    url: "http://localhost:9999/api/users/all",
+                    type: 'POST',
                     dataType: "json"
                 },
                 update: {
@@ -23,15 +23,18 @@ app.controller('AdminCtrl', ['$scope', 'socket', function ($scope, socket) {
                     dataType: "json",
                     type: "DELETE"
                 },
-                parameterMap: function (options, operation) {
-                    if (operation !== "read" && options.models) {
-                        return {models: kendo.stringify(options.models)};
-                    }
+                parameterMap: function(data, type) {
+                    return data;
                 }
             },
+            serverPaging: true,
+            serverFiltering: true,
+            serverSorting: true,
             batch: true,
             pageSize: 5,
             schema: {
+                data: 'data',
+                total : 'total',
                 model: {
                     id: "_id",
                     fields: {
@@ -41,7 +44,7 @@ app.controller('AdminCtrl', ['$scope', 'socket', function ($scope, socket) {
                         lastName: { type: "string", validation: {required: true}},
                         experience: { type: "number", validation: {required: true}, min: 0},
                         gold: { type: "number", validation: {required: true, min: 100}},
-                        movement: { type: "number", validation: {required: true, min: 500}}
+                        movement: { type: "number", validation: {required: true, min: 0}}
                     }
                 }
             }

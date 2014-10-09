@@ -1,24 +1,40 @@
 'use strict';
 
-app.controller('CastleCtrl', ['$scope', function ($scope) {
+app.controller('CastleCtrl', ['$scope','$location', function ($scope, $location) {
     $scope.bgSize = '1000px 790px';
-    $scope.background =background;
 
-    var background = 'url("../../img/insideCastle.jpg")';
-    var backgroundBuild = 'url("../../img/insideCastle-build.jpg")';
-    var backgroundTroops = 'url("../../img/insideCastle-troops.jpg")';
+    $scope.background = 'url("../../img/insideCastle.jpg")';
+    $scope.backgroundBuild = 'url("../../img/insideCastle-build.jpg")';
+    $scope.backgroundTroops = 'url("../../img/insideCastle-troops.jpg")';
+
+    $scope.showOriginal =true;
+    $scope.showBuild =false;
+    $scope.showTroops =false;
 
     $scope.getBuildBackground = function(){
-        $scope.background =backgroundBuild;
+        $scope.showOriginal =false;
+        $scope.showBuild =true;
+        $scope.showTroops =false;
     };
     $scope.looseBuildBackground = function() {
-        $scope.background =background;
+        $scope.showOriginal =true;
+        $scope.showBuild =false;
+        $scope.showTroops =false;
     };
     $scope.getTroopsBackground = function(){
-        $scope.background =backgroundTroops;
+        $scope.showOriginal =false;
+        $scope.showBuild =false;
+        $scope.showTroops =true;
     };
 
     $scope.looseTroopsBackground = function() {
-        $scope.background =background;
+        $scope.showOriginal =true;
+        $scope.showBuild =false;
+        $scope.showTroops =false;
     };
+
+    $scope.go = function(where) {
+        console.log(where);
+        $location.path(where);
+    }
 }]);

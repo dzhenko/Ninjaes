@@ -8,33 +8,29 @@
                 .form-group
                     label.col-md-2.control-label(for="first-name") First Name
                     .col-md-6
-                        input.form-control(id="first-name" type="text", placeholder="First Name", ng-model="user.firstName", required)
-                    .col-md-3
-                        .alert.alert-danger(ng-hide="!!user.firstName") First name is required
+                        input.form-control(id="first-name" type="text", placeholder="First Name", ng-model="user.firstName")
                 .form-group
                     label.col-md-2.control-label(for="last-name") Last Name
                     .col-md-6
-                        input.form-control(id="last-name" type="text", placeholder="Last Name", ng-model="user.lastName", required)
-                    .col-md-3
-                        .alert.alert-danger(ng-hide="!!user.lastName") Last name is required
+                        input.form-control(id="last-name" type="text", placeholder="Last Name", ng-model="user.lastName")
+
                 .form-group
-                    label.col-md-2.control-label(for="username") Username
+                    label.col-md-2.control-label(for="changePassword") Change password
                     .col-md-6
-                        input.form-control(id="username" type="text", placeholder="Username", ng-model="user.username", required)
-                    .col-md-3
-                        .alert.alert-danger(ng-hide="!!user.username") Username name is required
-                .form-group
+                        input.btn.btn-sm(id="changePassword" type="checkbox", ng-model="changePassword")
+
+                .form-group(ng-show="changePassword")
                     label.col-md-2.control-label(for="password") Password
                     .col-md-6
-                        input.form-control(id="password" type="password", placeholder="Password", ng-model="user.password", required)
+                        input.form-control(id="password" type="password", placeholder="Password", ng-model="user.password")
                     .col-md-3
                         .alert.alert-danger(ng-show="user.password.length < 6") Password is too short
-                .form-group
+                .form-group(ng-show="changePassword")
                     label.col-md-2.control-label(for="password2") Confirm Password
                     .col-md-6
-                        input.form-control(id="password2" type="password", placeholder="Confirm password", ng-model="secondPassword", required)
+                        input.form-control(id="password2" type="password", placeholder="Confirm password", ng-model="secondPassword")
                     .col-md-3
                         .alert.alert-danger(ng-show="user.password !== secondPassword") Both passwords must match
                 .pull-right.col-md-6
-                    button.btn.btn-primary(ng-click="update(user)", ng-disabled="signUpForm.$invalid || user.password !== secondPassword || user.password.length < 6") Create
+                    button.btn.btn-primary(ng-click="update(user)", ng-disabled="signUpForm.$pristine") Update
                     a.btn.btn-danger(href="#/") Cancel
