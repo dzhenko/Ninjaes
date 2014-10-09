@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-.container.castle(ng-style="{ 'background' : background, 'background-size' : bgSize }" ng-init="looseBuildBackground()")
-    a(href='#/buildings' title="Build stuff" ng-mouseover="getBuildBackground()" ng-mouseleave="looseBuildBackground()")
-        div.buildingsCreator
-    a(href='#/troops' title="Buy troops" ng-mouseover="getTroopsBackground()" ng-mouseleave="looseTroopsBackground()")
-        div.troopsCreator
-div(player-stats="" style="width: 1000px; margin: 0 auto")
-=======
 .container.castle(ng-style="{ 'background' : backgroundBuild, 'background-size' : bgSize }" ng-show="showBuild")
     .buildingsCreator(ng-click="go('/buildings')" ng-mouseenter="getBuildBackground()" ng-mouseleave="looseBuildBackground()")
     .troopsCreator(ng-click="go('/troops')" ng-mouseenter="getTroopsBackground()" ng-mouseleave="looseTroopsBackground()")
@@ -15,4 +7,4 @@ div(player-stats="" style="width: 1000px; margin: 0 auto")
 .container.castle(ng-style="{ 'background' : background, 'background-size' : bgSize }" ng-show="showOriginal")
     .buildingsCreator(ng-click="go('/buildings')" ng-mouseenter="getBuildBackground()" ng-mouseleave="looseBuildBackground()")
     .troopsCreator(ng-click="go('/troops')" ng-mouseenter="getTroopsBackground()" ng-mouseleave="looseTroopsBackground()")
->>>>>>> origin/master
+div(player-stats="" style="width: 1000px; margin: 0 auto")
