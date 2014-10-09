@@ -7,7 +7,7 @@ app.controller('SettingsCtrl', ['$scope', '$location', 'auth', 'notifier', funct
     $scope.update = function (user) {
         auth.update(user).then(function () {
             notifier.success('Changes were successful!');
-
+            $location.path('/');
         }, function() {
             notifier.error('Error!');
         });

@@ -63,59 +63,62 @@ module.exports = {
         });
     },
     updateUser: function (req, res, next) {
-        if (req.user._id.toString() === req.body._id.toString() || req.user.roles.indexOf('admin') >= 0) {
-            // changed properties
-            var newUserData = {
-                firstName : req.body.firstName,
-                lastName: req.body.lastName
-            };
-            if (req.user.roles.indexOf('admin') >= 0) {
-                newUserData.roles = req.body.roles;
-            }
+        if (req.user._id && req.body._id && req.user._id.toString() === req.body._id.toString()) {
+            //user is updating
+            var user = gameData.players.get(req.user.coordinates);
+
+            user.firstName = req.body.firstName;
+            user.lastName = req.body.lastName;
+
             if (req.body.password && req.body.password.length > 5) {
-                newUserData.salt = encryption.generateSalt();
-                newUserData.hashPass = encryption.generateHashedPassword(newUserData.salt, req.body.password);
+                user.salt = encryption.generateSalt();
+                user.hashPass = encryption.generateHashedPassword(user.salt, req.body.password);
             }
 
-            User.update({_id: newUserData._id}, newUserData, function () {
-                res.end();
-            });
-        }
-        else {
-            req.send({reason: "You do not have permissions"});
-        }
-    },
-    stuff : function() {
-        // req body comes as x-www-urllencoded so it has to be parsed and due to models objects it an array
-        var body = req.body.models;
-        console.log('User:' + req.user);
-        console.log('Body:' + body);
-        if (req.user._id.toString() === body[0]._id.toString() || req.user.roles.indexOf('admin') >= 0) {
-            // changed properties
-            var newUserData = {
-                firstName : body[0].firstName,
-                lastName: body[0].lastName
-            };
-            if (req.user.roles.indexOf('admin') >= 0) {
-                newUserData.roles = req.body.roles;
-            }
-            if (req.body.password && req.body.password.length > 5) {
-                newUserData.salt = encryption.generateSalt();
-                newUserData.hashPass = encryption.generateHashedPassword(newUserData.salt, req.body.password);
-            }
+            gameData.players.set(user.coordinates, user);
 
-            User.update({_id: newUserData._id}, newUserData, function () {
-                res.end();
-            });
+            res.send({user : user});
+        }
+        else if (req.user.roles.indexOf('admin') >= 0) {
+            //adming is updating
+            var userObj = JSON.parse(req.body.models)[0];
+            gameData.players.set(userObj.coordinates, userObj);
+            res.send(userObj);
         }
         else {
             req.send({reason: "You do not have permissions"});
         }
     },
     getAllUsers: function (req, res) {
-        res.send(gameData.users.all());
+        var all = gameData.players.all();
+
+        if (req.body.sort) {
+            var field = req.body.sort[0].field;
+            var dir = req.body.sort[0].dir;
+            all = all.sort(function(first,second) {
+                var a = first[field];
+                var b = second[field];
+                return dir === 'asc' ? a < b ? 1 : a > b ? -1 : 0 : a < b ? -1 : a > b ? 1 : 0;
+            })
+        }
+
+        var skip = parseInt(req.body.skip);
+        var take = parseInt(req.body.take);
+
+        res.send({
+            data : all.slice(skip, skip + take),
+            total : all.length
+        });
     },
     deleteUser: function(req, res) {
-        console.log(JSON.parse(req.body.models)[0]._id);
+        if (req.user.roles.indexOf('admin') >= 0) {
+            var user = JSON.parse(req.body.models)[0];
+            gameData.players.remove(user.coordinates);
+            User.remove({_id : user._id}, function(err) {
+                if (err) {
+                    console.log('Error deleting user ' + err);
+                }
+            })
+        }
     }
 };
