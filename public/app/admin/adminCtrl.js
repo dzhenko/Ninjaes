@@ -7,7 +7,6 @@ app.controller('AdminCtrl', ['$scope', 'socket', function ($scope, socket) {
 
     var crudServiceBaseUrl = "http://localhost:9999/api",
         dataSource = new kendo.data.DataSource({
-            autoSync: true,
             transport: {
                 read: {
                     url: crudServiceBaseUrl + "/users",
@@ -16,15 +15,13 @@ app.controller('AdminCtrl', ['$scope', 'socket', function ($scope, socket) {
                 },
                 update: {
                     url: crudServiceBaseUrl + "/users",
-                    type: 'PUT',
-                    contentType: "application/json",
-                    dataType: "json"
+                    dataType: "json",
+                    type: "PUT"
                 },
                 destroy: {
                     url: crudServiceBaseUrl + "/users",
-                    type: 'DELETE',
-                    contentType: "application/json",
-                    dataType: "json"
+                    dataType: "json",
+                    type: "DELETE"
                 },
                 parameterMap: function (options, operation) {
                     if (operation !== "read" && options.models) {
@@ -46,7 +43,7 @@ app.controller('AdminCtrl', ['$scope', 'socket', function ($scope, socket) {
             pageSize: 5,
             schema: {
                 model: {
-                    id: "id",
+                    id: "_id",
                     fields: {
                         id: { editable: false, nullable: false },
                         username: { editable: false, nullable: false },
@@ -60,9 +57,12 @@ app.controller('AdminCtrl', ['$scope', 'socket', function ($scope, socket) {
             }
         });
 
-    $("#grid").kendoGrid({
+    $scope.mainGridOptions = {
         dataSource: dataSource,
+        filterable: true,
+        sortable: true,
         pageable: true,
+        //detailTemplate: kendo.template($("#template").html()),
         columns: [
             { field: "username", title: "Username", width: "100px" },
             { field: "firstName", title: "First Name", width: "100px" },
@@ -72,6 +72,6 @@ app.controller('AdminCtrl', ['$scope', 'socket', function ($scope, socket) {
             { field: "movement", title: "Movement", width: "100px" },
             { command: ["edit", "destroy"], title: " ", width: "120px" }
         ],
-        editable: "inline"
-    });
+        editable: "popup"
+    };
 }]);

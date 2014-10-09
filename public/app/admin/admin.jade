@@ -11,4 +11,6 @@
     hr
     .container
         h2.text-center Edit players
-        div(id='grid')
+        div(ng-controller="AdminCtrl")
+            div(kendo-grid, k-options="mainGridOptions")
+            script(type="text/x-kendo-template", id="template")
