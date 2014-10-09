@@ -1,4 +1,4 @@
-app.factory('overviewNotifier', ['$q', function ($q) {
+app.factory('troopsOverviewNotifier', ['$q', function ($q) {
     'use strict';
 
     var mapHolder = $('#overview-panel');
@@ -113,6 +113,7 @@ app.factory('overviewNotifier', ['$q', function ($q) {
             addBtn.click(purchaseInfo, function (purchaseInfo) {
                 if (purchaseInfo.data.recruit < purchaseInfo.data.available) {
                     purchaseInfo.data.recruit++;
+                    purchaseInfo.data.totalCost = purchaseInfo.data.recruit * troop.cost;
                     deferred.notify(purchaseInfo.data);
                 }
             });
@@ -120,18 +121,20 @@ app.factory('overviewNotifier', ['$q', function ($q) {
             subtractBtn.click(purchaseInfo, function (purchaseInfo) {
                 if (purchaseInfo.data.recruit > 0) {
                     purchaseInfo.data.recruit--;
+                    purchaseInfo.data.totalCost = purchaseInfo.data.recruit * troop.cost;
                     deferred.notify(purchaseInfo.data);
                 }
             });
 
             buyMaxBtn.click(purchaseInfo, function (purchaseInfo) {
                 purchaseInfo.data.recruit = purchaseInfo.data.available;
+                purchaseInfo.data.totalCost = purchaseInfo.data.recruit * troop.cost;
                 deferred.notify(purchaseInfo.data);
             });
 
             finishBargainBtn.click(function () {
                 holder.hide();
-                deferred.resolve()
+                deferred.resolve(troop.id);
             });
 
             holder.css('background-image', 'url("../../img/recruit.png")').height('396px');
@@ -139,8 +142,9 @@ app.factory('overviewNotifier', ['$q', function ($q) {
 
             return deferred.promise;
         },
-        updateRecruits: function (count) {
+        updateRecruits: function (count, totalCost) {
             recruitLabel.text(count);
+            totalCostLabel.text(totalCost);
         }
     }
 }]);

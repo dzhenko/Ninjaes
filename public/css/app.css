@@ -73,10 +73,8 @@ footer {
 }
 .castle {
   margin-top: -40px;
-  background: url("../../img/insideCastle.jpg");
   width: 1000px;
   height: 600px;
-  background-size: 1000px 790px;
 }
 .buildingsCreator {
   margin-top: 250px;

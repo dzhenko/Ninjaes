@@ -1,6 +1,6 @@
 'use strict';
 
-var env = process.env.NODE_ENV || 'production'; // 'development'; - set if you want local Db
+var env = process.env.NODE_ENV || 'development';
 var config = require('./server/config/config')[env];
 
 var express = require('express');

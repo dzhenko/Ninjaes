@@ -4,7 +4,8 @@ var encryption = require('../utilities/encryption'),
     mongoose = require('mongoose'),
     User = mongoose.model('User'),
     Castle = mongoose.model('Castle'),
-    newUserHandler = require('../handlers/newUserHandler');
+    newUserHandler = require('../handlers/newUserHandler'),
+    map = require('../handlers/mapHandler');
 
 module.exports = {
     createUser: function (req, res, next) {
@@ -84,16 +85,37 @@ module.exports = {
             req.send({reason: "You do not have permissions"});
         }
     },
-    getAllUsers: function (req, res) {
-        User.find({}).select('username _id firstName lastName experience gold movement').exec(function (err, collection) {
-            if (err) {
-                console.log('Users could not be loaded ' + err);
+    stuff : function() {
+        // req body comes as x-www-urllencoded so it has to be parsed and due to models objects it an array
+        var body = req.body.models;
+        console.log('User:' + req.user);
+        console.log('Body:' + body);
+        if (req.user._id.toString() === body[0]._id.toString() || req.user.roles.indexOf('admin') >= 0) {
+            // changed properties
+            var newUserData = {
+                firstName : body[0].firstName,
+                lastName: body[0].lastName
+            };
+            if (req.user.roles.indexOf('admin') >= 0) {
+                newUserData.roles = req.body.roles;
+            }
+            if (req.body.password && req.body.password.length > 5) {
+                newUserData.salt = encryption.generateSalt();
+                newUserData.hashPass = encryption.generateHashedPassword(newUserData.salt, req.body.password);
             }
 
-            res.send(collection);
-        });
+            User.update({_id: newUserData._id}, newUserData, function () {
+                res.end();
+            });
+        }
+        else {
+            req.send({reason: "You do not have permissions"});
+        }
+    },
+    getAllUsers: function (req, res) {
+        res.send(map.getAllUsers());
     },
     deleteUser: function(req, res) {
-        //
+        console.log(JSON.parse(req.body.models)[0]._id);
     }
 };

@@ -350,6 +350,22 @@ function getUser(coords) {
     return players[indexConverter.getIndex(coords)];
 }
 
+function getAllUsers() {
+    if (!players) {
+        return;
+    }
+
+    var allPlayers = [];
+
+    for (var player in players) {
+        if (players[player] && players.hasOwnProperty(player)) {
+            allPlayers.push(players[player]);
+        }
+    }
+
+    return allPlayers;
+}
+
 function getCastle(coords) {
     if (!castles) {
         return;
@@ -369,5 +385,6 @@ module.exports = {
     addCastle: addCastle,
     movePlayer: movePlayer,
     getUser : getUser,
-    getCastle : getCastle
+    getCastle : getCastle,
+    getAllUsers: getAllUsers
 };
