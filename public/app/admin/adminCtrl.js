@@ -62,7 +62,7 @@ app.controller('AdminCtrl', ['$scope', 'socket', function ($scope, socket) {
         filterable: true,
         sortable: true,
         pageable: true,
-        //detailTemplate: kendo.template($("#template").html()),
+        detailTemplate: kendo.template($("#template").html()),
         columns: [
             { field: "username", title: "Username", width: "100px" },
             { field: "firstName", title: "First Name", width: "100px" },
