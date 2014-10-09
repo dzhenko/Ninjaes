@@ -3,7 +3,6 @@
 var gameSettings = require('../config/gameSettings'),
     originalGameData = require('../data/gameData');
 
-//TODO: Test
 function validateCoordinates(coordinates) {
     if (!coordinates) {
         return false;
@@ -103,5 +102,8 @@ function init(numberOfGameObjects) {
 
 module.exports = {
     init: init,
-    getMapFragment: getMapFragment
+    getMapFragment: getMapFragment,
+    validateCoordinates: validateCoordinates,
+    generateRandomGold: generateRandomGold,
+    generateRandomMonster: generateRandomMonster
 };

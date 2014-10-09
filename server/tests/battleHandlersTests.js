@@ -46,7 +46,7 @@ describe('battleHandler', function () {
 //    })
 
     describe('#fightMonster()', function () {
-        it('win over a monster should gain 1 more experience', function () {
+        it('is expected to win over a monster should gain 1 more experience', function () {
             var initialExperience = gameData.players.get(fakeInfo.user.coordinates).experience;
             var winner = battleHandler.fightMonster(fakeInfo, gameData).user;
 
