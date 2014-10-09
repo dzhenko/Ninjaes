@@ -91,3 +91,19 @@ footer {
   width: 200px;
   display: inline-block;
 }
+
+.stats-text{
+    background-color: #4d3221;
+}
+
+.stats-container .merged-text{
+    padding: 1px;
+}
+
+.stats-container table{
+    margin-bottom: 0;
+}
+
+.stats-container .progress{
+    margin: 2px;
+}
