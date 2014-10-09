@@ -34,6 +34,7 @@ app.controller('CastleCtrl', ['$scope','$location', function ($scope, $location)
     };
 
     $scope.go = function(where) {
+        console.log(where);
         $location.path(where);
     }
 }]);

@@ -1,7 +1,9 @@
 .container.castle(ng-style="{ 'background' : backgroundBuild, 'background-size' : bgSize }" ng-show="showBuild")
-.container.castle(ng-style="{ 'background' : backgroundTroops, 'background-size' : bgSize }" ng-show="showTroops")
-.container.castle(ng-style="{ 'background' : background, 'background-size' : bgSize }" ng-show="showOriginal")
-
     .buildingsCreator(ng-click="go('/buildings')" ng-mouseenter="getBuildBackground()" ng-mouseleave="looseBuildBackground()")
-
+    .troopsCreator(ng-click="go('/troops')" ng-mouseenter="getTroopsBackground()" ng-mouseleave="looseTroopsBackground()")
+.container.castle(ng-style="{ 'background' : backgroundTroops, 'background-size' : bgSize }" ng-show="showTroops")
+    .buildingsCreator(ng-click="go('/buildings')" ng-mouseenter="getBuildBackground()" ng-mouseleave="looseBuildBackground()")
+    .troopsCreator(ng-click="go('/troops')" ng-mouseenter="getTroopsBackground()" ng-mouseleave="looseTroopsBackground()")
+.container.castle(ng-style="{ 'background' : background, 'background-size' : bgSize }" ng-show="showOriginal")
+    .buildingsCreator(ng-click="go('/buildings')" ng-mouseenter="getBuildBackground()" ng-mouseleave="looseBuildBackground()")
     .troopsCreator(ng-click="go('/troops')" ng-mouseenter="getTroopsBackground()" ng-mouseleave="looseTroopsBackground()")
