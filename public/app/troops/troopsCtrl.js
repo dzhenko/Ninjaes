@@ -14,7 +14,7 @@ app.controller('TroopsCtrl', ['$scope', '$location', 'appData', 'troopsModel', '
 
         $scope.recalculatePurchaseInfo = function (unitInfo) {
             var maxUnitsFromUserGold = parseInt($scope.userTroops.user.gold / unitInfo.cost);
-            var unitsForSale = $scope.userTroops.castle[0].troopsForSale[unitInfo.id];
+            var unitsForSale = $scope.userTroops.castle.troopsForSale[unitInfo.id];
             var available = Math.min(maxUnitsFromUserGold, unitsForSale);
             $scope.purchaseInfo = {
                 available: available,
@@ -34,7 +34,7 @@ app.controller('TroopsCtrl', ['$scope', '$location', 'appData', 'troopsModel', '
         function buyTroops(index) {
             socket.emit('buy troops', {
                 user : identity.currentUser,
-                castle :$scope.userTroops.castle[0],
+                castle :$scope.userTroops.castle,
                 request : {
                     index : index,
                     amount : $scope.purchaseInfo.recruit
@@ -47,12 +47,11 @@ app.controller('TroopsCtrl', ['$scope', '$location', 'appData', 'troopsModel', '
             socket.on('buy troops', handleBuyTroops);
         }
 
-        console.log(identity.currentUser);
-
         function handleBuyTroops(response) {
             console.log(response);
             if (!response.success) {
                 gameNotifier.message('Not enough money!');
+                return;
             }
 
             gameNotifier.message('-------Success-------');
@@ -60,6 +59,7 @@ app.controller('TroopsCtrl', ['$scope', '$location', 'appData', 'troopsModel', '
             identity.currentUser = response.user;
             appData.getUserOverview().then(function (data) {
                 $scope.userTroops = data;
+                $location.path('/castle');
             });
         }
     }]);

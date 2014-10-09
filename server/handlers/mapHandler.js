@@ -37,7 +37,7 @@ function generateRandomGold(gameData) {
 
 //TODO: Test
 function generateRandomMonster(gameData) {
-    gameData = gameData || realGameData;
+    gameData = gameData || originalGameData;
 
     var rndPosition = generateRandomPosition();
     while (gameData.getAny(rndPosition) !== undefined) {
@@ -53,7 +53,7 @@ function generateRandomMonster(gameData) {
 
 //TODO: Test
 function getMapFragment(userForced, dictById, gameData) {
-    gameData = gameData || realGameData;
+    gameData = gameData || originalGameData;
 
     if (!validateCoordinates(userForced.user.coordinates)) {
         console.log('Invalid coordinates');

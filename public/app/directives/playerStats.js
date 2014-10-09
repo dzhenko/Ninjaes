@@ -13,11 +13,9 @@ app.directive('playerStats', ['appData', 'troopsModel', function (appData, troop
                         troops: data.user.troops
                     };
 
-                    scope.castleData = data.castle[0];
+                    scope.castleData = data.castle;
 
                     scope.troopsData = troopsModel;
-                    console.log(troopsModel);
-                    console.log(data);
                 });
         }
     };

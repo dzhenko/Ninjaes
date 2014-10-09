@@ -113,7 +113,7 @@ function updateAllObjects() {
 
     for (var player in players) {
         if (players[player] && players.hasOwnProperty(player)) {
-            gameModels.User.findOneAndUpdate({_id : players[player]._id}, {
+            models.User.findOneAndUpdate({_id : players[player]._id}, {
                 coordinates : players[player].coordinates,
                 gold : players[player].gold,
                 troops : players[player].troops,
@@ -129,7 +129,7 @@ function updateAllObjects() {
 
     for (var castle in castles) {
         if (castles[castle] && castles.hasOwnProperty(castle)) {
-            gameModels.Castle.findOneAndUpdate({_id : castles[castle]._id}, {
+            models.Castle.findOneAndUpdate({_id : castles[castle]._id}, {
                 buildings : castles[castle].buildings,
                 troopsForSale: castles[castle].troopsForSale
             }, function(err, newOne) {

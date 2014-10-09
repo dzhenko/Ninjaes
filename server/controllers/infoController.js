@@ -87,7 +87,7 @@ module.exports = {
         })
     },
     userOverview: function(req, res) {
-        Castle.find({owner : req.user._id.toString()}, function(err, castle) {
+        Castle.findOne({owner : req.user._id.toString()}, function(err, castle) {
             if (err) {
                 console.log('Could not find castle' + err);
                 return;

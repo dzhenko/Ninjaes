@@ -7,7 +7,7 @@
                 div(player-stats="")
                 div(id="data-filler" style="position: absolute; z-index: 100; color: #fff; line-height: 15px; font-size: 15px")
                     div(ng-click="recalculatePurchaseInfo(troopsInfo[0]); recruit(troopsInfo[0], purchaseInfo)" style="position: absolute; left: 5px; top: 20px; width: 390px; height: 140px; z-index: 750")
-                    span(style="position: absolute; left:120px; top:133px; z-index: 500") {{ userTroops.castle[0].troopsForSale[0] }}
+                    span(style="position: absolute; left:120px; top:133px; z-index: 500") {{ userTroops.castle.troopsForSale[0] }}
                     div
                         span(style="position: absolute; left:360px; top:26px; z-index: 500") {{ troopsInfo[0].attack }}
                         span(style="position: absolute; left:360px; top:46px; z-index: 500") {{ troopsInfo[0].defense }}
@@ -16,7 +16,7 @@
                         span(style="position: absolute; left:360px; top:108px; z-index: 500") {{ troopsInfo[0].speed }}
                         span(style="position: absolute; left:360px; top:128px; z-index: 500") {{ troopsInfo[0].growth }}
                     div(ng-click="recalculatePurchaseInfo(troopsInfo[1]); recruit(troopsInfo[1], purchaseInfo);" style="position: absolute; left: 405px; top: 20px; width: 400px; height: 130px; z-index: 750")
-                    span(ng-click="recruit(troopsInfo[1])" style="position: absolute; left:513px; top:133px; z-index: 500") {{ userTroops.castle[0].troopsForSale[1] }}
+                    span(ng-click="recruit(troopsInfo[1])" style="position: absolute; left:513px; top:133px; z-index: 500") {{ userTroops.castle.troopsForSale[1] }}
                     div
                         span(style="position: absolute; left:750px; top:26px; z-index: 500") {{ troopsInfo[1].attack }}
                         span(style="position: absolute; left:750px; top:46px; z-index: 500") {{ troopsInfo[1].defense }}
@@ -25,7 +25,7 @@
                         span(style="position: absolute; left:750px; top:108px; z-index: 500") {{ troopsInfo[1].speed }}
                         span(style="position: absolute; left:750px; top:128px; z-index: 500") {{ troopsInfo[1].growth }}
                     div(ng-click="recalculatePurchaseInfo(troopsInfo[2]); recruit(troopsInfo[2], purchaseInfo)" style="position: absolute; left: 0; top: 160px; width: 400px; height: 130px; z-index: 750")
-                    span(ng-click="recruit(troopsInfo[2])" style="position: absolute; left:120px; top:266px; z-index: 500") {{ userTroops.castle[0].troopsForSale[2] }}
+                    span(ng-click="recruit(troopsInfo[2])" style="position: absolute; left:120px; top:266px; z-index: 500") {{ userTroops.castle.troopsForSale[2] }}
                     div
                         span(style="position: absolute; left:360px; top:159px; z-index: 500") {{ troopsInfo[2].attack }}
                         span(style="position: absolute; left:360px; top:179px; z-index: 500") {{ troopsInfo[2].defense }}
@@ -34,7 +34,7 @@
                         span(style="position: absolute; left:360px; top:241px; z-index: 500") {{ troopsInfo[2].speed }}
                         span(style="position: absolute; left:360px; top:261px; z-index: 500") {{ troopsInfo[2].growth }}
                     div(ng-click="recalculatePurchaseInfo(troopsInfo[3]); recruit(troopsInfo[3], purchaseInfo)" style="position: absolute; left: 410px; top: 160px; width: 400px; height: 130px; z-index: 750")
-                    span(ng-click="recruit(troopsInfo[3])" style="position: absolute; left:513px; top:266px; z-index: 500") {{ userTroops.castle[0].troopsForSale[3] }}
+                    span(ng-click="recruit(troopsInfo[3])" style="position: absolute; left:513px; top:266px; z-index: 500") {{ userTroops.castle.troopsForSale[3] }}
                     div
                         span(style="position: absolute; left:750px; top:159px; z-index: 500") {{ troopsInfo[3].attack }}
                         span(style="position: absolute; left:750px; top:179px; z-index: 500") {{ troopsInfo[3].defense }}
@@ -43,7 +43,7 @@
                         span(style="position: absolute; left:750px; top:241px; z-index: 500") {{ troopsInfo[3].speed }}
                         span(style="position: absolute; left:750px; top:261px; z-index: 500") {{ troopsInfo[3].growth }}
                     div(ng-click="recalculatePurchaseInfo(troopsInfo[4]); recruit(troopsInfo[4], purchaseInfo)" style="position: absolute; left: 0; top: 290px; width: 400px; height: 130px; z-index: 750")
-                    span(ng-click="recruit(troopsInfo[4])" style="position: absolute; left:120px; top:400px; z-index: 500") {{ userTroops.castle[0].troopsForSale[4] }}
+                    span(ng-click="recruit(troopsInfo[4])" style="position: absolute; left:120px; top:400px; z-index: 500") {{ userTroops.castle.troopsForSale[4] }}
                     div
                         span(style="position: absolute; left:360px; top:292px; z-index: 500") {{ troopsInfo[4].attack }}
                         span(style="position: absolute; left:360px; top:312px; z-index: 500") {{ troopsInfo[4].defense }}
@@ -52,7 +52,7 @@
                         span(style="position: absolute; left:360px; top:374px; z-index: 500") {{ troopsInfo[4].speed }}
                         span(style="position: absolute; left:360px; top:394px; z-index: 500") {{ troopsInfo[4].growth }}
                     div(ng-click="recalculatePurchaseInfo(troopsInfo[5]); recruit(troopsInfo[5], purchaseInfo)" style="position: absolute; left: 410px; top: 290px; width: 400px; height: 130px; z-index: 750")
-                    span(ng-click="recruit(troopsInfo[5])" style="position: absolute; left:513px; top:400px; z-index: 500") {{ userTroops.castle[0].troopsForSale[5] }}
+                    span(ng-click="recruit(troopsInfo[5])" style="position: absolute; left:513px; top:400px; z-index: 500") {{ userTroops.castle.troopsForSale[5] }}
                     div
                         span(style="position: absolute; left:750px; top:292px; z-index: 500") {{ troopsInfo[5].attack }}
                         span(style="position: absolute; left:750px; top:312px; z-index: 500") {{ troopsInfo[5].defense }}
@@ -61,7 +61,7 @@
                         span(style="position: absolute; left:750px; top:374px; z-index: 500") {{ troopsInfo[5].speed }}
                         span(style="position: absolute; left:750px; top:394px; z-index: 500") {{ troopsInfo[5].growth }}
                     div(ng-click="recalculatePurchaseInfo(troopsInfo[6]); recruit(troopsInfo[6], purchaseInfo)" style="position: absolute; left: 200px; top: 420px; width: 400px; height: 130px; z-index: 750")
-                    span(ng-click="recruit(troopsInfo[6])" style="position: absolute; left:313px; top:532px; z-index: 500") {{ userTroops.castle[0].troopsForSale[6] }}
+                    span(ng-click="recruit(troopsInfo[6])" style="position: absolute; left:313px; top:532px; z-index: 500") {{ userTroops.castle.troopsForSale[6] }}
                     div
                         span(style="position: absolute; left:550px; top:425px; z-index: 500") {{ troopsInfo[6].attack }}
                         span(style="position: absolute; left:550px; top:445px; z-index: 500") {{ troopsInfo[6].defense }}
