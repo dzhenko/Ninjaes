@@ -1,7 +1,7 @@
 'use strict';
 
 var gameSettings = require('../config/gameSettings'),
-    gameData = require('../data/gameData');
+    originalGameData = require('../data/gameData');
 
 module.exports = {
     getUnusedCoordinates: function (otherCastles) {
@@ -13,7 +13,7 @@ module.exports = {
             var randomY = Math.floor(Math.random() * gameSettings.mapSize / gameSettings.playerTerrainSize) * gameSettings.playerTerrainSize + gameSettings.playerTerrainSize / 2;
 
             for (var i = 0; i < otherCastles.length; i++) {
-                if (otherCastles[i].coordinates.x === randomX && otherUsers[i].coordinates.y === randomY) {
+                if (otherCastles[i].coordinates.x === randomX && otherCastles[i].coordinates.y === randomY) {
                     randomX = Math.floor(Math.random() * gameSettings.mapSize / gameSettings.playerTerrainSize) * gameSettings.playerTerrainSize + gameSettings.playerTerrainSize / 2;
                     randomY = Math.floor(Math.random() * gameSettings.mapSize / gameSettings.playerTerrainSize) * gameSettings.playerTerrainSize + gameSettings.playerTerrainSize / 2;
 
@@ -52,7 +52,9 @@ module.exports = {
             troops: [0,0,0,0,0,0,0]
         }
     },
-    updateMapWithUserAndCastle: function(user, castle) {
+    updateMapWithUserAndCastle: function(user, castle, gameData) {
+        gameData = gameData || originalGameData;
+
         gameData.players.add(user);
         gameData.castles.add(castle);
     }

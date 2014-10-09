@@ -1,10 +1,12 @@
 'use strict';
 
 var troopsModel = require('../gameModels/troopsModel'),
-    gameData = require('../data/gameData');
-//TODO:
+    originalGameData = require('../data/gameData');
+
 module.exports = {
-    buyTroops : function(information) {
+    buyTroops : function(information, gameData) {
+        gameData = gameData || originalGameData;
+
         if (!information || !information.request || !information.user || !information.castle) {
             return {
                 success : false

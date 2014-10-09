@@ -1,9 +1,9 @@
 'use strict';
 
 var gameSettings = require('../config/gameSettings'),
-    gameData = require('../data/gameData');
+    originalGameData = require('../data/gameData');
 
-//TODO:
+//TODO: Test
 function validateCoordinates(coordinates) {
     if (!coordinates) {
         return false;
@@ -19,7 +19,10 @@ function generateRandomPosition() {
     }
 }
 
-function generateRandomGold() {
+//TODO: Test
+function generateRandomGold(gameData) {
+    gameData = gameData || originalGameData;
+
     var rndPosition = generateRandomPosition();
     while (gameData.getAny(rndPosition) !== undefined) {
         rndPosition = generateRandomPosition();
@@ -32,7 +35,10 @@ function generateRandomGold() {
     });
 }
 
-function generateRandomMonster() {
+//TODO: Test
+function generateRandomMonster(gameData) {
+    gameData = gameData || realGameData;
+
     var rndPosition = generateRandomPosition();
     while (gameData.getAny(rndPosition) !== undefined) {
         rndPosition = generateRandomPosition();
@@ -45,7 +51,10 @@ function generateRandomMonster() {
     });
 }
 
-function getMapFragment(userForced, dictById) {
+//TODO: Test
+function getMapFragment(userForced, dictById, gameData) {
+    gameData = gameData || realGameData;
+
     if (!validateCoordinates(userForced.user.coordinates)) {
         console.log('Invalid coordinates');
         return;

@@ -2,11 +2,13 @@
 
 var troopsModel = require('../gameModels/troopsModel'),
     Report = require('mongoose').model('Report'),
-    gameData = require('../data/gameData'),
+    originalGameData = require('../data/gameData'),
     indexConverter = require('../utilities/indexConverter');
-//TODO:
+
 module.exports = {
-    fightHero : function(information) {
+    fightHero : function(information, gameData) {
+        gameData = gameData || originalGameData;
+
         var user = gameData.players.get(information.user.coordinates);
         var target = gameData.players.get(information.hero.coordinates);
         if (!user) {
@@ -117,7 +119,9 @@ module.exports = {
             user : user
         }
     },
-    fightMonster: function(information) {
+    fightMonster: function(information, gameData) {
+        gameData = gameData || originalGameData;
+
         var user = gameData.players.get(information.user.coordinates);
         if (!user) {
             user = information.user;

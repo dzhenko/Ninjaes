@@ -1,9 +1,9 @@
 'use strict';
 
-var gameData = require('../data/gameData'),
+var originalGameData = require('../data/gameData'),
     map = require('../handlers/mapHandler');
 
-function movePlayer(player, dx, dy) {
+function movePlayer(player, dx, dy, gameData) {
     if (!player.coordinates) {
         return;
     }
@@ -17,7 +17,9 @@ function movePlayer(player, dx, dy) {
 }
 
 module.exports = {
-    checkMove: function(information, dictById) {
+    checkMove: function(information, dictById, gameData) {
+        gameData = gameData || originalGameData;
+
         if (!information.user) {
             return;
         }
@@ -41,7 +43,7 @@ module.exports = {
         if (!mapObj) {
             event = 'null';
 
-            movePlayer(user, information.dx, information.dy);
+            movePlayer(user, information.dx, information.dy, gameData);
             user.coordinates = futureCoords;
         }
         else if (mapObj.type === 2 ||
@@ -75,7 +77,7 @@ module.exports = {
                 }
             }
 
-            movePlayer(user, information.dx, information.dy);
+            movePlayer(user, information.dx, information.dy, gameData);
             user.coordinates = futureCoords;
         }
 
