@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('OverviewCtrl', ['$scope', '$location', 'appData', 'troopsModel', 'overviewNotifier', function ($scope, $location, appData, troopsModel, overviewNotifier) {
+app.controller('OverviewCtrl', ['$scope', '$location', 'appData', 'troopsModel', function ($scope, $location, appData, troopsModel) {
     $scope.troopsInfo = troopsModel;
 
     appData.getUserOverview().then(function (data) {
