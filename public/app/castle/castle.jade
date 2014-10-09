@@ -1,5 +1,7 @@
-.container.castle(ng-style="{ 'background' : background, 'background-size' : bgSize }" ng-init="looseBuildBackground()")
-    a(href='#/buildings' title="Build stuff" ng-mouseover="getBuildBackground()" ng-mouseleave="looseBuildBackground()")
-        div.buildingsCreator
-    a(href='#/troops' title="Buy troops" ng-mouseover="getTroopsBackground()" ng-mouseleave="looseTroopsBackground()")
-        div.troopsCreator
+.container.castle(ng-style="{ 'background' : backgroundBuild, 'background-size' : bgSize }" ng-show="showBuild")
+.container.castle(ng-style="{ 'background' : backgroundTroops, 'background-size' : bgSize }" ng-show="showTroops")
+.container.castle(ng-style="{ 'background' : background, 'background-size' : bgSize }" ng-show="showOriginal")
+
+    .buildingsCreator(ng-click="go('/buildings')" ng-mouseenter="getBuildBackground()" ng-mouseleave="looseBuildBackground()")
+
+    .troopsCreator(ng-click="go('/troops')" ng-mouseenter="getTroopsBackground()" ng-mouseleave="looseTroopsBackground()")
