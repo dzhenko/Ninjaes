@@ -4,7 +4,7 @@ app.factory('massNotifier', [function() {
     var body = $(document.body);
 
     var holder = $('<div />').css('position','absolute').css('top','120px').css('color','white').width('375px')
-        .css('left',(screen.availWidth / 2 - 132) + 'px').css('background-size','strech').css('z-index', 100);
+        .css('left',(screen.availWidth / 2 - 200) + 'px').css('background-size','strech').css('z-index', 100);
 
     var text = $('<p />').css('position','absolute').css('left','13px').css('font-size','2em')
         .css('top','35px').css('z-index', 101).appendTo(holder);

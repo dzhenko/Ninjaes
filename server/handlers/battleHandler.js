@@ -134,10 +134,10 @@ module.exports = {
         var amount = monster.amount;
         var lvl = monster.level || 0;
 
-        var monsterCost = (troopsModel[lvl].cost * amount) / (1 + user.experience);
+        var monsterCost = (troopsModel[lvl].cost * amount) / (1 + (user.experience / 100));
 
         for (var i = user.troops.length - 1; i >= 0; i--) {
-            if (monsterCost < troopsModel[0].cost) {
+            if (monsterCost < troopsModel[lvl].cost) {
                 break;
             }
 
