@@ -1,5 +1,5 @@
-.container.castle
-    a(href='#/buildings' title="Build stuff")
+.container.castle(ng-style="{ 'background' : background, 'background-size' : bgSize }" ng-init="bgInit()")
+    a(href='#/buildings' title="Build stuff" ng-mouseover="getBuildBackground()" ng-mouseleave="bgInit()" ng-init="init()")
         div.buildingsCreator
-    a(href='#/troops' title="Buy troops")
+    a(href='#/troops' title="Buy troops" ng-mouseover="getTroopsBackground()" ng-mouseleave="bgInit()")
         div.troopsCreator
