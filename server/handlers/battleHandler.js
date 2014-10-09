@@ -120,7 +120,6 @@ module.exports = {
             user : user
         }
     },
-    //TODO: Test
     fightMonster: function(information, gameData) {
         gameData = gameData || originalGameData;
 
