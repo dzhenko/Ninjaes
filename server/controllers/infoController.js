@@ -1,7 +1,7 @@
 var mongoose = require('mongoose'),
     User = mongoose.model('User'),
     Castle = mongoose.model('Castle'),
-    map = require('../handlers/mapHandler');
+    gameData = require('../data/gameData');
 
 module.exports = {
     userIdByName: function (req, res) {
@@ -82,7 +82,7 @@ module.exports = {
 
             res.send({
                 success: true,
-                castle: map.getCastle(castle.coordinates)
+                castle: gameData.castles.get(castle.coordinates)
             })
         })
     },
@@ -95,8 +95,8 @@ module.exports = {
 
             res.send({
                 success: true,
-                user: map.getUser(req.user.coordinates),
-                castle: map.getCastle(castle.coordinates)
+                user: gameData.players.get(req.user.coordinates),
+                castle: gameData.castles.get(castle.coordinates)
             })
         })
     }

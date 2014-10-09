@@ -12,8 +12,6 @@ var reportSchema = mongoose.Schema({
     killedUnits: [Number]
 });
 
-var Report = mongoose.model('Report', reportSchema);
+console.log('in the schema');
 
-module.exports = {
-    // nothing yet
-};
+module.exports = mongoose.model('Report', reportSchema);

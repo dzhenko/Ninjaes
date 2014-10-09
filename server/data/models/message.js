@@ -8,10 +8,5 @@ var messageSchema = mongoose.Schema({
     created: { type: Date, default: Date.now },
     text: String
 });
-
-var Message = mongoose.model('Message', messageSchema);
-
 // For development
-module.exports = {
-    // nothing yet
-};
+module.exports = mongoose.model('Message', messageSchema);

@@ -1,9 +1,9 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    Models = require('../models');
+    data = require('../data/gameData');
 
-require('../handlers/mapHandler').init();
+require('../data/gameData').init();
 
 module.exports = function (config) {
     mongoose.connect(config.db);

@@ -1,8 +1,8 @@
 'use strict';
 
 var troopsModel = require('../gameModels/troopsModel'),
-    map = require('../handlers/mapHandler');
-
+    gameData = require('../data/gameData');
+//TODO:
 module.exports = {
     buyTroops : function(information) {
         if (!information || !information.request || !information.user || !information.castle) {
@@ -11,12 +11,12 @@ module.exports = {
             }
         }
 
-        var castle = map.getCastle(information.castle.coordinates);
+        var castle = gameData.castles.get(information.castle.coordinates);
         if (!castle) {
             castle = information.castle;
         }
 
-        var user = map.getUser(information.user.coordinates);
+        var user = gameData.players.get(information.user.coordinates);
         if (!user) {
             user = information.user;
         }

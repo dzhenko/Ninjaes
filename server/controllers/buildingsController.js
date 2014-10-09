@@ -2,7 +2,7 @@ var mongoose = require('mongoose'),
     User = mongoose.model('User'),
     Castle = mongoose.model('Castle'),
     buildingsModel = require('../gameModels/buildingsModel'),
-    map = require('../handlers/mapHandler');
+    gameData = require('../data/gameData');
 
 module.exports = {
     build: function (req, res) {
@@ -12,8 +12,8 @@ module.exports = {
                 return;
             }
 
-            var user = map.getUser(req.user.coordinates);
-            var castle = map.getCastle(origCastle.coordinates);
+            var user = gameData.players.get(req.user.coordinates);
+            var castle = gameData.castles.get(origCastle.coordinates);
 
             if (!user) {
                 user = req.user;

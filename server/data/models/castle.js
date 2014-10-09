@@ -17,8 +17,4 @@ var castleSchema = mongoose.Schema({
     troops: [Number]
 });
 
-var Castle = mongoose.model('Castle', castleSchema);
-
-module.exports = {
-    // nothing yet
-};
+module.exports = mongoose.model('Castle', castleSchema);

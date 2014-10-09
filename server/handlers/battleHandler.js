@@ -2,19 +2,22 @@
 
 var troopsModel = require('../gameModels/troopsModel'),
     Report = require('mongoose').model('Report'),
-    map = require('../handlers/mapHandler'),
+    gameData = require('../data/gameData'),
     indexConverter = require('../utilities/indexConverter');
-
+//TODO:
 module.exports = {
     fightHero : function(information) {
-        var user = map.getUser(information.user.coordinates);
-        var target = map.getUser(information.hero);
-        if (!user || !target) {
-            console.log('can not get user or hero at fight hero ctrl');
-            return;
+        var user = gameData.players.get(information.user.coordinates);
+        var target = gameData.players.get(information.hero.coordinates);
+        if (!user) {
+            user = information.user;
         }
 
-        var coef = user.experience / target.experience;
+        if (!target) {
+            target = information.hero;
+        }
+
+        var coef = user.experience / target.experience || 1;
         var i;
 
         var userCost = 0;
@@ -115,18 +118,14 @@ module.exports = {
         }
     },
     fightMonster: function(information) {
-        var user = map.getUser(information.user.coordinates);
+        var user = gameData.players.get(information.user.coordinates);
         if (!user) {
-            return {
-                success: false
-            }
+            user = information.user;
         }
 
-        var monster = map.getPosition(indexConverter.getCoordinates(information.monster));
+        var monster = gameData.objects.get(indexConverter.getCoordinates(information.monster.index));
         if (!monster) {
-            return {
-                success: false
-            }
+            monster = information.monster;
         }
 
         var amount = monster.amount;
@@ -148,7 +147,7 @@ module.exports = {
         var success = user.troops[0] > 0;
 
         if (success) {
-            map.removePosition(indexConverter.getCoordinates(information.monster));
+            gameData.objects.remove(indexConverter.getCoordinates(information.monster.index));
             user.experience++;
         }
 

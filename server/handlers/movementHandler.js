@@ -1,6 +1,20 @@
 'use strict';
 
-var map = require('../handlers/mapHandler');
+var gameData = require('../data/gameData'),
+    map = require('../handlers/mapHandler');
+
+function movePlayer(player, dx, dy) {
+    if (!player.coordinates) {
+        return;
+    }
+
+    gameData.players.remove(player.coordinates);
+
+    gameData.players.set({
+        x: player.coordinates.x + dx,
+        y: player.coordinates.y + dy
+    }, player);
+}
 
 module.exports = {
     checkMove: function(information, dictById) {
@@ -8,7 +22,7 @@ module.exports = {
             return;
         }
 
-        var user = map.getUser(information.user.coordinates);
+        var user = gameData.players.get(information.user.coordinates);
 
         if (!user || user.movement === 0) {
             return false;
@@ -19,7 +33,7 @@ module.exports = {
             y : user.coordinates.y + information.dy
         };
 
-        var mapObj = map.getPosition(futureCoords);
+        var mapObj = gameData.objects.get(futureCoords);
 
         user.movement--;
 
@@ -27,7 +41,7 @@ module.exports = {
         if (!mapObj) {
             event = 'null';
 
-            map.movePlayer(user, information.dx, information.dy);
+            movePlayer(user, information.dx, information.dy);
             user.coordinates = futureCoords;
         }
         else if (mapObj.type === 2 ||
@@ -44,11 +58,11 @@ module.exports = {
                 user.gold += mapObj.amount;
                 event = 'gold';
 
-                map.removePosition(futureCoords);
+                gameData.objects.remove(futureCoords);
             }
             else if (mapObj.type === 4 && mapObj.obj && mapObj.obj.owner.toString() === user._id.toString()) {
                 event = 'castle';
-                var userCastle = map.getCastle(mapObj.obj.coordinates);
+                var userCastle = gameData.castles.get(mapObj.obj.coordinates);
 
                 if (!userCastle) {
                     console.log('Serious bug map handler 48 row - can not get castle at coords');
@@ -61,7 +75,7 @@ module.exports = {
                 }
             }
 
-            map.movePlayer(user, information.dx, information.dy);
+            movePlayer(user, information.dx, information.dy);
             user.coordinates = futureCoords;
         }
 

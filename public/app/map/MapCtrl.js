@@ -145,7 +145,7 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
                 if (response.object.type === 2) {
                     gameNotifier.enemy(response.object.amount).then(function() {
                         socket.emit('fight monster', {
-                            monster : response.object.index,
+                            monster : response.object,
                             user: identity.currentUser
                         });
                     });
@@ -156,7 +156,7 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
                 else {
                     gameNotifier.hero(response.object.amount).then(function() {
                         socket.emit('fight hero', {
-                            hero : response.object.obj.coordinates,
+                            hero : response.object.obj,
                             user: identity.currentUser
                         });
                     });

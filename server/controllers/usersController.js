@@ -5,7 +5,7 @@ var encryption = require('../utilities/encryption'),
     User = mongoose.model('User'),
     Castle = mongoose.model('Castle'),
     newUserHandler = require('../handlers/newUserHandler'),
-    map = require('../handlers/mapHandler');
+    gameData = require('../data/gameData');
 
 module.exports = {
     createUser: function (req, res, next) {
@@ -113,7 +113,7 @@ module.exports = {
         }
     },
     getAllUsers: function (req, res) {
-        res.send(map.getAllUsers());
+        res.send(gameData.users.all());
     },
     deleteUser: function(req, res) {
         console.log(JSON.parse(req.body.models)[0]._id);

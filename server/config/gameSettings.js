@@ -12,7 +12,7 @@ module.exports = {
     castleUpdateInterval: 1000 * 60 * 60 * 24,
     playerUpdateInterval: 1000 * 60,
     playerUpdateMovement: 10,
-    mapSaveInterval: 1000 * 30,
+    objectsSaveInterval: 1000 * 30,
     goldSpawnInterval: 1000 * 15,
     goldMaxStacks: 25,
     goldAmountPerStack: 100,

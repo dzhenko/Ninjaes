@@ -1,7 +1,7 @@
 'use strict';
 
 var gameSettings = require('../config/gameSettings'),
-    map = require('../handlers/mapHandler');
+    gameData = require('../data/gameData');
 
 module.exports = {
     getUnusedCoordinates: function (otherCastles) {
@@ -53,7 +53,7 @@ module.exports = {
         }
     },
     updateMapWithUserAndCastle: function(user, castle) {
-        map.addPlayer(user);
-        map.addCastle(castle);
+        gameData.players.add(user);
+        gameData.castles.add(castle);
     }
 };
