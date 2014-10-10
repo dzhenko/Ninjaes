@@ -12,11 +12,13 @@ module.exports = {
         var user = gameData.players.get(information.user.coordinates);
         var target = gameData.players.get(information.hero.coordinates);
         if (!user) {
-            user = information.user;
+            console.log('battle handler hacked - not existing user!');
+            return false;
         }
 
         if (!target) {
-            target = information.hero;
+            console.log('battle handler hacked - not existing target hero!');
+            return false;
         }
 
         var coef = user.experience / target.experience || 1;
@@ -124,12 +126,14 @@ module.exports = {
 
         var user = gameData.players.get(information.user.coordinates);
         if (!user) {
-            user = information.user;
+            console.log('battle handler hacked - not existing user!');
+            return false;
         }
 
         var monster = gameData.objects.get(indexConverter.getCoordinates(information.monster.index));
         if (!monster) {
-            monster = information.monster;
+            console.log('battle handler hacked - not existing monster!');
+            return false;
         }
 
         var amount = monster.amount;

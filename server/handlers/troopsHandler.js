@@ -16,12 +16,14 @@ module.exports = {
 
         var castle = gameData.castles.get(information.castle.coordinates);
         if (!castle) {
-            castle = information.castle;
+            console.log('troops handler hacked - not existing castle!');
+            return false;
         }
 
         var user = gameData.players.get(information.user.coordinates);
         if (!user) {
-            user = information.user;
+            console.log('troops handler hacked - not existing hero!');
+            return false;
         }
 
         if (castle.troopsForSale[information.request.index] < information.request.amount) {
