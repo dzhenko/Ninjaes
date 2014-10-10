@@ -62,6 +62,8 @@ app.controller('AdminCtrl', ['$scope', 'socket', function ($scope, socket) {
             { field: "experience", title: "Experience", width: "100px" },
             { field: "gold", title: "Gold", width: "100px" },
             { field: "movement", title: "Movement", width: "100px" },
+            { field: "coordinates.x", title: "X-Coordinate", width: "50px" },
+            { field: "coordinates.y", title: "Y-Coordinate", width: "50px" },
             { command: ["edit", "destroy"], title: " ", width: "120px" }
         ],
         editable: "popup"

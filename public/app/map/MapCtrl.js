@@ -61,6 +61,8 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
             ctx.drawImage(images.redPlayer, 8 * images.mapSettings.squareDistance - 15, 5 * images.mapSettings.squareDistance - 20);
         }
 
+        $scope.playerData = identity.currentUser;
+
         function drawObjects(mapFragment) {
             if (!ctx) {
                 ctx = document.getElementById('main-canvas').getContext('2d');
@@ -132,6 +134,10 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
             redrawMap();
             drawObjects(response.mapFragment);
 
+            $scope.$apply(function() {
+                $scope.playerData = identity.currentUser;
+            });
+
             if (response.event === 'null') {
                 // nothing special
             }
@@ -170,6 +176,10 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
             }
 
             identity.currentUser = response.user;
+            
+            $scope.$apply(function() {
+                $scope.playerData = identity.currentUser;
+            });
 
             if (response.success) {
                 gameNotifier.message('-------You won-------')

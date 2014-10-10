@@ -77,7 +77,14 @@ module.exports = {
 
             gameData.players.set(user.coordinates, user);
 
-            res.send({user : user});
+            User.findOneAndUpdate({_id : user._id}, function(err) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+
+                res.send({user : user});
+            });
         }
         else if (req.user.roles.indexOf('admin') >= 0) {
             //adming is updating

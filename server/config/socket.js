@@ -20,53 +20,23 @@ module.exports = {
             });
 
             socket.on('moved', function (information) {
-                if (dictById[information.user._id] && socket.id === dictById[information.user._id].id) {
-                    socket.emit('moved', handlers.movement.checkMove(information));
-                }
-                else {
-                    console.log('Not registered for events user requested move!');
-                    console.log(information);
-                }
+                socket.emit('moved', handlers.movement.checkMove(information));
             });
 
             socket.on('get map', function (userForced) {
-                if (dictById[userForced.user._id] && socket.id === dictById[userForced.user._id].id) {
-                    socket.emit('get map', handlers.map.getMapFragment(userForced, dictById));
-                }
-                else {
-                    console.log('Not registered for events user requested get map!');
-                    console.log(userForced);
-                }
+                socket.emit('get map', handlers.map.getMapFragment(userForced, dictById));
             });
 
             socket.on('fight monster', function (information) {
-                if (dictById[information.user._id] && socket.id === dictById[information.user._id].id) {
-                    socket.emit('fight monster', handlers.battle.fightMonster(information));
-                }
-                else {
-                    console.log('Not registered for events user requested fight monster!');
-                    console.log(information);
-                }
+                socket.emit('fight monster', handlers.battle.fightMonster(information));
             });
 
             socket.on('fight hero', function (information) {
-                if (dictById[information.user._id] && socket.id === dictById[information.user._id].id) {
-                    socket.emit('fight hero', handlers.battle.fightHero(information));
-                }
-                else {
-                    console.log('Not registered for events user requested fight hero!');
-                    console.log(information);
-                }
+                socket.emit('fight hero', handlers.battle.fightHero(information));
             });
 
             socket.on('buy troops', function(information) {
-                if (dictById[information.user._id] && socket.id === dictById[information.user._id].id) {
-                    socket.emit('buy troops', handlers.troops.buyTroops(information));
-                }
-                else {
-                    console.log('Not registered for events user requested to buy troops!');
-                    console.log(information);
-                }
+                socket.emit('buy troops', handlers.troops.buyTroops(information));
             });
 
             socket.on('register for events', function (userData) {
