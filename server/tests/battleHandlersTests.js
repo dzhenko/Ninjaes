@@ -6,6 +6,7 @@ var expect = require('chai').expect,
 describe('battleHandler', function () {
     beforeEach(function () {
         fakeInfo.user = {
+            _id: '54337a87777f8c241de8216e',
             username: 'pesho',
             coordinates: {
                 x: 50,
@@ -14,9 +15,10 @@ describe('battleHandler', function () {
             gold: 5000,
             movement: 2000,
             experience: 100,
-            troops: [28, 5, 3, 0, 0, 0]
+            troops: [28, 5, 3, 0, 0, 0,0]
         };
         fakeInfo.hero = {
+            _id: '54337a89999f8c241de8216e',
             username: 'gosho',
             coordinates: {
                 x: 100,
@@ -25,25 +27,29 @@ describe('battleHandler', function () {
             gold: 5000,
             movement: 2000,
             experience: 50,
-            troops: [18, 5, 3, 0, 0, 0]
+            troops: [18, 5, 3, 0, 0, 0,0]
         };
         fakeInfo.monster = {
             level: 5,
             amount: 5
         };
 
-        gameData.players.get = function () {
-            return fakeInfo.user;
+        gameData.players.get = function (coords) {
+            if (coords === fakeInfo.user.coordinates) {
+                return fakeInfo.user;
+            } else {
+                return fakeInfo.hero;
+            }
         }
 
     });
-//    describe('#fightHero()', function () {
-//        it('just for the test', function () {
-//            var winner = battleHandler.fightHero(fakeInfo, gameData).user;
-//            console.log(winner);
-//            expect(true).to.be.true;
-//        })
-//    })
+
+    describe('#fightHero()', function () {
+        it('is expected more experienced user to win', function () {
+            var winner = battleHandler.fightHero(fakeInfo, gameData).user;
+            expect(winner.username).to.be.('pesho');
+        })
+    })
 
     describe('#fightMonster()', function () {
         it('is expected to win over a monster should gain 1 more experience', function () {
