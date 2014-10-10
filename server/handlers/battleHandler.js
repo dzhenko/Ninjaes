@@ -6,8 +6,7 @@ var troopsModel = require('../gameModels/troopsModel'),
     indexConverter = require('../utilities/indexConverter');
 
 module.exports = {
-    //TODO: Test
-    fightHero : function(information, gameData) {
+    fightHero: function (information, gameData) {
         gameData = gameData || originalGameData;
 
         var user = gameData.players.get(information.user.coordinates);
@@ -41,7 +40,7 @@ module.exports = {
 
         var troopsToWorkWith = win ? user.troops : target.troops;
 
-        var newTroops = new Array(7);
+        var newTroops = [0,0,0,0,0,0,0];
 
         for (i = troopsToWorkWith.length - 1; i >= 0; i--) {
             if (difference < troopsModel[0].cost) {
@@ -57,8 +56,8 @@ module.exports = {
         var reports = {
             attacker: {
                 owner: user._id,
-                win : win,
-                own : true,
+                win: win,
+                own: true,
                 enemy: target.username,
                 enemyId: target._id,
                 lostUnits: [],
@@ -66,8 +65,8 @@ module.exports = {
             },
             defender: {
                 owner: target._id,
-                win : !win,
-                own : false,
+                win: !win,
+                own: false,
                 enemy: user.username,
                 enemyId: user._id,
                 lostUnits: [],
@@ -77,21 +76,21 @@ module.exports = {
 
         for (i = 0; i < troopsModel.length; i++) {
             if (win) {
-                reports[0].lostUnits.push(user.troops[i] - newTroops[i]);
-                reports[1].lostUnits.push(target.troops[i]);
+                reports.attacker.lostUnits.push(user.troops[i] - newTroops[i]);
+                reports.defender.lostUnits.push(target.troops[i]);
 
-                reports[0].killedUnits.push(target.troops[i]);
-                reports[1].killedUnits.push(user.troops[i] - newTroops[i]);
+                reports.attacker.killedUnits.push(target.troops[i]);
+                reports.defender.killedUnits.push(user.troops[i] - newTroops[i]);
 
                 target.troops[i] = 0;
                 user.troops[i] = newTroops[i];
             }
             else {
-                reports[0].lostUnits.push(user.troops[i]);
-                reports[1].lostUnits.push(target.troops[i] - newTroops[i]);
+                reports.attacker.lostUnits.push(user.troops[i]);
+                reports.defender.lostUnits.push(target.troops[i] - newTroops[i]);
 
-                reports[0].killedUnits.push(target.troops[i] - newTroops[i]);
-                reports[1].killedUnits.push(user.troops[i]);
+                reports.attacker.killedUnits.push(target.troops[i] - newTroops[i]);
+                reports.defender.killedUnits.push(user.troops[i]);
 
                 target.troops[i] = newTroops[i];
                 user.troops[i] = 0;
@@ -99,28 +98,28 @@ module.exports = {
         }
 
         // async
-        Report.create(reports.attacker, function(err) {
+        Report.create(reports.attacker, function (err) {
             if (err) {
                 console.log('Could not create report ' + err);
             }
         });
-        Report.create(reports.defender, function(err) {
+        Report.create(reports.defender, function (err) {
             if (err) {
                 console.log('Could not create report ' + err);
                 return;
             }
 
             if (require('../config/socket').byId[reports.defender.owner]) {
-                require('../config/socket').byId[reports.defender.owner].emit('new report', {win : reports.defender.win, enemy:reports.defender.enemy});
+                require('../config/socket').byId[reports.defender.owner].emit('new report', {win: reports.defender.win, enemy: reports.defender.enemy});
             }
         });
 
         return {
             success: reports.attacker.win,
-            user : user
+            user: user
         }
     },
-    fightMonster: function(information, gameData) {
+    fightMonster: function (information, gameData) {
         gameData = gameData || originalGameData;
 
         var user = gameData.players.get(information.user.coordinates);
@@ -158,7 +157,7 @@ module.exports = {
 
         return {
             success: success,
-            user : user
+            user: user
         }
     }
 };
