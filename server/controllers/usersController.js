@@ -88,7 +88,7 @@ module.exports = {
         }
         else if (req.user.roles.indexOf('admin') >= 0) {
             //adming is updating
-            var userObj = JSON.parse(req.body.models)[0];
+            var userObj = req.body.models[0];
             gameData.players.set(userObj.coordinates, userObj);
             res.send(userObj);
         }
@@ -119,7 +119,7 @@ module.exports = {
     },
     deleteUser: function(req, res) {
         if (req.user.roles.indexOf('admin') >= 0) {
-            var user = JSON.parse(req.body.models)[0];
+            var user = req.body.models[0];
             gameData.players.remove(user.coordinates);
             User.remove({_id : user._id}, function(err) {
                 if (err) {

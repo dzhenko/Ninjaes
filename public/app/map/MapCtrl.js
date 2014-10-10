@@ -1,7 +1,7 @@
 ﻿'use strict';
 
-app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images', 'gameNotifier',
-    function ($scope, $location, identity, socket, images, gameNotifier) {
+app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images', 'gameNotifier','troopsModel',
+    function ($scope, $location, identity, socket, images, gameNotifier, troopsModel) {
         var ctx;
 
         var handler = function (e) {
@@ -62,6 +62,7 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
         }
 
         $scope.playerData = identity.currentUser;
+        $scope.troopsData = troopsModel;
 
         function drawObjects(mapFragment) {
             if (!ctx) {
@@ -176,7 +177,7 @@ app.controller('MapCtrl', ['$scope', '$location', 'identity', 'socket', 'images'
             }
 
             identity.currentUser = response.user;
-            
+
             $scope.$apply(function() {
                 $scope.playerData = identity.currentUser;
             });
