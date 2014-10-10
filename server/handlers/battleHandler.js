@@ -40,7 +40,6 @@ module.exports = {
 
         var troopsToWorkWith = win ? user.troops : target.troops;
 
-        // var newTroops = new Array(7);
         var newTroops = [0,0,0,0,0,0,0];
 
         for (i = troopsToWorkWith.length - 1; i >= 0; i--) {
@@ -77,12 +76,6 @@ module.exports = {
 
         for (i = 0; i < troopsModel.length; i++) {
             if (win) {
-                // reports[0].lostUnits.push(user.troops[i] - newTroops[i]);
-                // reports[1].lostUnits.push(target.troops[i]);
-
-                // reports[0].killedUnits.push(target.troops[i]);
-                // reports[1].killedUnits.push(user.troops[i] - newTroops[i]);
-
                 reports.attacker.lostUnits.push(user.troops[i] - newTroops[i]);
                 reports.defender.lostUnits.push(target.troops[i]);
 
@@ -93,12 +86,6 @@ module.exports = {
                 user.troops[i] = newTroops[i];
             }
             else {
-                // reports[0].lostUnits.push(user.troops[i]);
-                // reports[1].lostUnits.push(target.troops[i] - newTroops[i]);
-
-                // reports[0].killedUnits.push(target.troops[i] - newTroops[i]);
-                // reports[1].killedUnits.push(user.troops[i]);
-
                 reports.attacker.lostUnits.push(user.troops[i]);
                 reports.defender.lostUnits.push(target.troops[i] - newTroops[i]);
 
@@ -110,8 +97,6 @@ module.exports = {
             }
         }
 
-        console.log(reports.attacker);
-        console.log(reports.defender);
         // async
         Report.create(reports.attacker, function (err) {
             if (err) {

@@ -15,7 +15,7 @@ describe('battleHandler', function () {
             gold: 5000,
             movement: 2000,
             experience: 100,
-            troops: [28, 5, 3, 0, 0, 0,0]
+            troops: [28, 5, 3, 0, 0, 0, 0]
         };
         fakeInfo.hero = {
             _id: '54337a89999f8c241de8216e',
@@ -27,7 +27,7 @@ describe('battleHandler', function () {
             gold: 5000,
             movement: 2000,
             experience: 50,
-            troops: [18, 5, 3, 0, 0, 0,0]
+            troops: [18, 5, 3, 0, 0, 0, 0]
         };
         fakeInfo.monster = {
             level: 5,
@@ -53,6 +53,20 @@ describe('battleHandler', function () {
             var winner = battleHandler.fightHero(fakeInfo, gameData).user;
             expect(winner.troops[0]).to.equals(2);
         });
+        it('is expected return success property with true value', function () {
+            var winner = battleHandler.fightHero(fakeInfo, gameData).success;
+            expect(winner).to.be.true;
+        });
+        it('is expected player with more powerful troops to win when same experience', function () {
+            fakeInfo.user.troops = [28, 5, 3, 0, 0, 0, 0];
+            fakeInfo.user.experience = 100;
+
+            fakeInfo.hero.troops = [25, 5, 3, 0, 0, 0, 0];
+            fakeInfo.hero.experience = 100;
+
+            var winner = battleHandler.fightHero(fakeInfo, gameData).user;
+            expect(winner.username).to.equals('pesho');
+        });
     });
 
     describe('#fightMonster()', function () {
@@ -72,7 +86,7 @@ describe('battleHandler', function () {
             fakeInfo.user.experience = 0;
             var winner = battleHandler.fightMonster(fakeInfo, gameData).user;
 
-            for(var i = 0, len = winner.troops.length; i < len; i+=1) {
+            for (var i = 0, len = winner.troops.length; i < len; i += 1) {
                 expect(winner.troops[i]).to.be.equal(0);
             }
         });
