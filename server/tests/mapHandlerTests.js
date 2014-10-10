@@ -58,4 +58,27 @@ describe('mapHandler', function () {
             expect(result).to.be.true;
         });
     });
+
+//    describe('#generateRandomGold()', function() {
+//        it('is expected to add the newly created element to the map', function() {
+//            var gold = {
+//                type: 1,
+//                amount: (Math.floor(Math.random() * gameSettings.goldMaxStacks)) * gameSettings.goldAmountPerStack,
+//                object: undefined
+//            };
+//            console.log(fakeInfo);
+//            fakeInfo[objects] = [];// = { position: {}}};
+//            fakeInfo[objects][0].push(gold);
+//            console.log(fakeInfo[objects]);
+//            fakeInfo.objects.
+//            fakeInfo.getAny = function (){
+//                return fakeInfo.objects(0);
+//            };
+//
+//            var result = mapHandler.generateRandomGold(fakeInfo);
+//            var dataIsReturned = fakeInfo.getAny() !== undefined;
+//
+//            expect(dataIsReturned).to.equal(true);
+//        }) ;
+//    });
 });
