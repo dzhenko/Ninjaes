@@ -44,7 +44,11 @@ app.controller('AdminCtrl', ['$scope', 'socket', function ($scope, socket) {
                         lastName: { type: "string", validation: {required: true}},
                         experience: { type: "number", validation: {required: true}, min: 0},
                         gold: { type: "number", validation: {required: true, min: 100}},
-                        movement: { type: "number", validation: {required: true, min: 0}}
+                        movement: { type: "number", validation: {required: true, min: 0}},
+                        coordinates: {
+                            x: {type: "number", validation: {require: true, min: 0}},
+                            y: {type: "number", validation: {require: true, min: 0}},
+                        }
                     }
                 }
             }
@@ -62,8 +66,8 @@ app.controller('AdminCtrl', ['$scope', 'socket', function ($scope, socket) {
             { field: "experience", title: "Experience", width: "100px" },
             { field: "gold", title: "Gold", width: "100px" },
             { field: "movement", title: "Movement", width: "100px" },
-            { field: "coordinates.x", title: "X-Coordinate", width: "50px" },
-            { field: "coordinates.y", title: "Y-Coordinate", width: "50px" },
+            { field: "coordinates.x", title: "X-Coord", width: "100px" },
+            { field: "coordinates.y", title: "Y-Coord", width: "100px" },
             { command: ["edit", "destroy"], title: " ", width: "120px" }
         ],
         editable: "popup"
