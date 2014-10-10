@@ -47,9 +47,13 @@ describe('battleHandler', function () {
     describe('#fightHero()', function () {
         it('is expected more experienced user to win', function () {
             var winner = battleHandler.fightHero(fakeInfo, gameData).user;
-            expect(winner.username).to.be.('pesho');
-        })
-    })
+            expect(winner.username).to.equals('pesho');
+        });
+        it('is expected winner to have just 2 Halberdiers left', function () {
+            var winner = battleHandler.fightHero(fakeInfo, gameData).user;
+            expect(winner.troops[0]).to.equals(2);
+        });
+    });
 
     describe('#fightMonster()', function () {
         it('is expected to win over a monster should gain 1 more experience', function () {

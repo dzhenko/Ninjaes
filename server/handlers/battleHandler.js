@@ -6,7 +6,6 @@ var troopsModel = require('../gameModels/troopsModel'),
     indexConverter = require('../utilities/indexConverter');
 
 module.exports = {
-    //TODO: Test
     fightHero: function (information, gameData) {
         gameData = gameData || originalGameData;
 
