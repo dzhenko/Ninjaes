@@ -13,13 +13,13 @@ app.factory('identity', ['$window', 'UsersResource', function($window, UsersReso
             return !!this.currentUser;
         },
         isAuthorizedForRole: function(role) {
-            return !!this.currentUser && this.currentUser.roles.indexOf(role) >= 0;
+            return !!this.currentUser && !!this.currentUser.roles && this.currentUser.roles.indexOf(role) >= 0;
         },
         isAdmin: function() {
-            return !!this.currentUser && this.currentUser.roles.indexOf('admin') >= 0;
+            return !!this.currentUser && !!this.currentUser.roles && this.currentUser.roles.indexOf('admin') >= 0;
         },
         isModerator: function() {
-            return !!this.currentUser && this.currentUser.roles.indexOf('moderator') >= 0;
+            return !!this.currentUser && !!this.currentUser.roles && this.currentUser.roles.indexOf('moderator') >= 0;
         },
         getSanitisedUser: function () {
             if (!user) {

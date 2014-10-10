@@ -4,7 +4,7 @@
         p Stats about how much Xp you have, how much gold and all game stats (including your castle information)
         div.center-block.text-center
             div(id="overview-panel" style="position: relative; width: 800px; height: 556px; margin: 0 auto")
-                div(player-stats="")
+
                 div(id="data-filler" style="position: absolute; z-index: 100; color: #fff; line-height: 15px; font-size: 15px")
                     div(ng-click="recalculatePurchaseInfo(troopsInfo[0]); recruit(troopsInfo[0], purchaseInfo)" style="position: absolute; left: 5px; top: 20px; width: 390px; height: 140px; z-index: 750")
                     span(style="position: absolute; left:120px; top:133px; z-index: 500") {{ userTroops.castle.troopsForSale[0] }}
@@ -72,3 +72,4 @@
                     div(ng-click="go('/castle')" style="position: absolute; left: 640px; top: 450px; z-index: 750")
                         img(src="img/accept.png")
                 img(src="img/overview.gif")
+                div(player-stats="")

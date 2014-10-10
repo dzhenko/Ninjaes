@@ -2,7 +2,8 @@
 
 var passport = require('passport'),
     LocalPassport = require('passport-local'),
-    User = require('mongoose').model('User');
+    User = require('mongoose').model('User'),
+    gameData = require('../data/gameData');
 
 module.exports = function() {
     passport.use(new LocalPassport(function(username, password, done) {
@@ -13,7 +14,7 @@ module.exports = function() {
             }
 
             if (user && user.authenticate(password)) {
-                return done(null, user);
+                return done(null, gameData.players.get(user.coordinates));
             }
             else {
                 return done(null, false);
@@ -35,7 +36,7 @@ module.exports = function() {
             }
 
             if (user) {
-                return done(null, user);
+                return done(null, gameData.players.get(user.coordinates));
             }
             else {
                 return done(null, false);

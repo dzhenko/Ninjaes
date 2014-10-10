@@ -1,7 +1,6 @@
 'use strict';
 
-var mongoose = require('mongoose'),
-    data = require('../data/gameData');
+var mongoose = require('mongoose');
 
 require('../data/gameData').init();
 
