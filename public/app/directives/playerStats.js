@@ -10,6 +10,7 @@ app.directive('playerStats', ['appData', 'troopsModel', function (appData, troop
                     scope.playerData = {
                         gold: data.user.gold,
                         experience: data.user.experience,
+                        movement: data.user.movement,
                         troops: data.user.troops
                     };
 
