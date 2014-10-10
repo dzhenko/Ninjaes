@@ -36,7 +36,7 @@ module.exports = function() {
             }
 
             if (user) {
-                return done(null, gameData.players.get(user.coordinates));
+                return done(null, gameData.players.get(user.coordinates) ? gameData.players.get(user.coordinates) : user);
             }
             else {
                 return done(null, false);

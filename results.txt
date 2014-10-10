@@ -1,0 +1,41 @@
+
+[0m[0m
+[0m  battleHandler[0m
+[0m    #fightHero()[0m
+[2K[0G    [32m  √[0m[90m is expected more experienced user to win [0m
+[2K[0G    [32m  √[0m[90m is expected winner to have just 2 Halberdiers left [0m
+[2K[0G    [32m  √[0m[90m is expected return success property with true value [0m
+[2K[0G    [32m  √[0m[90m is expected player with more powerful troops to win when same experience [0m
+[0m    #fightMonster()[0m
+[2K[0G    [32m  √[0m[90m is expected to win over a monster should gain 1 more experience [0m
+[2K[0G    [32m  √[0m[90m fight with not experienced user should be won by the monster [0m
+[2K[0G    [32m  √[0m[90m monster should kill player's troops [0m
+
+[0m  mapHandler[0m
+[0m    #validateCoordinates()[0m
+[2K[0G    [32m  √[0m[90m is expected to return false if no coordinates object is send [0m
+[2K[0G    [32m  √[0m[90m is expected to return false with negative X coordinate [0m
+[2K[0G    [32m  √[0m[90m is expected to return false with negative Y coordinate [0m
+[2K[0G    [32m  √[0m[90m is expected to return false with invalid  coordinates [0m
+[2K[0G    [32m  √[0m[90m is expected to return false with invalid boundary coordinates [0m
+[2K[0G    [32m  √[0m[90m is expected to return true with valid  coordinates [0m
+
+[0m  newUserHandler[0m
+[0m    #updateMapWithUserAndCastle()[0m
+[2K[0G    [32m  √[0m[90m is expected to add user and castle [0m
+
+[0m  troopsHandler[0m
+[0m    #buyTroops[0m
+[2K[0G    [32m  √[0m[90m if handler returns false when information is an empty object [0m
+[2K[0G    [32m  √[0m[90m if handler returns false when information has no request property [0m
+[2K[0G    [32m  √[0m[90m if handler returns false when information has no user property [0m
+[2K[0G    [32m  √[0m[90m if handler returns false when information has no castle property [0m
+[2K[0G    [32m  √[0m[90m if handler returns false when available troops for sale in castle are less than the requested amount [0m
+[2K[0G    [32m  √[0m[90m if handler returns false when user does not have enough money to pay for the units he wants to buy [0m
+[2K[0G    [32m  √[0m[90m if handler sets properly the amount of troops for sale left in the castle after user buys certain amount [0m
+[2K[0G    [32m  √[0m[90m if after buying new troops the amount of certain unit of troops the user owns has been properly increased [0m
+[2K[0G    [32m  √[0m[90m if after buying new troop units the amount of gold of the user is reduced and set properly [0m
+
+
+[92m [0m[32m 23 passing[0m[90m (39ms)[0m
+

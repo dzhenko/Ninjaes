@@ -1,4 +1,5 @@
 ﻿module.exports = function (grunt) {
+    grunt.loadNpmTasks('grunt-mocha-test');
     grunt.initConfig({
         concat: {
             options: {
@@ -17,6 +18,16 @@
                 ],
                 dest: 'public/all.js'
             }
+        },
+        mochaTest: {
+            test: {
+                options: {
+                    reporter: 'spec',
+                    captureFile: 'results.txt',
+                    quiet: false
+                },
+                src: ['server/tests/**/*.js']
+            }
         }
     });
 
@@ -26,4 +37,5 @@
 
 // register at least this one task
     grunt.registerTask('default', [ 'concat' ]);
+    grunt.registerTask('test', 'mochaTest');
 };
