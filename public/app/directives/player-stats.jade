@@ -6,8 +6,12 @@ div.stats-container(style="background-color: #2f1b0e; color: #fff;")
                 td.merged-text.text-left {{ playerData.gold }}
                 td.merged-text.text-right Movement :
                 td.merged-text.text-left {{ playerData.movement}}
+                td.merged-text.text-right X :
+                td.merged-text.text-left {{ playerData.coordinates.x}}
+                td.merged-text.text-right Y :
+                td.merged-text.text-left {{ playerData.coordinates.y}}
                 td.merged-text.text-right Exp
-                td.merged-text.text-left(style="width: 70%;")
+                td.merged-text.text-left(style="width: 40%;")
                     div.progress
                         div.progress-bar.progress-bar-success(style="width: 100%") {{ playerData.experience }}
     table.table(style="background-color: #2f1b0e; color: #fff;")

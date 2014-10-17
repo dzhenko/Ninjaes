@@ -6,6 +6,9 @@ app.controller('TroopsCtrl', ['$scope', '$location', 'appData', 'troopsModel', '
             $scope.userTroops = data;
         });
 
+        $scope.playerData = identity.currentUser;
+        $scope.troopsData = troopsModel;
+
         $scope.troopsInfo = troopsModel;
 
         $scope.go = function (path) {
@@ -53,6 +56,10 @@ app.controller('TroopsCtrl', ['$scope', '$location', 'appData', 'troopsModel', '
                 gameNotifier.message('Not enough money!');
                 return;
             }
+
+            $scope.$apply(function() {
+                $scope.playerData = identity.currentUser;
+            });
 
             gameNotifier.message('-------Success-------');
 

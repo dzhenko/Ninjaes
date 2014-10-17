@@ -7,9 +7,12 @@
 [2K[0G    [32m  √[0m[90m is expected return success property with true value [0m
 [2K[0G    [32m  √[0m[90m is expected player with more powerful troops to win when same experience [0m
 [0m    #fightMonster()[0m
-[2K[0G    [32m  √[0m[90m is expected to win over a monster should gain 1 more experience [0m
-[2K[0G    [32m  √[0m[90m fight with not experienced user should be won by the monster [0m
-[2K[0G    [32m  √[0m[90m monster should kill player's troops [0m
+battle handler hacked - not existing monster!
+[2K[0G    [31m  1) is expected to win over a monster should gain 1 more experience[0m
+battle handler hacked - not existing monster!
+[2K[0G    [31m  2) fight with not experienced user should be won by the monster[0m
+battle handler hacked - not existing monster!
+[2K[0G    [31m  3) monster should kill player's troops[0m
 
 [0m  mapHandler[0m
 [0m    #validateCoordinates()[0m
@@ -30,12 +33,17 @@
 [2K[0G    [32m  √[0m[90m if handler returns false when information has no request property [0m
 [2K[0G    [32m  √[0m[90m if handler returns false when information has no user property [0m
 [2K[0G    [32m  √[0m[90m if handler returns false when information has no castle property [0m
-[2K[0G    [32m  √[0m[90m if handler returns false when available troops for sale in castle are less than the requested amount [0m
-[2K[0G    [32m  √[0m[90m if handler returns false when user does not have enough money to pay for the units he wants to buy [0m
-[2K[0G    [32m  √[0m[90m if handler sets properly the amount of troops for sale left in the castle after user buys certain amount [0m
-[2K[0G    [32m  √[0m[90m if after buying new troops the amount of certain unit of troops the user owns has been properly increased [0m
-[2K[0G    [32m  √[0m[90m if after buying new troop units the amount of gold of the user is reduced and set properly [0m
+troops handler hacked - not existing castle!
+[2K[0G    [31m  4) if handler returns false when available troops for sale in castle are less than the requested amount[0m
+troops handler hacked - not existing castle!
+[2K[0G    [31m  5) if handler returns false when user does not have enough money to pay for the units he wants to buy[0m
+troops handler hacked - not existing castle!
+[2K[0G    [31m  6) if handler sets properly the amount of troops for sale left in the castle after user buys certain amount[0m
+troops handler hacked - not existing castle!
+[2K[0G    [31m  7) if after buying new troops the amount of certain unit of troops the user owns has been properly increased[0m
+troops handler hacked - not existing castle!
+[2K[0G    [31m  8) if after buying new troop units the amount of gold of the user is reduced and set properly[0m
 
 
-[92m [0m[32m 23 passing[0m[90m (39ms)[0m
+[92m [0m[32m 15 passing[0m[90m (36ms)[0m
 

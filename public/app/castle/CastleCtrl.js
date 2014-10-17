@@ -1,11 +1,14 @@
 'use strict';
 
-app.controller('CastleCtrl', ['$scope','$location', function ($scope, $location) {
+app.controller('CastleCtrl', ['$scope','$location','identity', 'troopsModel', function ($scope, $location, identity, troopsModel) {
     $scope.bgSize = '1000px 790px';
 
     $scope.background = 'url("../../img/insideCastle.jpg")';
     $scope.backgroundBuild = 'url("../../img/insideCastle-build.jpg")';
     $scope.backgroundTroops = 'url("../../img/insideCastle-troops.jpg")';
+
+    $scope.playerData = identity.currentUser;
+    $scope.troopsData = troopsModel;
 
     $scope.showOriginal =true;
     $scope.showBuild =false;
