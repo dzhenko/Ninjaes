@@ -1,11 +1,18 @@
 'use strict';
 
+<<<<<<< HEAD
 app.controller('CastleCtrl', ['$scope','$location','identity', 'troopsModel', function ($scope, $location, identity, troopsModel) {
+=======
+app.controller('CastleCtrl', ['$scope','$location', 'troopsModel', 'identity', function ($scope, $location, troopsModel, identity) {
+>>>>>>> 1fb595c9edd50b56da83e7906dec7f1c2b1ec40e
     $scope.bgSize = '1000px 790px';
 
     $scope.background = 'url("../../img/insideCastle.jpg")';
     $scope.backgroundBuild = 'url("../../img/insideCastle-build.jpg")';
     $scope.backgroundTroops = 'url("../../img/insideCastle-troops.jpg")';
+	
+    $scope.playerData = identity.currentUser;
+    $scope.troopsData = troopsModel;
 
     $scope.playerData = identity.currentUser;
     $scope.troopsData = troopsModel;
